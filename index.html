@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="chat-container">
+      <!-- Always visible header with back navigation -->
+      <div class="chat-header">
+        <img
+          src="img/icons/chevronLeft.svg"
+          alt="Chevron Left"
+          class="back-icon"
+          id="back-icon"
+          style="display: none"
+        />
+        <span id="header-text">Bună ziua!<br />Cu ce vǎ putem ajuta?</span>
+      </div>
+
+      <!-- Card container: initially shows all cards for selection -->
+      <div class="card-container" id="card-container">
+        <div class="card" id="card1" data-title="Meniul principal">
+          <div class="card-title">
+            <div class="card-header">Vreau să îmi aleg un parfum</div>
+            <img
+              src="img/icons/chevronRight.svg"
+              alt="Chevron Right"
+              class="chevron-icon"
+            />
+          </div>
+          <div class="chat-content">
+            <span id="current-date"></span>
+            <div class="chat-messages" id="chat-messages1">
+              <!-- Messages for card 1 -->
+            </div>
+            <div class="chat-input">
+              <input
+                type="text"
+                id="user-message-input1"
+                placeholder="Type your message..."
+              />
+              <button id="send-user-message1">Send</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" id="card2" data-title="Meniul principal">
+          <div class="card-title">
+            <div class="card-header">Despre comanda mea</div>
+            <img
+              src="img/icons/chevronRight.svg"
+              alt="Chevron Right"
+              class="chevron-icon"
+            />
+          </div>
+          <div class="chat-content">
+            <span id="current-date"></span>
+            <div class="chat-messages" id="chat-messages2">
+              <!-- Messages for card 2 -->
+            </div>
+            <div class="chat-input">
+              <input
+                type="text"
+                id="user-message-input2"
+                placeholder="Type your message..."
+              />
+              <button id="send-user-message2">Send</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" id="card3" data-title="Meniul principal">
+          <div class="card-title">
+            <div class="card-header">Despre cel mai apropiat magazin</div>
+            <img
+              src="img/icons/chevronRight.svg"
+              alt="Chevron Right"
+              class="chevron-icon"
+            />
+          </div>
+          <div class="chat-content">
+            <span id="current-date"></span>
+            <div class="chat-messages" id="chat-messages3">
+              <!-- Messages for card 3 -->
+            </div>
+            <div class="chat-input">
+              <input
+                type="text"
+                id="user-message-input3"
+                placeholder="Type your message..."
+              />
+              <button id="send-user-message3">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional testing buttons remain here -->
+    <div class="tool-buttons">
+      <button id="lorem-user">Send Lorem as User</button>
+      <button id="lorem-system">Send Lorem as System</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
