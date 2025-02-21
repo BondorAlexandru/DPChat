@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfume Chatbot Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        #chat-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .question {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .answer-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .answer-button:hover {
+            background-color: #d0d0d0;
+        }
+        #restart-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .history-item {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #4CAF50;
+        }
+        .perfume-recommendation {
+            background-color: #e8f5e9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .perfume-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        .not-listed-button {
+            background-color: #f5f5f5;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Perfume Chatbot Tester</h1>
+    <button id="restart-button">Restart Conversation</button>
+    <div id="chat-container"></div>
+
+    <script type="module">
+        import PerfumeChatbot from './dp_flow.js';
+
+        class ChatbotTester {
+            constructor() {
+                this.userId = 'user_' + Date.now();
+                this.chatContainer = document.getElementById('chat-container');
+                
+                // Check if chat container exists
+                if (!this.chatContainer) {
+                    console.error('Chat container not found!');
+                    return;
+                }
+
+                this.setupEventListeners();
+                this.init();
+            }
+
+            async init() {
+                try {
+                    this.showLoading();
+                    this.bot = new PerfumeChatbot(this.userId);
+                    this.brands_and_models = await this.bot.return_perfumes_brands_and_models();
+                    
+                    // Load questions and perfume data
+                    await this.bot.process_questions('questions.json');
+                    
+                    this.hideLoading();
+                    const initialQuestion = this.bot.generate_output("1");
+                    this.displayQuestion(initialQuestion);
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                    this.hideLoading();
+                    this.showError('Error initializing chatbot: ' + error.message);
+                }
+            }
+
+            setupEventListeners() {
+                const restartButton = document.getElementById('restart-button');
+                if (restartButton) {
+                    restartButton.addEventListener('click', () => this.restart());
+                }
+            }
+
+            showLoading() {
+                if (!this.chatContainer) return;
+                
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading';
+                loadingDiv.id = 'loading-indicator';
+                loadingDiv.textContent = 'Loading chatbot...';
+                this.chatContainer.appendChild(loadingDiv);
+            }
+
+            hideLoading() {
+                if (!this.chatContainer) return;
+                
+                const loadingDiv = document.getElementById('loading-indicator');
+                if (loadingDiv) {
+                    loadingDiv.remove();
+                }
+            }
+
+            showError(message) {
+                if (!this.chatContainer) return;
+                
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                errorDiv.textContent = message;
+                this.chatContainer.appendChild(errorDiv);
+            }
+
+            displayQuestion(questionData) {
+                if (!this.chatContainer || !questionData) return;
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.textContent = questionData.text;
+                this.chatContainer.appendChild(questionDiv);
+
+                // Special handling for perfume preference question
+                if (questionData.id === 'perfume_preference_selection') {
+                    this.displayPerfumeDropdown();
+                } else {
+                    // Regular answer buttons
+                    const answersDiv = document.createElement('div');
+                    questionData.answers.forEach(answer => {
+                        const button = document.createElement('button');
+                        button.className = 'answer-button';
+                        button.textContent = `${answer.id}. ${answer.text}`;
+                        button.addEventListener('click', () => {
+                            this.processAnswer(questionData.id, answer.id);
+                        });
+                        answersDiv.appendChild(button);
+                    });
+                    this.chatContainer.appendChild(answersDiv);
+                }
+
+                this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+            }
+
+            displayPerfumeRecommendations(perfumes) {
+                if (!this.chatContainer || !perfumes) return;
+
+                const recsDiv = document.createElement('div');
+                recsDiv.className = 'perfume-recommendation';
+                recsDiv.innerHTML = '<h3>Recommended Perfumes:</h3>';
+
+                perfumes.forEach(perfume => {
+                    const perfumeDiv = document.createElement('div');
+                    perfumeDiv.className = 'perfume-item';
+                    perfumeDiv.innerHTML = `
+                        <strong>${perfume.name}</strong><br>
+                        link: ${perfume.link}<br>
+                        link_pic: ${perfume.link_pic}<br>
+                    `;
+                    recsDiv.appendChild(perfumeDiv);
+                });
+
+                this.chatContainer.appendChild(recsDiv);
+                this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+            }
+
+            displayPerfumeDropdown() {
+                const dropdownContainer = document.createElement('div');
+                dropdownContainer.style.margin = '10px 0';
+
+                // Create select element
+                const select = document.createElement('select');
+                select.style.width = '100%';
+                select.style.padding = '8px';
+                select.style.marginBottom = '10px';
+
+                // Add default option
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select a perfume';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                select.appendChild(defaultOption);
+
+                if (this.brands_and_models && Array.isArray(this.brands_and_models)) {
+                    this.brands_and_models.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = `${item.brand}-${item.model}`;
+                        option.textContent = `${item.brand} - ${item.model}`;
+                        select.appendChild(option);
+                    });
+                } else {
+                    console.warn('No perfume list available');
+                    const unavailableOption = document.createElement('option');
+                    unavailableOption.textContent = 'No perfumes available';
+                    unavailableOption.disabled = true;
+                    select.appendChild(unavailableOption);
+                }
+
+                // Add options from brands_and_models
+                this.brands_and_models.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = `${item.brand}-${item.model}`;
+                    option.textContent = `${item.brand} - ${item.model}`;
+                    select.appendChild(option);
+                });
+
+                // Create submit button
+                const submitButton = document.createElement('button');
+                submitButton.className = 'answer-button';
+                submitButton.textContent = 'Submit';
+                submitButton.style.marginTop = '10px';
+                submitButton.disabled = true; // Initially disabled
+
+                // Enable/disable submit button based on selection
+                select.addEventListener('change', () => {
+                    submitButton.disabled = !select.value;
+                });
+
+                // Handle submission
+                submitButton.addEventListener('click', () => {
+                    if (select.value) {
+                        const [brand, model] = select.value.split('-');
+                        this.processAnswer('perfume_preference_selection', '1', { brand, model });
+                    }
+                });
+
+                dropdownContainer.appendChild(select);
+                dropdownContainer.appendChild(submitButton);
+                this.chatContainer.appendChild(dropdownContainer);
+            }
+
+
+            processAnswer(questionId, answerId, additionalData = null) {
+                if (!this.bot) return;
+
+                try {
+                    // Pass the additional data to processAnswer if it exists
+                    const result = additionalData 
+                        ? this.bot.processAnswer(questionId, answerId, additionalData)
+                        : this.bot.processAnswer(questionId, answerId);
+                    
+                    if (result === null) {
+                        const endDiv = document.createElement('div');
+                        endDiv.className = 'question';
+                        endDiv.textContent = 'Conversation ended. Click "Restart Conversation" to begin again.';
+                        this.chatContainer.appendChild(endDiv);
+                    } else {
+                        // Display the next question
+                        this.displayQuestion(result.question);
+                        
+                        // If there are perfume recommendations, display them
+                        if (result.perfumes) {
+                            this.displayPerfumeRecommendations(result.perfumes);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Process answer error:', error);
+                    this.showError('Error processing answer: ' + error.message);
+                }
+            }
+
+            async restart() {
+                if (!this.chatContainer) return;
+                
+                this.chatContainer.innerHTML = '';
+                await this.init();
+            }
+        }
+
+        // Wait for DOM to be fully loaded before initializing
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, creating ChatbotTester');
+            window.chatbotTester = new ChatbotTester();
+        });
+    </script>
+</body>
+</html>
