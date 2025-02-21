@@ -1,0 +1,99 @@
+{
+    "questions": {
+        "1": {
+            "text": "Bună ziua! Cu ce vă putem ajuta?",
+            "answers": {
+                "1.1": {
+                    "text": "Am o întrebare legată de comanda mea",
+                    "nextQuestion": "1.1"
+                },
+                "2.1": {
+                    "text": "Recomanda parfum",
+                    "nextQuestion": "2.1"
+                },
+                "3.1": {
+                  "text": "Vreau să îmi aleg un parfum cu placeholder",
+                  "nextQuestion": "perfume_preference_selection"
+                },
+                "4.1": {
+                    "text": "End",
+                    "nextQuestion": "end"
+                }
+            }
+        },
+        "1.1": {
+            "text": "Pentru a ne contacta, vă rugăm apelați 07123 456 789 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+                "1": {
+                    "text": "Înțeles",
+                    "nextQuestion": "end"
+                }
+            }
+        },
+        "2.1": {
+            "text": "Ce intensitate doriți să aibă parfumul ales?",
+            "answers": {
+                "1": {
+                    "text": "Subtil",
+                    "nextQuestion": "recommendation"
+                },
+                "2": {
+                    "text": "Moderat",
+                    "nextQuestion": "recommendation"
+                },
+                "3": {
+                    "text": "Intens",
+                    "nextQuestion": "recommendation"
+                },
+                "4": {
+                    "text": "Nu știu",
+                    "nextQuestion": "recommendation"
+                }
+            }
+        },
+        "end": {
+            "text": "Vă mulțumim pentru că ați ales serviciile noastre! Mai putem să vă ajutăm cu ceva?",
+            "answers": {
+                "1": {
+                    "text": "Da",
+                    "nextQuestion": "1"
+                },
+                "2": {
+                    "text": "Nu",
+                    "nextQuestion": null
+                }
+            }
+        },
+        "perfume_preference_selection": {
+            "text": "Vă rugăm tastați numele parfumului dumneavoastră favorit aici:",
+            "answers": {
+                "1": {
+                    "text": "placeholder DP1",
+                    "nextQuestion": "recommendation_model_brand"
+                },
+                "2": {
+                    "text": "Nu exista",
+                    "nextQuestion": "2.1"
+                }
+            }
+        },
+        "recommendation_model_brand": {
+            "text": "Pe baza analizei notelor olfactive ale preferinței dumneavoastră, vă putem sugera urmatorul parfum:",
+            "answers": {
+                "end": {
+                    "text": "pula",
+                    "nextQuestion": "1"
+                }
+            }
+        },
+        "recommendation": {
+            "text": "Pe baza analizei notelor olfactive ale preferinței dumneavoastră, vă putem sugera urmatoarele parfumuri: ",
+            "answers": {
+                "end": {
+                    "text": "pula",
+                    "nextQuestion": "1"
+                }
+            }
+        }
+    }
+}
