@@ -177,7 +177,7 @@
                 this.chatContainer.appendChild(questionDiv);
 
                 // Special handling for perfume preference question
-                if (questionData.id === 'perfume_preference_selection') {
+                if (questionData.id === '3.2.1') {
                     this.displayPerfumeDropdown();
                 } else {
                     // Regular answer buttons
@@ -276,7 +276,9 @@
                 submitButton.addEventListener('click', () => {
                     if (select.value) {
                         const [brand, model] = select.value.split('-');
-                        this.processAnswer('perfume_preference_selection', '1', { brand, model });
+                        console.log("din ui");
+                        console.log({ brand, model });
+                        this.processAnswer('3.2.1', '1', { brand, model });
                     }
                 });
 

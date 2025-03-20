@@ -4,16 +4,16 @@
             "text": "Bună ziua! Cu ce vă putem ajuta?",
             "answers": {
                 "1.1": {
-                    "text": "Am o întrebare legată de comanda mea",
+                    "text": "Am o întrebare legată de comanda mea.",
                     "nextQuestion": "1.1"
                 },
                 "2.1": {
-                    "text": "Recomanda parfum",
+                    "text": "Vreau sa gasesc cel mai apropiat magazin.",
                     "nextQuestion": "2.1"
                 },
                 "3.1": {
-                  "text": "Vreau să îmi aleg un parfum cu placeholder",
-                  "nextQuestion": "perfume_preference_selection"
+                  "text": "Vreau să îmi aleg un parfum.",
+                  "nextQuestion": "3.1"
                 },
                 "4.1": {
                     "text": "End",
@@ -31,6 +31,699 @@
             }
         },
         "2.1": {
+            "text": "Selecteaza orasul in care va aflati",
+            "answers": {
+              "2.2.1": {
+                "text": "Bucuresti.",
+                "nextQuestion": "2.2.1"
+              },
+              "2.2.2": {
+                "text": "Argeș.",
+                "nextQuestion": "2.2.2"
+              },
+              "2.2.3": {
+                "text": "Braila.",
+                "nextQuestion": "2.2.3"
+              },
+              "2.2.4": {
+                "text": "Brașov.",
+                "nextQuestion": "2.2.4"
+              },
+              "2.2.5": {
+                "text": "Buzău.",
+                "nextQuestion": "2.2.5"
+              },
+              "2.2.6": {
+                "text": "Cluj.",
+                "nextQuestion": "2.2.6"
+              },
+              "2.2.7": {
+                "text": "Constanța.",
+                "nextQuestion": "2.2.7"
+              },
+              "2.2.8": {
+                "text": "Dolj.",
+                "nextQuestion": "2.2.8"
+              },
+              "2.2.9": {
+                "text": "Galaţi.",
+                "nextQuestion": "2.2.9"
+              },
+              "2.2.10": {
+                "text": "Hunedoara.",
+                "nextQuestion": "2.2.10"
+              },
+              "2.2.11": {
+                "text": "Iași.",
+                "nextQuestion": "2.2.11"
+              },
+              "2.2.12": {
+                "text": "Ilfov.",
+                "nextQuestion": "2.2.12"
+              },
+              "2.2.13": {
+                "text": "Olt.",
+                "nextQuestion": "2.2.13"
+              },
+              "2.2.14": {
+                "text": "Prahova.",
+                "nextQuestion": "2.2.14"
+              },
+              "2.2.15": {
+                "text": "Vâlcea.",
+                "nextQuestion": "2.2.15"
+              }
+            }
+          },
+          "2.2.1": {
+            "text": "Selectați magazinul din București care vă interesează",
+            "answers": {
+              "2.2.1.1": {
+                "text": "Veranda Mall",
+                "nextQuestion": "2.2.1.1"
+              },
+              "2.2.1.2": {
+                "text": "Afi Palace Mall Cotroceni",
+                "nextQuestion": "2.2.1.2"
+              },
+              "2.2.1.3": {
+                "text": "Supernova Lujerului",
+                "nextQuestion": "2.2.1.3"
+              },
+              "2.2.1.4": {
+                "text": "Supernova Alexandriei",
+                "nextQuestion": "2.2.1.4"
+              },
+              "2.2.1.5": {
+                "text": "Centru Esplanada Pantelimon",
+                "nextQuestion": "2.2.1.5"
+              },
+              "2.2.1.6": {
+                "text": "Piata Resita",
+                "nextQuestion": "2.2.1.6"
+              },
+              "2.2.1.7": {
+                "text": "Complex Comercial Big Berceni",
+                "nextQuestion": "2.2.1.7"
+              },
+              "2.2.1.8": {
+                "text": "Mega Mall Pantelimon",
+                "nextQuestion": "2.2.1.8"
+              },
+              "2.2.1.9": {
+                "text": "Liberty Center",
+                "nextQuestion": "2.2.1.9"
+              },
+              "2.2.1.10": {
+                "text": "Carrefour Grand Arena",
+                "nextQuestion": "2.2.1.10"
+              },
+              "2.2.1.11": {
+                "text": "Auchan Militari",
+                "nextQuestion": "2.2.1.11"
+              },
+              "2.2.1.12": {
+                "text": "Sun Plaza Mall",
+                "nextQuestion": "2.2.1.12"
+              },
+              "2.2.1.13": {
+                "text": "Carrefour COLOSSEUM",
+                "nextQuestion": "2.2.1.13"
+              },
+              "2.2.1.14": {
+                "text": "Magazin Secuilor",
+                "nextQuestion": "2.2.1.14"
+              },
+              "2.2.1.15": {
+                "text": "Park Lake",
+                "nextQuestion": "2.2.1.15"
+              },
+              "2.2.1.16": {
+                "text": "Iris Titan",
+                "nextQuestion": "2.2.1.16"
+              },
+              "2.2.1.17": {
+                "text": "Magazin Pta Rahovei",
+                "nextQuestion": "2.2.1.17"
+              }
+            }
+          },
+          "2.2.1.1": {
+            "text": "Pentru a ne contacta la magazinul **Veranda Mall** din Strada Ziduri Moși 23 (nivelul 0 parter, in fata caselor de marcat Carrefour), vă rugăm apelați 0787.702.818 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.2": {
+            "text": "Pentru a ne contacta la magazinul **Afi Palace Mall Cotroceni**, vă rugăm apelați 0744.456.883 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.3": {
+            "text": "Pentru a ne contacta la magazinul **Supernova Lujerului** din Bulevardul Iuliu Maniu 19, vă rugăm apelați 0757.265.639 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.4": {
+            "text": "Pentru a ne contacta la magazinul **Supernova Alexandriei** din Șoseaua Alexandriei 152, vă rugăm apelați 0744.477.115 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.5": {
+            "text": "Pentru a ne contacta la magazinul **Centru Esplanada Pantelimon** din strada Vergului nr 20, sector 2, vă rugăm apelați 0743.112.346 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.6": {
+            "text": "Pentru a ne contacta la magazinul **Piata Resita** din strada Resita, nr.5B, sector 4, vă rugăm apelați 0743.112.341 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.7": {
+            "text": "Pentru a ne contacta la magazinul **Complex Comercial Big Berceni** din Berceni, vă rugăm apelați 0722.253.809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.8": {
+            "text": "Pentru a ne contacta la magazinul **Mega Mall Pantelimon** din Hipermarket Carrefour, vă rugăm apelați 0722.253.809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.9": {
+            "text": "Pentru a ne contacta la magazinul **Liberty Center** din Liberty Mall Rahova, vă rugăm apelați 0758.056.307 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.10": {
+            "text": "Pentru a ne contacta la magazinul **Carrefour Grand Arena**, vă rugăm apelați 0758.056.318 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.11": {
+            "text": "Pentru a ne contacta la magazinul **Auchan Militari**, vă rugăm apelați 0743.112.348 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.12": {
+            "text": "Pentru a ne contacta la magazinul **Sun Plaza Mall** din Sun Plaza, vă rugăm apelați 0722.253.809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.13": {
+            "text": "Pentru a ne contacta la magazinul **Carrefour COLOSSEUM** din Sos. Chitilei, 284, vă rugăm apelați 0724.832.842 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.14": {
+            "text": "Pentru a ne contacta la magazinul **Magazin Secuilor** din Str Secuilor, nr. 2, Sector 4, vă rugăm apelați 0743.112.344 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.15": {
+            "text": "Pentru a ne contacta la magazinul **Park Lake** din Park Lake Shopping Center, nivel -2, vă rugăm apelați 0748.054.725 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.16": {
+            "text": "Pentru a ne contacta la magazinul **Iris Titan** din Iris Titan Shopping Center, vă rugăm apelați 0752.089.752 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.1.17": {
+            "text": "Pentru a ne contacta la magazinul **Magazin Pta Rahovei** din Piata Rahovei, vă rugăm apelați 0724.832.842 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.2": {
+            "text": "Selectați magazinul din Argeș care vă interesează",
+            "answers": {
+              "2.2.2.1": {
+                "text": "Argeș Mall",
+                "nextQuestion": "2.2.2.1"
+              },
+              "2.2.2.2": {
+                "text": "Trivale Shopping Center",
+                "nextQuestion": "2.2.2.2"
+              },
+              "2.2.2.3": {
+                "text": "Auchan Pitești",
+                "nextQuestion": "2.2.2.3"
+              }
+            }
+          },
+          "2.2.2.1": {
+            "text": "Pentru a ne contacta la magazinul **Argeș Mall** din Str Tudor Vladimirescu 37, vă rugăm apelați 0747.682.704 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.2.2": {
+            "text": "Pentru a ne contacta la magazinul **Trivale Shopping Center**, vă rugăm apelați 0747.682.704 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.2.3": {
+            "text": "Pentru a ne contacta la magazinul **Auchan Pitești** din Hipermarket Auchan, vă rugăm apelați 0747.682.704 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.3": {
+            "text": "Pentru a ne contacta la magazinul **Brăila Mall** din Strada Principală, nr. 48, la parter, vă rugăm apelați 0722.253.809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.4": {
+            "text": "Pentru a ne contacta la magazinul **Unirea Shopping Center** din Str Garii, vă rugăm apelați 0747682704 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.5": {
+            "text": "Pentru a ne contacta la magazinul **Shopping City Buzău** din Bulevardul Unirii 232, vă rugăm apelați 0722253809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.6": {
+            "text": "Pentru a ne contacta la magazinul **Iulius Mall Cluj, etaj 1** din Strada Alexandru Vaida Voevod 53B, Cluj-Napoca, vă rugăm apelați 0722 253 809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.7": {
+            "text": "Selectați magazinul din Constanța care vă interesează",
+            "answers": {
+              "2.2.7.1": {
+                "text": "Comercial Tomis",
+                "nextQuestion": "2.2.7.1"
+              },
+              "2.2.7.2": {
+                "text": "Magazin Vivo",
+                "nextQuestion": "2.2.7.2"
+              }
+            }
+          },
+          "2.2.7.1": {
+            "text": "Pentru a ne contacta la magazinul **Comercial Tomis** din Bulevardul Tomis, nr.391, Constanța, vă rugăm apelați 0742 788 397 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.7.2": {
+            "text": "Pentru a ne contacta la magazinul **Magazin Vivo** din Bulevardul Aurel Vlaicu 220, Constanța, vă rugăm apelați 0758 056 307 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.8": {
+            "text": "Pentru a ne contacta la magazinul **Mall Electroputere Parc Craiova** din Str Calea Bucuresti, vă rugăm apelați 0747682704 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.9": {
+            "text": "Pentru a ne contacta la magazinul **Shopping City Galaţi** din Bulevardul George Coșbuc 251, vă rugăm apelați 0722.253.809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.10": {
+            "text": "Pentru a ne contacta la magazinul **Magazin Petroșani** din Strada 1 Decembrie 1918, bloc 69, vă rugăm apelați 0774.048.094 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.11": {
+            "text": "Pentru a ne contacta la magazinul **Pallas Mall** din Corp A parter, etaj cupola, vă rugăm lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.12": {
+            "text": "Selectați magazinul din Ilfov care vă interesează",
+            "answers": {
+              "2.2.12.1": {
+                "text": "DN1 Value Centre – Balotesti",
+                "nextQuestion": "2.2.12.1"
+              },
+              "2.2.12.2": {
+                "text": "Complex Bragadiru",
+                "nextQuestion": "2.2.12.2"
+              },
+              "2.2.12.3": {
+                "text": "Magazin Buftea",
+                "nextQuestion": "2.2.12.3"
+              }
+            }
+          },
+          "2.2.12.1": {
+            "text": "Pentru a ne contacta la magazinul **DN1 Value Centre – Balotesti** din Calea Bucureşti 2bis, 077015, vă rugăm apelați 0736.458.203 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.12.2": {
+            "text": "Pentru a ne contacta la magazinul **Complex Bragadiru** din Sos.Alexandriei nr.229, cladire C46, vă rugăm apelați 0769.736.104 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.12.3": {
+            "text": "Pentru a ne contacta la magazinul **Magazin Buftea** din Str Oltului nr 4, Buftea, Ilfov, vă rugăm apelați 0761.612.021 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.13": {
+            "text": "Selectați magazinul din Olt care vă interesează",
+            "answers": {
+              "2.2.13.1": {
+                "text": "Caracal",
+                "nextQuestion": "2.2.13.1"
+              },
+              "2.2.13.2": {
+                "text": "Magazin Slatina",
+                "nextQuestion": "2.2.13.2"
+              }
+            }
+          },
+          "2.2.13.1": {
+            "text": "Pentru a ne contacta la magazinul **Caracal** din Str Aleea Lipscani bl 22 B, parter, vă rugăm apelați 0765.453.484 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.13.2": {
+            "text": "Pentru a ne contacta la magazinul **Magazin Slatina** din Blv Ioan Cuza, Bloc V4, Parter, vă rugăm apelați 0765.453.484 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.14": {
+            "text": "Pentru a ne contacta la magazinul **Shopping City Ploiești**, vă rugăm apelați 0722.253.809 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+          "2.2.15": {
+            "text": "Pentru a ne contacta la magazinul **River Plaza Mall** din Str. Calea lui Traian nr. 121, vă rugăm apelați 0747.682.704 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
+            "answers": {
+              "1": {
+                "text": "Înțeles",
+                "nextQuestion": "end"
+              }
+            }
+          },
+        "3.1": {
+            "text": "Aveti un parfum pe baza caruia putem recomanda?",
+            "answers": {
+                "1": {
+                    "text": "Da",
+                    "nextQuestion": "3.2.1"
+                },
+                "2": {
+                    "text": "Nu, ajuta-ma sa imi gasesc parfumul ideal!",
+                    "nextQuestion": "3.2.2"
+                }
+            }
+        },
+        "3.2.1": {
+            "text": "Vă rugăm tastați numele parfumului dumneavoastră favorit aici:",
+            "answers": {
+                "1": {
+                    "text": "placeholder DP1",
+                    "nextQuestion": "recommendation_model_brand"
+                },
+                "2": {
+                    "text": "Nu exista",
+                    "nextQuestion": "3.2.2"
+                }
+            }
+        },
+        "3.2.2": {
+            "text": "Pentru cine doriți sa cumparati parfumul:",
+            "answers": {
+                "1": {
+                    "text": "Pentru mine",
+                    "nextQuestion": "3.3"
+                },
+                "2": {
+                    "text": "Cadou",
+                    "nextQuestion": "3.4"
+                }
+            }
+        },
+        "3.3": {
+            "text": "In ce circumstante doriti sa folositi parfumul ales?",
+            "answers": {
+                "1": {
+                    "text": "Pentru zi",
+                    "nextQuestion": "3.4"
+                },
+                "2": {
+                    "text": "Pentru seara",
+                    "nextQuestion": "3.4"
+                }
+            }
+        },
+        "3.4": {
+            "text": "Ce optiune reprezinta cel mai bine parfumul ales?",
+            "answers": {
+                "1": {
+                    "text": "Pentru femei",
+                    "nextQuestion": "3.5"
+                },
+                "2": {
+                    "text": "Pentru barbati",
+                    "nextQuestion": "3.5"
+                }
+            }
+        },
+        "3.5": {
+            "text": "Din ce categorie olfactiva ar face parte parfumul ales?",
+            "answers": {
+                "1": {
+                    "text": "Dulce",
+                    "nextQuestion": "3.5.1"
+                },
+                "2": {
+                    "text": "Proaspat",
+                    "nextQuestion": "3.5.2"
+                },
+                "3": {
+                    "text": "Deep",
+                    "nextQuestion": "3.5.3"
+                },
+                "4": {
+                    "text": "Spice",
+                    "nextQuestion": "3.5.4"
+                }
+            }
+        },
+        "3.5.1": {
+            "text": "Ati ales **Dulce**, care aroma va defineste cel mai bine alegerea?",
+            "answers": {
+                "1": {
+                    "text": "Fructat",
+                    "nextQuestion": "3.6"
+                },
+                "2": {
+                    "text": "Floral",
+                    "nextQuestion": "3.6"
+                },
+                "3": {
+                    "text": "Vanilat",
+                    "nextQuestion": "3.6"
+                },
+                "4": {
+                    "text": "Nu stiu",
+                    "nextQuestion": "3.6"
+                }
+            }
+        },
+        "3.5.2": {
+            "text": "Ati ales **Proaspat**, care aroma va defineste cel mai bine alegerea?",
+            "answers": {
+                "1": {
+                    "text": "Citric",
+                    "nextQuestion": "3.6"
+                },
+                "2": {
+                    "text": "Acvatic",
+                    "nextQuestion": "3.6"
+                },
+                "3": {
+                    "text": "Nu stiu",
+                    "nextQuestion": "3.6"
+                }
+            }
+        },
+        "3.5.3": {
+            "text": "Ati ales **Deep**, care aroma va defineste cel mai bine alegerea?",
+            "answers": {
+                "1": {
+                    "text": "Lemnos",
+                    "nextQuestion": "3.6"
+                },
+                "2": {
+                    "text": "Piele",
+                    "nextQuestion": "3.6"
+                },
+                "3": {
+                    "text": "Nu stiu",
+                    "nextQuestion": "3.6"
+                }
+            }
+        },
+        "3.5.4": {
+            "text": "Ati ales **Spice**, care aroma va defineste cel mai bine alegerea?",
+            "answers": {
+                "1": {
+                    "text": "Aromatic",
+                    "nextQuestion": "3.6"
+                },
+                "2": {
+                    "text": "Picant",
+                    "nextQuestion": "3.6"
+                },
+                "3": {
+                    "text": "Oriental",
+                    "nextQuestion": "3.6"
+                },
+                "4": {
+                    "text": "Nu stiu",
+                    "nextQuestion": "3.6"
+                }
+            }
+        },
+        "3.6": {
             "text": "Ce intensitate doriți să aibă parfumul ales?",
             "answers": {
                 "1": {
@@ -64,24 +757,12 @@
                 }
             }
         },
-        "perfume_preference_selection": {
-            "text": "Vă rugăm tastați numele parfumului dumneavoastră favorit aici:",
-            "answers": {
-                "1": {
-                    "text": "placeholder DP1",
-                    "nextQuestion": "recommendation_model_brand"
-                },
-                "2": {
-                    "text": "Nu exista",
-                    "nextQuestion": "2.1"
-                }
-            }
-        },
+        
         "recommendation_model_brand": {
             "text": "Pe baza analizei notelor olfactive ale preferinței dumneavoastră, vă putem sugera urmatorul parfum:",
             "answers": {
                 "end": {
-                    "text": "pula",
+                    "text": "Vă mulțumim pentru că ați ales serviciile noastre! Mai putem să vă ajutăm cu ceva?",
                     "nextQuestion": "1"
                 }
             }

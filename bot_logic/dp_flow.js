@@ -15,6 +15,7 @@ export default class PerfumeChatbot {
         this.conversationHistory = [];
         this.perfumes = [];
         this.perfumes_brands_and_models = [];
+        this.filters = {}
     }
 
     /**
@@ -129,7 +130,12 @@ export default class PerfumeChatbot {
         this.perfumes_brands_and_models = data.map(row => ({
             brand: row.Brand,
             model: row.Model,
-            perfume_match: row.Nume_Produs
+            perfume_match: row.Nume_Produs,
+            timp: row.Timp,
+            sex: row.Sex,
+            aroma_1: row.Aroma,
+            aroma_2: row.AromaSecundara,
+            intensitate: row.Intensitate
         }));
         console.log(this.perfumes_brands_and_models);
         return this.perfumes_brands_and_models;
@@ -183,13 +189,59 @@ export default class PerfumeChatbot {
 
     /**
      * Filters perfumes based on provided criteria
-     * @param {Dictionary} filters - Filter criteria
      * @returns {List} Filtered list of perfume names
      */
-    select_perfumes(filters) {
+    select_perfumes() {
 
-        const matches = ['M15', 'M16', 'D5']
-        return matches;
+        // const matches = ['M15', 'M16', 'D5']
+        // console.log(this.filters)
+        // return matches;
+
+        if (!this.filters || !this.perfumes_brands_and_models) {
+            return [];
+        }
+        
+        const results = [];
+        console.log(this.perfumes_brands_and_models);
+        console.log(this.filters)
+        for (let perfume of this.perfumes_brands_and_models) {
+            let match = true;
+            // console.log("pula2")
+            for (let key in this.filters) {
+                console.log("pula")
+                console.log(perfume);
+                if (!this.filters[key]) continue;
+                
+                if (key === "sex") {
+                    if (this.filters[key].toLowerCase() === "barbati" || this.filters[key].toLowerCase() === "dama") {
+                        if (perfume[key] && 
+                            (perfume[key].toLowerCase() === this.filters[key].toLowerCase() || 
+                             perfume[key].toLowerCase() === "unisex")) {
+                            continue;
+                        } else {
+                            match = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (this.filters[key].toLowerCase() === "nu stiu") {
+                    continue;
+                }
+                
+                if (!perfume[key] || !perfume[key].toLowerCase().includes(this.filters[key].toLowerCase())) {
+                    match = false;
+                    break;
+                }
+            }
+            
+            if (match) {
+                results.push(perfume.perfume_match);
+            }
+        }
+        
+        return results;
+
     }
 
 
@@ -199,16 +251,30 @@ export default class PerfumeChatbot {
      * @returns {List} Filtered list of perfume names
      */
     select_perfume_from_brands_models(perfume_brand_model) {
+        console.log("in_perfume_match_1");
+        console.log(this.perfumes_brands_and_models);
+        if (!perfume_brand_model) {
+            console.warn('perfume_brand_model is null or undefined');
+            return [];
+        }
         
+        // Check if brand and model properties exist
+        if (!perfume_brand_model.brand || !perfume_brand_model.model) {
+            console.warn('perfume_brand_model is missing brand or model property:', perfume_brand_model);
+            return [];
+        }
+        
+        console.log("in_perfume_match_2");
         const matchingPerfume = this.perfumes_brands_and_models.find(entry => 
             entry.brand.toLowerCase() === perfume_brand_model.brand.toLowerCase() && 
             entry.model.toLowerCase() === perfume_brand_model.model.toLowerCase()
         );
+        console.log(matchingPerfume)
 
         if (matchingPerfume && matchingPerfume.perfume_match) {
             return [matchingPerfume.perfume_match];
         }
-
+        console.log("in_perfume_match_3");
         console.warn('No matching perfume found for:', perfume_brand_model);
         return [];
     }
@@ -247,9 +313,8 @@ export default class PerfumeChatbot {
 
         // Recommendation of perfumes - last step
         if (this.currentQuestion === "recommendation") {
-            const filters = this.extractFiltersFromHistory();
-            const recommendedPerfumes = this.select_perfumes(filters);
-            console.log(this.generate_output(this.currentQuestion))
+            const recommendedPerfumes = this.select_perfumes();
+            console.log(perfume_brand_model)
             console.log(this.generate_perfume_list(recommendedPerfumes))
             return {
                 question: this.generate_output(this.currentQuestion),
@@ -257,7 +322,7 @@ export default class PerfumeChatbot {
             };
         }
 
-        // case when users type the perfume
+        // Recommendation of perfumes - last step
         if (this.currentQuestion === "recommendation_model_brand") {
             const recommendedPerfume = this.select_perfume_from_brands_models(perfume_brand_model);
             console.log(this.generate_output(this.currentQuestion))
@@ -265,6 +330,74 @@ export default class PerfumeChatbot {
             return {
                 question: this.generate_output(this.currentQuestion),
                 perfumes: this.generate_perfume_list(recommendedPerfume)
+            };
+        }
+
+
+        // case when users type the perfume
+        if (this.currentQuestion === "3.2.1" && !answer) {
+            console.log('pressed the submit button');
+            console.log(question);
+            console.log(answer);
+            console.log(this.conversationHistory);
+            const recommendedPerfume = this.select_perfume_from_brands_models(perfume_brand_model);
+            console.log(this.generate_output(this.currentQuestion))
+            console.log(this.generate_perfume_list(recommendedPerfume))
+            return {
+                question: this.generate_output(this.currentQuestion),
+                perfumes: this.generate_perfume_list(recommendedPerfume)
+            };
+        }
+
+
+        // Cases where we set the filters
+        if (this.currentQuestion === "3.3" && this.currentQuestion !== "end") {
+            if (answer.text.includes('zi')) 
+                this.filters['timp'] = 'Zi';    
+            else 
+                this.filters['timp'] = 'Seara';    
+            
+            return {
+                question: this.generate_output(this.currentQuestion)
+            };
+        }
+
+        if (this.currentQuestion === "3.4" && this.currentQuestion !== "end") {
+            if (answer.text.includes('femei')) 
+                this.filters['sex'] = 'Dama';    
+            else 
+                this.filters['sex'] = 'Barbati';    
+            
+            return {
+                question: this.generate_output(this.currentQuestion)
+            };
+        }
+
+        if (this.currentQuestion === "3.5" && this.currentQuestion !== "end") {
+            this.filters['aroma_1'] = answer.text + ',';    
+            
+            return {
+                question: this.generate_output(this.currentQuestion)
+            };
+        }
+
+        if (this.currentQuestion === "3.5.1" ||
+            this.currentQuestion === "3.5.2" ||
+            this.currentQuestion === "3.5.3" ||
+            this.currentQuestion === "3.5.4" ) {
+            this.filters['aroma_2'] = answer.text + ',';    
+            
+            return {
+                question: this.generate_output(this.currentQuestion)
+            };
+        }
+
+        if (this.currentQuestion === "3.6" && this.currentQuestion !== "end") {
+            this.filters['intensitate'] = answer.text;    
+
+            
+            return {
+                question: this.generate_output(this.currentQuestion)
             };
         }
 
@@ -283,20 +416,10 @@ export default class PerfumeChatbot {
                 question: this.generate_output(this.currentQuestion),
             };
         }
-        console.log('null')
         return null;
     }
 
-    /**
-     * Extracts filter criteria from conversation history
-     * @private
-     * @returns {Object} Filter criteria based on user's answers
-     */
-    extractFiltersFromHistory() {
-        const filters = {};    
-        return filters;
-    }
-
+    
     /**
      * Retrieves conversation history
      * @param {string} [userId=null] - Optional user ID to filter history
