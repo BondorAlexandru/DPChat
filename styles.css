@@ -133,31 +133,6 @@ body {
   background-color: #f0f0f0;
 }
 
-.chat-input {
-  /* display: flex; */
-  display: none !important;
-  background-color: white;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.chat-input button {
-  margin-left: 10px;
-  padding: 10px 15px;
-  border: none;
-  background-color: #4a90e2;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .tool-buttons {
   text-align: center;
   margin: 20px;
@@ -290,7 +265,7 @@ body {
 }
 
 .option-button {
-  background-color: #4043f8;
+  background-color: #f4ad54;
   color: #fff;
   border: none;
   border-radius: 11px 11px 0px 11px;
@@ -302,7 +277,7 @@ body {
 }
 
 .option-button:hover {
-  background-color: #3235d6;
+  background-color: #f2b56c;
 }
 
 /* Styles for the card expansion effect - grow from baseline with slower animation */
@@ -316,6 +291,8 @@ body {
   margin-top: 0;
   transform-origin: bottom;
   padding-bottom: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* Override the hover effect for expanding or expanded cards */
@@ -433,34 +410,37 @@ body {
   transform: rotate(180deg);
 }
 
-/* Chat assistant label styling */
+/* Chat assistant label styling - Updated */
 .chat-assistant-label {
   position: fixed;
-  bottom: 20px;
+  bottom: 20px; /* Same level as the button */
   right: 20px;
   background-color: white;
   color: #000;
-  padding: 0 16px 0 24px;
   border-radius: 30px;
   font-size: 16px;
   font-weight: 500;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 1; /* No fading in/out */
+  transition: width 0.4s ease, padding 0.4s ease;
   pointer-events: none;
-  z-index: 998;
+  z-index: 998; /* Lower than the button's z-index */
   height: 60px;
   display: flex;
   align-items: center;
   white-space: nowrap;
-  min-width: 210px;
+  overflow: hidden;
+  width: 60px; /* Same width as the circle */
+  padding: 0; /* No padding initially */
+  text-indent: 60px; /* Push text out of view initially */
 }
 
-/* Show label when chat is closed */
+/* Show label when chat is closed, no opacity change */
 .chat-assistant-label.visible {
-  transform: translateX(0);
-  opacity: 1;
+  width: 210px; /* Expanded width */
+  padding: 0 20px 0 35px; /* Adjust padding to position text correctly */
+  text-indent: 0; /* Restore normal text positioning */
+  justify-content: flex-start; /* Align text to start */
 }
 
 /* Perfume icon is no longer needed as we're using the actual toggle button */
