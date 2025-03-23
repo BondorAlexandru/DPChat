@@ -138,7 +138,6 @@ export default class PerfumeChatbot {
             intensitate: row.Intensitate,
             link: row.link
         }));
-        console.log(this.perfumes_brands_and_models);
         return this.perfumes_brands_and_models;
     }
 
@@ -172,7 +171,6 @@ export default class PerfumeChatbot {
      * @returns {List} Formatted list of perfume objects
      */
     generate_perfume_list(perfumeNames) {
-        console.log(perfumeNames)
         const formattedPerfumes = perfumeNames.map(name => {
             const match = name.match(/[A-Z]{1,2}(?:-?\d{1,2})/);
             const urlCode = match ? match[0].toLowerCase() : '';    
@@ -202,8 +200,6 @@ export default class PerfumeChatbot {
         }
         
         const results = [];
-        // console.log(this.perfumes_brands_and_models);
-        // console.log(this.filters)
         for (let perfume of this.perfumes_brands_and_models) {
             let match = true;
             for (let key in this.filters) 
@@ -307,7 +303,6 @@ export default class PerfumeChatbot {
             entry.brand.toLowerCase() === perfume_brand_model.brand.toLowerCase() && 
             entry.model.toLowerCase() === perfume_brand_model.model.toLowerCase()
         );
-        console.log(matchingPerfume)
 
         if (matchingPerfume && matchingPerfume.perfume_match) {
             return [matchingPerfume.perfume_match];
@@ -330,8 +325,6 @@ export default class PerfumeChatbot {
         }
 
         const answer = question.answers[answerId] || question.answers["*"];
-        console.log(question)
-        console.log(answer)
         if (!answer) {
             throw new Error(`Invalid answer ${answerId} for question ${questionId}`);
         }
@@ -352,21 +345,15 @@ export default class PerfumeChatbot {
         if (this.currentQuestion === "recommendation") {
             this.filters['intensitate'] = answer.text;
             const recommendedPerfumes = this.select_perfumes();
-            // console.log(recommendedPerfumes)
-            console.log(this.generate_perfume_list(recommendedPerfumes))
-            console.log(recommendedPerfumes)
             return {
                 question: this.generate_output(this.currentQuestion),
                 perfumes: this.generate_perfume_list(recommendedPerfumes)
             };
         }
 
-
         // Recommendation of perfumes - last step
         if (this.currentQuestion === "recommendation_model_brand") {
             const recommendedPerfume = this.select_perfume_from_brands_models(perfume_brand_model);
-            console.log(this.generate_output(this.currentQuestion))
-            console.log(this.generate_perfume_list(recommendedPerfume))
             return {
                 question: this.generate_output(this.currentQuestion),
                 perfumes: this.generate_perfume_list(recommendedPerfume)
@@ -376,13 +363,7 @@ export default class PerfumeChatbot {
 
         // case when users type the perfume
         if (this.currentQuestion === "3.2.1" && !answer) {
-            console.log('pressed the submit button');
-            console.log(question);
-            console.log(answer);
-            console.log(this.conversationHistory);
             const recommendedPerfume = this.select_perfume_from_brands_models(perfume_brand_model);
-            console.log(this.generate_output(this.currentQuestion))
-            console.log(this.generate_perfume_list(recommendedPerfume))
             return {
                 question: this.generate_output(this.currentQuestion),
                 perfumes: this.generate_perfume_list(recommendedPerfume)
@@ -392,8 +373,6 @@ export default class PerfumeChatbot {
 
         // Cases where we set the filters
         if (this.currentQuestion === "3.4" && this.currentQuestion !== "end") {
-            console.log(answer)
-            console.log(answer.text)
             if (answer.text.includes('zi')) 
                 this.filters['timp'] = 'Zi';    
             else 
@@ -453,7 +432,6 @@ export default class PerfumeChatbot {
 
         // case when conversation ends
         if (this.currentQuestion === "end") {
-            console.log(this.currentQuestion)
             return {
                 question: this.generate_output(this.currentQuestion),
             };
