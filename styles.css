@@ -163,13 +163,34 @@ body {
 .card {
   background-color: #fff;
   border-radius: 30px;
-  padding: 15px 35px 65px 35px;
+  padding: 15px 35px 75px 35px;
   margin-top: -50px;
   box-shadow: 0px -4px 11px 2px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, margin-top 0.3s, height 3s;
+  transition: padding 0.3s ease, margin-top 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+}
+
+.card:hover {
+  padding-top: 25px;
+  margin-top: -60px;
+  box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-title {
+  transform: translateY(-10px);
+}
+
+#card1:hover, #card2:hover, #card3:hover {
+  background-color: #E2E2F8;
 }
 
 .card-container > .card {
@@ -205,7 +226,7 @@ body {
 }
 
 #card1 {
-  background-color: #E2E2F8;
+  background-color: #FAFAFA;
 }
 
 #card2 {
@@ -214,16 +235,6 @@ body {
 
 #card3 {
   background-color: #FAFAFA;
-}
-
-.card-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card.expanded .card-title {
-  display: none;
 }
 
 .card-header {
@@ -242,4 +253,30 @@ body {
   letter-spacing: 0.6px;
   text-transform: uppercase;
   margin-bottom: 20px;
+}
+
+/* Styles for the answer options */
+.message-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0 20px 0;
+  width: 70%;
+  margin-left: auto;
+}
+
+.option-button {
+  background-color: #4043f8;
+  color: #fff;
+  border: none;
+  border-radius: 11px 11px 0px 11px;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.option-button:hover {
+  background-color: #3235d6;
 }
