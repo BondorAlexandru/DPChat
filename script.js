@@ -109,9 +109,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   const chatToggleButton = document.getElementById('chat-toggle-button');
   const chatContainer = document.querySelector('.chat-container');
   const toggleIcon = document.getElementById('toggle-icon');
+  const assistantLabel = document.getElementById('chat-assistant-label');
   
-  // Set initial state - chat hidden by default
+  // Set initial state - chat hidden by default, label visible
   chatContainer.classList.add('hidden');
+  
+  // Show the label with a slight delay for initial load
+  setTimeout(() => {
+    assistantLabel.classList.add('visible');
+  }, 300);
   
   // Toggle chat visibility when the button is clicked
   chatToggleButton.addEventListener('click', function() {
@@ -123,12 +129,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       toggleIcon.src = 'img/icons/openButton.svg';
       toggleIcon.alt = 'Open Chat';
       chatToggleButton.classList.remove('active');
+      
+      // Show the label with a slight delay for better animation
+      setTimeout(() => {
+        assistantLabel.classList.add('visible');
+      }, 100);
     } else {
       // Show chat with animation
       chatContainer.classList.remove('hidden');
       toggleIcon.src = 'img/icons/closeButton.svg';
       toggleIcon.alt = 'Close Chat';
       chatToggleButton.classList.add('active');
+      
+      // Hide the label immediately
+      assistantLabel.classList.remove('visible');
       
       // Reset the chat if it was in an expanded state
       const expandedCard = document.querySelector('.card.expanded');
@@ -139,17 +153,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   });
   
-  // Remove the close on outside click functionality since
-  // we're using animations (optional)
-  /*
-  document.addEventListener('click', function(event) {
-    if (!chatContainer.contains(event.target) && 
-        !chatToggleButton.contains(event.target) &&
-        !chatContainer.classList.contains('hidden')) {
-      chatToggleButton.click();
-    }
-  });
-  */
 });
 
  // Function to handle when a user clicks an option button
