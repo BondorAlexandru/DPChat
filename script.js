@@ -104,6 +104,52 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.querySelectorAll('#current-date').forEach(el => {
     el.textContent = formatDateInRomanian(today);
   });
+
+  // Chat toggle functionality
+  const chatToggleButton = document.getElementById('chat-toggle-button');
+  const chatContainer = document.querySelector('.chat-container');
+  const toggleIcon = document.getElementById('toggle-icon');
+  
+  // Set initial state - chat hidden by default
+  chatContainer.classList.add('hidden');
+  
+  // Toggle chat visibility when the button is clicked
+  chatToggleButton.addEventListener('click', function() {
+    const isChatVisible = !chatContainer.classList.contains('hidden');
+    
+    if (isChatVisible) {
+      // Hide chat with animation
+      chatContainer.classList.add('hidden');
+      toggleIcon.src = 'img/icons/openButton.svg';
+      toggleIcon.alt = 'Open Chat';
+      chatToggleButton.classList.remove('active');
+    } else {
+      // Show chat with animation
+      chatContainer.classList.remove('hidden');
+      toggleIcon.src = 'img/icons/closeButton.svg';
+      toggleIcon.alt = 'Close Chat';
+      chatToggleButton.classList.add('active');
+      
+      // Reset the chat if it was in an expanded state
+      const expandedCard = document.querySelector('.card.expanded');
+      if (expandedCard) {
+        // Simulate click on back button to return to main menu
+        document.getElementById('back-icon').click();
+      }
+    }
+  });
+  
+  // Remove the close on outside click functionality since
+  // we're using animations (optional)
+  /*
+  document.addEventListener('click', function(event) {
+    if (!chatContainer.contains(event.target) && 
+        !chatToggleButton.contains(event.target) &&
+        !chatContainer.classList.contains('hidden')) {
+      chatToggleButton.click();
+    }
+  });
+  */
 });
 
  // Function to handle when a user clicks an option button
