@@ -174,12 +174,17 @@ export default class PerfumeChatbot {
     generate_perfume_list(perfumeNames) {
         console.log(perfumeNames)
         const formattedPerfumes = perfumeNames.map(name => {
-            const match = name.match(/[A-Z]\d{1,2}/);
+            const match = name.match(/[A-Z]{1,2}(?:-?\d{1,2})/);
             const urlCode = match ? match[0].toLowerCase() : '';    
 
+            let link_value = `https://www.dpparfum.ro/produs/${urlCode}`
+            if (name.toLowerCase().includes("private collection")) 
+                link_value = `https://www.dpparfum.ro/produs/${urlCode}-private-collection/`
+            if (name.toLowerCase().includes("arabian") && name.toLowerCase().includes("-")) 
+                link_value = `https://www.dpparfum.ro/produs/${urlCode}-arabian/`
                 return {
                     name: name,
-                    link: `https://www.dpparfum.ro/produs/${urlCode}`,
+                    link: link_value,
                     link_pic: this.select_url_from_name(name)
                 };
             });
