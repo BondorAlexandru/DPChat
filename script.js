@@ -22,25 +22,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     card.addEventListener('click', function(e) {
       // Only expand if this card isn't already expanded.
       if (!this.classList.contains('expanded')) {
-        // Hide other cards.
-        cards.forEach(c => {
-          if (c !== this) {
-            c.style.display = 'none';
-          }
-        });
-        // Expand the clicked card.
-        this.classList.add('expanded');
-        this.style.display = 'flex'; // Ensures the card remains visible.
-        
-        // Update header text using card's data-title attribute.
-        const title = this.getAttribute('data-title') || 'Chat';
-        headerText.innerHTML = title;
-        
-        // Show the back icon and apply expanded header styles.
-        backIcon.style.display = 'block';
-        document.querySelector('.chat-header').classList.add('expanded-header');
-        
-        // Show a welcome message based on the card type
+        // Prepare chat content before visual transition
         const chatMessagesId = this.querySelector('.chat-messages').id;
         let context = '';
         if (chatMessagesId === 'chat-messages1') context = 'parfum';
@@ -50,29 +32,60 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Add a system welcome message with options
         const response = botServer.getResponse("", context);
         currentQuestionId = response.questionId;
+        
+        // Hide other cards immediately
+        cards.forEach(c => {
+          if (c !== this) {
+            c.style.display = 'none'; // Instant hide
+          }
+        });
+        
+        // Update header text immediately
+        const title = this.getAttribute('data-title') || 'Chat';
+        headerText.innerHTML = title;
+        
+        // Show the back icon and apply expanded header styles immediately
+        backIcon.style.display = 'block';
+        document.querySelector('.chat-header').classList.add('expanded-header');
+        
+        // Apply expanding class for smooth growth from baseline
+        this.classList.add('expanding');
+        
+        // Add the message immediately instead of waiting
         addMessage(response, 'system', chatMessagesId);
+        
+        // After transition completes, complete the expansion
+        setTimeout(() => {
+          this.classList.add('expanded');
+          this.style.display = 'flex'; // Ensures the card remains visible
+        }, 600); // Transition time
       }
     });
   });
 
   // Use the back icon to collapse the expanded card and revert header adjustments.
-  backIcon.addEventListener('click', () => {
+  backIcon.addEventListener('click', function() {
+    // Find the expanded card
     const expandedCard = document.querySelector('.card.expanded');
+    
+    // Remove expanded class
     if (expandedCard) {
-      // Collapse the expanded card.
       expandedCard.classList.remove('expanded');
-      // Show all cards again.
-      cards.forEach(c => {
-        c.style.display = 'flex';
-      });
-      // Reset header text and hide the back icon.
-      headerText.innerHTML = defaultMessage;
-      backIcon.style.display = 'none';
-      document.querySelector('.chat-header').classList.remove('expanded-header');
-      
-      // Reset current question ID
-      currentQuestionId = null;
+      expandedCard.classList.remove('expanding');
     }
+    
+    // Show all cards again and remove fade-out class
+    cards.forEach(c => {
+      c.style.display = 'flex';
+      c.classList.remove('fade-out');
+    });
+    
+    // Update header text back to default
+    headerText.innerHTML = 'Bună ziua!<br />Cu ce vǎ putem ajuta?';
+    
+    // Hide back icon and reset header style
+    backIcon.style.display = 'none';
+    document.querySelector('.chat-header').classList.remove('expanded-header');
   });
 
   // Set current date for all date spans.

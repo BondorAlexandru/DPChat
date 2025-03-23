@@ -7,8 +7,17 @@ body {
 
 .chat-container {
   width: 400px;
-  margin: 50px auto;
-  background-color: #f4ad54;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(244, 173, 84, 1) 50%,
+    rgba(244, 173, 84, 1) 100%
+  );
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -19,7 +28,7 @@ body {
 }
 
 .chat-header {
-  background-color: #F4AD54;
+  background-color: #f4ad54;
   padding: 32px;
   text-align: center;
   position: relative;
@@ -27,7 +36,7 @@ body {
 }
 
 #header-text {
-  color: #FAFAFA;
+  color: #fafafa;
   font-size: 28px;
   font-weight: 400;
   display: block;
@@ -37,6 +46,9 @@ body {
 /* New styles for when a card is expanded */
 .chat-header.expanded-header {
   padding: 20px;
+  margin-bottom: 0;
+  padding-bottom: 15px;
+  transition: all 0.3s ease;
 }
 
 .chat-header.expanded-header #header-text {
@@ -86,7 +98,7 @@ body {
 }
 
 .system-message {
-  background-color: #E2E2F8;
+  background-color: #e2e2f8;
   color: #000;
   border-radius: 11px 11px 11px 0px;
 }
@@ -166,7 +178,8 @@ body {
   padding: 15px 35px 75px 35px;
   margin-top: -50px;
   box-shadow: 0px -4px 11px 2px rgba(0, 0, 0, 0.05);
-  transition: padding 0.3s ease, margin-top 0.3s ease, background-color 0.3s ease;
+  transition: padding 0.3s ease, margin-top 0.3s ease,
+    background-color 0.3s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -189,10 +202,6 @@ body {
   transform: translateY(-10px);
 }
 
-#card1:hover, #card2:hover, #card3:hover {
-  background-color: #E2E2F8;
-}
-
 .card-container > .card {
   display: flex;
 }
@@ -200,6 +209,15 @@ body {
 .card.expanded {
   height: 400px;
   background-color: #fff !important;
+  transition: height 0.6s ease-out, padding-bottom 0.6s ease;
+  z-index: 10;
+  position: relative;
+  margin-top: 0;
+  transform-origin: bottom;
+  border-radius: 30px;
+  box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1);
+  padding-top: 15px;
+  padding-bottom: 35px;
 }
 
 .chat-content {
@@ -226,15 +244,15 @@ body {
 }
 
 #card1 {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 #card2 {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 #card3 {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .card-header {
@@ -279,4 +297,81 @@ body {
 
 .option-button:hover {
   background-color: #3235d6;
+}
+
+/* Styles for the card expansion effect - grow from baseline with slower animation */
+.card.expanding {
+  height: 400px;
+  transition: height 0.6s ease-out, background-color 0.6s ease, padding-bottom 0.6s ease;
+  background-color: #fff !important;
+  z-index: 10;
+  position: relative;
+  margin-top: 0;
+  transform-origin: bottom;
+  padding-bottom: 35px;
+}
+
+/* Override the hover effect for expanding or expanded cards */
+.card.expanding:hover,
+.card.expanded:hover {
+  padding-top: 15px;
+  margin-top: 0;
+  background-color: #fff !important;
+}
+
+/* Prevent title transform for expanded cards */
+.card.expanded:hover .card-title {
+  transform: none;
+}
+
+/* Chat content animation with matching delay */
+.card.expanded .chat-content {
+  display: block;
+  opacity: 1;
+  height: 100%;
+  overflow-y: auto;
+  transition: opacity 0.6s ease 0.1s;
+}
+
+/* Hide scrollbars but keep scroll functionality */
+.chat-messages,
+.card.expanded .chat-content,
+.chat-content {
+  /* For WebKit browsers (Chrome, Safari, newer Edge) */
+  -webkit-scrollbar {
+    display: none;
+  }
+
+  /* For Firefox */
+  scrollbar-width: none;
+
+  /* For IE and Edge */
+  -ms-overflow-style: none;
+}
+
+/* Ensure all transitions use the same timing for smoothness */
+.card,
+.card.expanding,
+.card.expanded,
+.card-container .card.fade-out {
+  transition-duration: 0.6s;
+}
+
+.card-container .card.fade-out {
+  display: none;
+}
+
+/* Hide card title in expanded view */
+.card.expanding .card-title,
+.card.expanded .card-title {
+  display: none;
+}
+
+/* Make chat content appear immediately */
+.card.expanding .chat-content {
+  display: block;
+  opacity: 1;
+  height: 100%;
+  overflow-y: auto;
+  transition: opacity 0.3s ease;
 }
