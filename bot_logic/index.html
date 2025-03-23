@@ -207,11 +207,34 @@
                 perfumes.forEach(perfume => {
                     const perfumeDiv = document.createElement('div');
                     perfumeDiv.className = 'perfume-item';
-                    perfumeDiv.innerHTML = `
-                        <strong>${perfume.name}</strong><br>
-                        link: ${perfume.link}<br>
-                        link_pic: ${perfume.link_pic}<br>
-                    `;
+                    
+                    // Create the name element
+                    const nameElement = document.createElement('strong');
+                    nameElement.textContent = perfume.name;
+                    
+                    // Create the link with image
+                    const linkElement = document.createElement('a');
+                    linkElement.href = perfume.link;
+                    linkElement.target = '_blank'; // Opens link in new tab
+                    
+                    // Create the image element
+                    const imageElement = document.createElement('img');
+                    imageElement.src = perfume.link_pic;
+                    imageElement.alt = perfume.name;
+                    imageElement.style.width = '100px';
+                    imageElement.style.height = '100px';
+                    imageElement.style.objectFit = 'cover';
+                    imageElement.style.marginTop = '10px';
+                    
+                    // Add the image to the link
+                    linkElement.appendChild(imageElement);
+                    
+                    // Add everything to the perfume div
+                    perfumeDiv.appendChild(nameElement);
+                    perfumeDiv.appendChild(document.createElement('br'));
+                    perfumeDiv.appendChild(linkElement);
+                    
+                    // Add the perfume div to the recs div
                     recsDiv.appendChild(perfumeDiv);
                 });
 
@@ -276,8 +299,6 @@
                 submitButton.addEventListener('click', () => {
                     if (select.value) {
                         const [brand, model] = select.value.split('-');
-                        console.log("din ui");
-                        console.log({ brand, model });
                         this.processAnswer('3.2.1', '1', { brand, model });
                     }
                 });

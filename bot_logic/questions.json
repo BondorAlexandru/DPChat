@@ -771,7 +771,7 @@
             "text": "Pe baza analizei notelor olfactive ale preferinței dumneavoastră, vă putem sugera urmatoarele parfumuri: ",
             "answers": {
                 "end": {
-                    "text": "pula",
+                    "text": "Vă mulțumim pentru că ați ales serviciile noastre! Mai putem să vă ajutăm cu ceva?",
                     "nextQuestion": "1"
                 }
             }
