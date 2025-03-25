@@ -16,6 +16,15 @@ export default class PerfumeChatbot {
         this.perfumes = [];
         this.perfumes_brands_and_models = [];
         this.filters = {}
+
+        this.return_perfumes_brands_and_models_list()
+            .then(concatenatedList => {
+                this.brandModelList = concatenatedList;
+                console.log(`Loaded ${concatenatedList.length} perfumes`);
+            })
+            .catch(error => {
+                console.error('Failed to initialize perfume data:', error);
+            });
     }
 
     /**
@@ -141,6 +150,31 @@ export default class PerfumeChatbot {
         return this.perfumes_brands_and_models;
     }
 
+
+    /**
+    * Returns a list of perfumes brands and models concatenated for user to type and 
+    * select one of them
+    * @returns {Array<string>} A list of strings with brand concatenated with model
+    */
+    async return_perfumes_brands_and_models_list() {
+        const data = await this.process_csv('parfumuri.csv');
+        
+        // Store the full data in the class property for future reference
+        this.perfumes_brands_and_models = data.map(row => ({
+            brand: row.Brand,
+            model: row.Model,
+            perfume_match: row.Nume_Produs,
+            timp: row.Timp,
+            sex: row.Sex,
+            aroma_1: row.Aroma,
+            aroma_2: row.AromaSecundara,
+            intensitate: row.Intensitate,
+            link: row.link
+        }));
+        
+        // Return just the concatenated brand and model strings
+        return data.map(row => `${row.Brand} ${row.Model}`);
+    }
 
     /**
      * Generates formatted output for a question
@@ -318,6 +352,8 @@ export default class PerfumeChatbot {
      * @returns {Object|null} Next question output or null if conversation ends
      * @throws {Error} If question or answer ID is invalid
      */
+     // TODO: rename perfume_brand_model in system_selection, selecting only one
+     // TODO: expand this logic for cities
     processAnswer(questionId, answerId, perfume_brand_model=null) {
         const question = this.questions[questionId];
         if (!question) {
@@ -345,9 +381,12 @@ export default class PerfumeChatbot {
         if (this.currentQuestion === "recommendation") {
             this.filters['intensitate'] = answer.text;
             const recommendedPerfumes = this.select_perfumes();
+            console.log(this.generate_perfume_list(recommendedPerfumes))
             return {
                 question: this.generate_output(this.currentQuestion),
-                perfumes: this.generate_perfume_list(recommendedPerfumes)
+                system_options: {
+                    output_list: this.generate_perfume_list(recommendedPerfumes)
+                }
             };
         }
 
@@ -356,17 +395,28 @@ export default class PerfumeChatbot {
             const recommendedPerfume = this.select_perfume_from_brands_models(perfume_brand_model);
             return {
                 question: this.generate_output(this.currentQuestion),
-                perfumes: this.generate_perfume_list(recommendedPerfume)
+                system_options: {
+                    output_list: this.generate_perfume_list(recommendedPerfume)
+                }
             };
         }
 
 
         // case when users type the perfume
-        if (this.currentQuestion === "3.2.1" && !answer) {
-            const recommendedPerfume = this.select_perfume_from_brands_models(perfume_brand_model);
+        if (this.currentQuestion === "3.2.1") {
+            if (answer.text.includes('Da')) 
+            {   
+                let return_val = {
+                    question: this.generate_output(this.currentQuestion),
+                    system_options: {
+                        input_list: this.brandModelList
+                    }
+                };
+                return return_val;
+            }
+                
             return {
                 question: this.generate_output(this.currentQuestion),
-                perfumes: this.generate_perfume_list(recommendedPerfume)
             };
         }
 

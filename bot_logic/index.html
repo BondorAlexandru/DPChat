@@ -204,7 +204,10 @@
                 recsDiv.className = 'perfume-recommendation';
                 recsDiv.innerHTML = '<h3>Recommended Perfumes:</h3>';
 
-                perfumes.forEach(perfume => {
+                // Handle the perfumes object or array
+                const perfumeArray = Array.isArray(perfumes) ? perfumes : Object.values(perfumes);
+                
+                perfumeArray.forEach(perfume => {
                     const perfumeDiv = document.createElement('div');
                     perfumeDiv.className = 'perfume-item';
                     
@@ -299,7 +302,7 @@
                 submitButton.addEventListener('click', () => {
                     if (select.value) {
                         const [brand, model] = select.value.split('-');
-                        this.processAnswer('3.2.1', '1', { brand, model });
+                        this.processAnswer('3.2.1', 'recommendation_model_brand', { brand, model });
                     }
                 });
 
@@ -317,7 +320,7 @@
                     const result = additionalData 
                         ? this.bot.processAnswer(questionId, answerId, additionalData)
                         : this.bot.processAnswer(questionId, answerId);
-                    
+
                     if (result === null) {
                         const endDiv = document.createElement('div');
                         endDiv.className = 'question';
@@ -325,11 +328,12 @@
                         this.chatContainer.appendChild(endDiv);
                     } else {
                         // Display the next question
+                        console.log(result);
                         this.displayQuestion(result.question);
                         
-                        // If there are perfume recommendations, display them
-                        if (result.perfumes) {
-                            this.displayPerfumeRecommendations(result.perfumes);
+                        // Check for system_options.output_list for perfume recommendations
+                        if (result.system_options && result.system_options.output_list) {
+                            this.displayPerfumeRecommendations(result.system_options.output_list);
                         }
                     }
                 } catch (error) {

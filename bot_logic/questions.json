@@ -32,6 +32,9 @@
         },
         "2.1": {
             "text": "Selecteaza orasul in care va aflati",
+            "system_options": {
+              "input_list": ["Bucuresti", "Argeș", "Braila", "Brașov", "Buzău", "Cluj", "Constanța", "Dolj", "Galaţi", "Hunedoara", "Iași", "Ilfov", "Olt", "Prahova", "Vâlcea"]
+            },
             "answers": {
               "2.2.1": {
                 "text": "Bucuresti.",
@@ -576,15 +579,14 @@
         },
         "3.2.1": {
             "text": "Vă rugăm tastați numele parfumului dumneavoastră favorit aici:",
+            "system_options": {
+              "input_list": []
+            },
             "answers": {
-                "1": {
-                    "text": "placeholder DP1",
+              "recommendation_model_brand": {
+                    "text": "Pula",
                     "nextQuestion": "recommendation_model_brand"
-                },
-                "2": {
-                    "text": "Nu exista",
-                    "nextQuestion": "3.2.2"
-                }
+              }
             }
         },
         "3.2.2": {
@@ -760,19 +762,33 @@
         
         "recommendation_model_brand": {
             "text": "Pe baza analizei notelor olfactive ale preferinței dumneavoastră, vă putem sugera urmatorul parfum:",
+            "system_options": {
+              "output_list": []
+            },
             "answers": {
-                "end": {
-                    "text": "Vă mulțumim pentru că ați ales serviciile noastre! Mai putem să vă ajutăm cu ceva?",
+                "1": {
+                    "text": "Mai am nevoie de ajutor.",
                     "nextQuestion": "1"
+                },
+                "2": {
+                    "text": "Multumesc, asta este tot.",
+                    "nextQuestion": null
                 }
             }
         },
         "recommendation": {
             "text": "Pe baza analizei notelor olfactive ale preferinței dumneavoastră, vă putem sugera urmatoarele parfumuri: ",
+            "system_options": {
+              "output_list": []
+            },
             "answers": {
-                "end": {
-                    "text": "Vă mulțumim pentru că ați ales serviciile noastre!",
+                "1": {
+                    "text": "Mai am nevoie de ajutor.",
                     "nextQuestion": "1"
+                },
+                "2": {
+                    "text": "Multumesc, asta este tot.",
+                    "nextQuestion": null
                 }
             }
         }
