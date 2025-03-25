@@ -40,14 +40,6 @@
             <div class="chat-messages" id="chat-messages1">
               <!-- Messages for card 1 -->
             </div>
-            <div class="chat-input">
-              <input
-                type="text"
-                id="user-message-input1"
-                placeholder="Type your message..."
-              />
-              <button id="send-user-message1">Send</button>
-            </div>
           </div>
         </div>
         <div class="card" id="card2" data-title="Meniul principal">
@@ -63,14 +55,6 @@
             <span id="current-date"></span>
             <div class="chat-messages" id="chat-messages2">
               <!-- Messages for card 2 -->
-            </div>
-            <div class="chat-input">
-              <input
-                type="text"
-                id="user-message-input2"
-                placeholder="Type your message..."
-              />
-              <button id="send-user-message2">Send</button>
             </div>
           </div>
         </div>
@@ -88,25 +72,18 @@
             <div class="chat-messages" id="chat-messages3">
               <!-- Messages for card 3 -->
             </div>
-            <div class="chat-input">
-              <input
-                type="text"
-                id="user-message-input3"
-                placeholder="Type your message..."
-              />
-              <button id="send-user-message3">Send</button>
-            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Optional testing buttons remain here -->
-    <div class="tool-buttons">
-      <button id="lorem-user">Send Lorem as User</button>
-      <button id="lorem-system">Send Lorem as System</button>
+    <div id="chat-toggle-button" class="chat-toggle-button">
+      <img src="img/icons/openButton.svg" alt="Open Chat" id="toggle-icon">
+    </div>
+    <div id="chat-assistant-label" class="chat-assistant-label">
+      Asistent vanzare AI
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
   </body>
 </html>
