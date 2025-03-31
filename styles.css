@@ -532,7 +532,7 @@ body {
   .card {
     padding: 15px 35px 175px 35px;
     margin-top: -130px;
-    transition: all 0.6s ease-out;
+    transition: all 0.3s ease-out;
     position: relative;
   }
 
