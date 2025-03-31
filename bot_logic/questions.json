@@ -576,11 +576,11 @@
         "3.2.1": {
             "text": "Vă rugăm tastați numele parfumului dumneavoastră favorit aici:",
             "system_options": {
-              "input_list": []
+              "input_list": ["Armani Aqua di Gio", "Armani Because of You", "Armani Black Code", "Armani Mania New", "Armani Stronger With You", "Armani My Way", "Armani Code", "Armani He", "Dior Sauvage", "Dior Homme Intense", "Chanel Allure Sport", "Chanel Bleu de Chanel", "Hugo Boss", "Dolce Gabbana K", "Burberry Hero", "Versace Dylan Blue Pour Homme", "Tom Ford Ombre Leather", "Paco Rabanne Phantom", "Davidoff Adventure", "Davidoff Cool Water", "Davidoff Champion", "Lacoste Essential"]
             },
             "answers": {
               "recommendation_model_brand": {
-                    "text": "Pula",
+                    "text": "Parfumul selectat",
                     "nextQuestion": "recommendation_model_brand"
               }
             }

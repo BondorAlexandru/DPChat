@@ -179,11 +179,110 @@ async function addMessage(messageData, type = 'user', chatId) {
   // Create message div
   const messageDiv = document.createElement('div');
   messageDiv.className = type + '-message';
-  messageDiv.innerHTML = `<span>${text}</span>`;
-  chatMessages.appendChild(messageDiv);
   
-  // If this is a system message and has options, display them
-  if (type === 'system' && typeof messageData === 'object' && messageData.options && messageData.options.length > 0) {
+  // If this is a system message and has system_options, include the dropdown inside the message
+  if (type === 'system' && typeof messageData === 'object' && messageData.system_options) {
+    const systemOptions = messageData.system_options;
+    
+    if (systemOptions.input_list && systemOptions.input_list.length > 0) {
+      // Add the class for wider system messages with dropdown
+      messageDiv.classList.add('system-message-with-dropdown');
+      
+      // Add the message text
+      messageDiv.innerHTML = `<span>${text}</span>`;
+      
+      // Create dropdown container inside the message
+      const dropdownContainer = document.createElement('div');
+      dropdownContainer.className = 'system-dropdown-container';
+      
+      // Create input for filtering
+      const inputField = document.createElement('input');
+      inputField.type = 'text';
+      inputField.className = 'dropdown-input';
+      inputField.placeholder = 'Vă rugăm tastați numele...';
+      
+      // Create dropdown list container
+      const dropdownList = document.createElement('div');
+      dropdownList.className = 'dropdown-list';
+      // Initially hide the dropdown
+      dropdownList.style.display = 'none';
+      
+      // Function to render the options based on filter
+      const renderOptions = (filter = '') => {
+        // Only show dropdown if filter has content
+        if (filter.length > 0) {
+          dropdownList.style.display = 'block';
+          
+          dropdownList.innerHTML = '';
+          const filteredOptions = systemOptions.input_list.filter(option => 
+            option.toLowerCase().includes(filter.toLowerCase())
+          );
+          
+          filteredOptions.forEach(option => {
+            const optionElement = document.createElement('div');
+            optionElement.className = 'dropdown-option';
+            optionElement.textContent = option;
+            
+            // Handle option selection
+            optionElement.addEventListener('click', () => {
+              inputField.value = option;
+              
+              // Visually show selection
+              dropdownList.querySelectorAll('.dropdown-option').forEach(el => {
+                el.classList.remove('selected');
+              });
+              optionElement.classList.add('selected');
+              
+              // Submit the selected option after a brief delay
+              setTimeout(() => {
+                // Remove the dropdown container from the message
+                messageDiv.removeChild(dropdownContainer);
+                
+                // Process the selected option
+                handleOptionClick(option, chatId);
+              }, 300);
+            });
+            
+            dropdownList.appendChild(optionElement);
+          });
+        } else {
+          // Hide dropdown when input is empty
+          dropdownList.style.display = 'none';
+        }
+      };
+      
+      // Initial render - dropdown should be hidden because input is empty
+      renderOptions('');
+      
+      // Handle input changes for filtering
+      inputField.addEventListener('input', (e) => {
+        renderOptions(e.target.value);
+      });
+      
+      // Append elements to container
+      dropdownContainer.appendChild(inputField);
+      dropdownContainer.appendChild(dropdownList);
+      
+      // Append the dropdown container to the message div
+      messageDiv.appendChild(dropdownContainer);
+      
+      // Append the message div to the chat messages container
+      chatMessages.appendChild(messageDiv);
+      
+      // Focus the input field
+      setTimeout(() => inputField.focus(), 100);
+    } else {
+      // If there are no input_list options, just display the regular message
+      messageDiv.innerHTML = `<span>${text}</span>`;
+      chatMessages.appendChild(messageDiv);
+    }
+  }
+  // If this is a system message and has regular options, display them
+  else if (type === 'system' && typeof messageData === 'object' && messageData.options && messageData.options.length > 0) {
+    // Add the message text
+    messageDiv.innerHTML = `<span>${text}</span>`;
+    chatMessages.appendChild(messageDiv);
+    
     const optionsDiv = document.createElement('div');
     optionsDiv.className = 'message-options';
     
@@ -204,6 +303,11 @@ async function addMessage(messageData, type = 'user', chatId) {
     });
     
     chatMessages.appendChild(optionsDiv);
+  }
+  else {
+    // Regular message without options
+    messageDiv.innerHTML = `<span>${text}</span>`;
+    chatMessages.appendChild(messageDiv);
   }
   
   // Auto-scroll to the latest message

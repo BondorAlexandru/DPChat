@@ -61,8 +61,8 @@ class BotServer {
             
             const nextQuestion = this.questions[nextQuestionId];
             if (nextQuestion) {
-              // Return next question with its answer options
-              return {
+              // Check if the question has system_options
+              const response = {
                 text: nextQuestion.text,
                 questionId: nextQuestionId,
                 options: Object.entries(nextQuestion.answers).map(([id, ans]) => ({ 
@@ -70,6 +70,13 @@ class BotServer {
                   text: ans.text 
                 }))
               };
+              
+              // Add system_options if they exist
+              if (nextQuestion.system_options) {
+                response.system_options = nextQuestion.system_options;
+              }
+              
+              return response;
             }
           }
         }
@@ -92,7 +99,7 @@ class BotServer {
       }
       
       const initialQuestion = this.questions[initialQuestionId];
-      return {
+      const response = {
         text: initialQuestion.text,
         questionId: initialQuestionId,
         options: Object.entries(initialQuestion.answers).map(([id, ans]) => ({ 
@@ -100,6 +107,13 @@ class BotServer {
           text: ans.text 
         }))
       };
+      
+      // Add system_options if they exist
+      if (initialQuestion.system_options) {
+        response.system_options = initialQuestion.system_options;
+      }
+      
+      return response;
       
     } catch (error) {
       console.error('Error getting bot response:', error);
