@@ -401,6 +401,18 @@ export default class PerfumeChatbot {
             };
         }
 
+        // Cases where we set the filters
+        if (this.currentQuestion === "2.1" && this.currentQuestion !== "end") {
+            console.log(this.questions[this.currentQuestion]);
+            return {
+                question: this.generate_output(this.currentQuestion),
+                system_options: {
+                    input_list: this.questions[this.currentQuestion].system_options
+                }
+            };
+        }
+
+
 
         // case when users type the perfume
         if (this.currentQuestion === "3.2.1") {
@@ -483,7 +495,7 @@ export default class PerfumeChatbot {
         // case when conversation ends
         if (this.currentQuestion === "end") {
             return {
-                question: this.generate_output(this.currentQuestion),
+                question: this.generate_output(this.currentQuestion)
             };
         }
         return null;
