@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Perfume Chatbot</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
     />
     <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div class="chat-container" id="chat-wrapper">
-      <div class="chat-header">
+        <div class="chat-header">
         <img
           src="../img/icons/chevronLeft.svg"
           alt="Back"
@@ -18,9 +18,9 @@
           id="back-button"
         />
         <span id="header-text">Bună ziua!<br />Cu ce vǎ putem ajuta?</span>
-      </div>
-
-      <div class="card-container" id="card-container">
+        </div>
+        
+        <div class="card-container" id="card-container">
         <div class="card" id="card3">
           <div class="card-title">
             <div class="card-header">Vreau să îmi aleg un parfum</div>
@@ -32,32 +32,32 @@
           <div class="chat-content" id="chat-content-3"></div>
         </div>
 
-        <div class="card" id="card1">
-          <div class="card-title">
+            <div class="card" id="card1">
+                <div class="card-title">
             <div class="card-header">Despre comanda mea</div>
             <img
               src="../img/icons/chevronRight.svg"
               class="chevron-icon"
             />
-          </div>
-          <div class="chat-content" id="chat-content-1"></div>
-        </div>
-
-        <div class="card" id="card2">
-          <div class="card-title">
+                </div>
+                <div class="chat-content" id="chat-content-1"></div>
+            </div>
+            
+            <div class="card" id="card2">
+                <div class="card-title">
             <div class="card-header">Despre cel mai apropiat magazin</div>
             <img
               src="../img/icons/chevronRight.svg"
               class="chevron-icon"
             />
-          </div>
-          <div class="chat-content" id="chat-content-2"></div>
+                </div>
+                <div class="chat-content" id="chat-content-2"></div>
+            </div>
         </div>
-      </div>
-
+        
       <div id="chat-messages" style="display: none"></div>
     </div>
-
+    
     <div class="chat-toggle-button" id="chat-toggle">
       <img
         src="../img/icons/openButton.svg"
@@ -65,7 +65,7 @@
         id="toggle-icon"
       />
     </div>
-
+    
     <div class="chat-assistant-label" id="chat-label">
       Asistent vânzǎri AI
     </div>
@@ -99,8 +99,8 @@
           this.headerText = document.getElementById(this.config.headerTextId);
           this.backButton = document.getElementById(this.config.backButtonId);
           this.chatHeader = document.querySelector(".chat-header");
-
-          this.currentFlowId = null;
+                
+                this.currentFlowId = null;
           this.userId = "user_" + Date.now();
 
           // Configuration for special question types - maps question IDs to handlers
@@ -114,9 +114,9 @@
               dataProvider: "getLocationOptions",
             },
           };
-
-          // Map each card to its corresponding question ID and answer ID
-          this.cardMapping = {
+                
+                // Map each card to its corresponding question ID and answer ID
+                this.cardMapping = {
             1: {
               questionId: "1",
               answerId: "1.1",
@@ -132,19 +132,19 @@
               answerId: "3.1",
               text: "Vreau să îmi aleg un parfum",
             },
-          };
-
-          this.flowLabels = {
+                };
+                
+                this.flowLabels = {
             1: "Despre comanda mea",
             2: "Despre cel mai apropiat magazin",
             3: "Vreau să îmi aleg un parfum",
-          };
-
-          // Check if chat container exists
-          if (!this.chatContainer) {
+                };
+                
+                // Check if chat container exists
+                if (!this.chatContainer) {
             console.error("Chat container not found!");
-            return;
-          }
+                    return;
+                }
 
           // Initialize toggle icon based on initial state
           const toggleIcon = document.getElementById("toggle-icon");
@@ -156,14 +156,14 @@
             }
           }
 
-          this.setupEventListeners();
-          this.initCards();
-        }
+                this.setupEventListeners();
+                this.initCards();
+            }
 
-        async init(flowId) {
-          try {
-            this.currentFlowId = flowId;
-            this.showLoading();
+            async init(flowId) {
+                try {
+                    this.currentFlowId = flowId;
+                    this.showLoading();
 
             // Initialize the chat flow engine with original method names
             this.chatbot = new ChatbotFlow(this.userId);
@@ -174,29 +174,29 @@
 
             // Load questions and conversation flow with original method name
             await this.chatbot.process_questions("questions.json");
-
-            this.hideLoading();
-
+                    
+                    this.hideLoading();
+                    
             // Add today's date at the top of the conversation
             this.addDateHeader();
-
+                    
             // Make sure chat messages container is visible
             this.chatContainer.style.display = "flex";
-
+                    
             // Get the mapping for this flow
-            const mapping = this.cardMapping[flowId];
-            if (mapping) {
+                    const mapping = this.cardMapping[flowId];
+                    if (mapping) {
               // Process the answer directly without showing the first question
-              this.processAnswer(mapping.questionId, mapping.answerId);
-            }
-          } catch (error) {
+                        this.processAnswer(mapping.questionId, mapping.answerId);
+                    }
+                } catch (error) {
             console.error("Initialization error:", error);
-            this.hideLoading();
+                    this.hideLoading();
             this.showError("Error initializing chatbot: " + error.message);
-          }
-        }
+                }
+            }
 
-        initCards() {
+            initCards() {
           // Get all cards by their IDs
           const cards = {};
           Object.keys(this.cardMapping).forEach((id) => {
@@ -210,17 +210,17 @@
 
           // Setup back button
           this.backButton.addEventListener("click", () => this.collapseCard());
-        }
-
-        expandCard(card, flowId) {
-          // Hide other cards
-          document.querySelectorAll(".card").forEach((c) => {
-            if (c !== card) {
-              c.style.display = "none";
             }
-          });
-
-          // Show back button and update header
+            
+            expandCard(card, flowId) {
+                // Hide other cards
+          document.querySelectorAll(".card").forEach((c) => {
+                    if (c !== card) {
+              c.style.display = "none";
+                    }
+                });
+                
+                // Show back button and update header
           this.backButton.style.display = "block";
           this.chatHeader.classList.add("expanded-header");
           this.headerText.textContent = "Meniul principal";
@@ -230,39 +230,39 @@
           this.chatContainer.style.display = "flex";
           
           // Initialize the chat with the selected flow ID immediately
-          this.init(flowId);
+                    this.init(flowId);
 
           // Add expanded class to the card without animation delay
           card.classList.add("expanded");
-        }
-
-        collapseCard() {
-          // Reset UI
+            }
+            
+            collapseCard() {
+                // Reset UI
           this.chatContainer.style.display = "none";
           this.cardContainer.style.display = "block";
           this.chatHeader.classList.remove("expanded-header");
           this.backButton.style.display = "none";
           this.headerText.textContent = this.config.headerTitle;
-
-          // Show all cards again
+                
+                // Show all cards again
           document.querySelectorAll(".card").forEach((card) => {
             card.style.display = "flex";
             card.classList.remove("expanded");
-          });
-
-          // Clear chat messages
+                });
+                
+                // Clear chat messages
           this.chatContainer.innerHTML = "";
-          this.currentFlowId = null;
-        }
+                this.currentFlowId = null;
+            }
 
-        setupEventListeners() {
+            setupEventListeners() {
           const restartButton = document.getElementById("restart-button");
-          if (restartButton) {
+                if (restartButton) {
             restartButton.addEventListener("click", () => this.restart());
-          }
+                }
 
-          // Set up chat toggle functionality
-          if (this.chatToggle) {
+                // Set up chat toggle functionality
+                if (this.chatToggle) {
             const toggleIcon = document.getElementById("toggle-icon");
             this.chatToggle.addEventListener("click", () => {
               // Toggle chat visibility
@@ -284,40 +284,41 @@
                   toggleIcon.src = "../img/icons/closeButton.svg";
                 }, 150); // Wait for half the rotation to change the icon
               }
-            });
-          }
-        }
+                    });
+                }
+            }
 
-        showLoading() {
-          if (!this.chatContainer) return;
-
+            showLoading() {
+                if (!this.chatContainer) return;
+                
           const loadingDiv = document.createElement("div");
           loadingDiv.className = "loading system-message";
           loadingDiv.id = "loading-indicator";
           loadingDiv.textContent = "Loading...";
-          this.chatContainer.appendChild(loadingDiv);
-        }
+                this.chatContainer.appendChild(loadingDiv);
+            }
 
-        hideLoading() {
-          if (!this.chatContainer) return;
-
+            hideLoading() {
+                if (!this.chatContainer) return;
+                
           const loadingDiv = document.getElementById("loading-indicator");
-          if (loadingDiv) {
-            loadingDiv.remove();
-          }
-        }
+                if (loadingDiv) {
+                    loadingDiv.remove();
+                }
+            }
 
-        showError(message) {
-          if (!this.chatContainer) return;
-
+            showError(message) {
+                if (!this.chatContainer) return;
+                
           const errorDiv = document.createElement("div");
           errorDiv.className = "error system-message";
-          errorDiv.textContent = message;
-          this.chatContainer.appendChild(errorDiv);
-        }
+                errorDiv.textContent = message;
+                this.chatContainer.appendChild(errorDiv);
+                this.scrollToBottom();
+            }
 
-        displayQuestion(questionData) {
-          if (!this.chatContainer || !questionData) return;
+            displayQuestion(questionData) {
+                if (!this.chatContainer || !questionData) return;
 
           // Check if this is a special question type
           const specialConfig = this.specialQuestionTypes[questionData.id];
@@ -339,10 +340,10 @@
         displayStandardQuestion(questionData) {
           const questionDiv = document.createElement("div");
           questionDiv.className = "question";
-          questionDiv.textContent = questionData.text;
-          this.chatContainer.appendChild(questionDiv);
+                questionDiv.textContent = questionData.text;
+                this.chatContainer.appendChild(questionDiv);
 
-          // Regular answer buttons
+                    // Regular answer buttons
           const answersDiv = document.createElement("div");
           answersDiv.className = "message-options";
           questionData.answers.forEach((answer) => {
@@ -356,21 +357,21 @@
               messageOptions.forEach((optionDiv) => {
                 optionDiv.remove();
               });
-
-              // Add the user's selection as a message
+                            
+                            // Add the user's selection as a message
               const userMessageDiv = document.createElement("div");
               userMessageDiv.className = "user-message";
-              userMessageDiv.textContent = answer.text;
-              this.chatContainer.appendChild(userMessageDiv);
+                            userMessageDiv.textContent = answer.text;
+                            this.chatContainer.appendChild(userMessageDiv);
 
               // Process the answer and continue the flow
               this.processAnswer(questionData.id, answer.id);
-            });
-            answersDiv.appendChild(button);
-          });
-          this.chatContainer.appendChild(answersDiv);
-          this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
-        }
+                        });
+                        answersDiv.appendChild(button);
+                    });
+                    this.chatContainer.appendChild(answersDiv);
+                    this.scrollToBottom();
+                }
 
         // Get product options for dropdown - can be overridden for specific product types
         getProductOptions(questionData) {
@@ -511,7 +512,7 @@
             }
 
             // Scroll to the bottom of chat
-            this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+                this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
           };
 
           // Handle input changes to filter options
@@ -652,8 +653,8 @@
           // Set up carousel navigation
           this.setupCarouselNavigation(leftArrow, rightArrow, productRecsContainer);
           
-          // Scroll to bottom of container
-          this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+          // Ensure the latest content is visible
+          this.scrollToBottom();
           
           return recsDiv;
         }
@@ -696,28 +697,29 @@
           
           // Update arrow visibility on scroll
           container.addEventListener('scroll', updateArrowVisibility);
-        }
+            }
 
-        processAnswer(questionId, answerId, additionalData = null) {
+            processAnswer(questionId, answerId, additionalData = null) {
           if (!this.chatbot) return;
 
-          try {
-            // Pass the additional data to processAnswer if it exists
-            const result = additionalData
+                try {
+                    // Pass the additional data to processAnswer if it exists
+                    const result = additionalData 
               ? this.chatbot.processAnswer(questionId, answerId, additionalData)
               : this.chatbot.processAnswer(questionId, answerId);
 
-            if (result === null) {
+                    if (result === null) {
               const endDiv = document.createElement("div");
               endDiv.className = "system-message";
               endDiv.textContent =
                 'Conversation ended. Click "Restart" to begin again or go back to select another option.';
               this.chatContainer.appendChild(endDiv);
-            } else {
-              console.log(result);
-              
+              this.scrollToBottom();
+                    } else {
+                        console.log(result);
+                        
               // Check if we have product recommendations to include in the system message
-              if (result.system_options && result.system_options.output_list) {
+                        if (result.system_options && result.system_options.output_list) {
                 // Create a system message that will contain both the question and product recommendations
                 const systemMessageDiv = document.createElement("div");
                 systemMessageDiv.className = "system-message";
@@ -763,13 +765,17 @@
                   });
                   
                   this.chatContainer.appendChild(answersDiv);
+                  this.scrollToBottom();
                 }
               } else {
                 // No recommendations, just display the question normally
                 this.displayQuestion(result.question);
               }
-            }
-          } catch (error) {
+              
+              // Always scroll to the bottom after processing
+              this.scrollToBottom();
+                    }
+                } catch (error) {
             console.error("Process answer error:", error);
             this.showError("Error processing answer: " + error.message);
           }
@@ -783,19 +789,19 @@
           // but we'll keep it for backward compatibility
           if (systemOptions.output_list && !document.querySelector('.product-recommendations')) {
             this.displayProductRecommendations(systemOptions.output_list);
-          }
-        }
+                }
+            }
 
-        async restart() {
-          if (!this.chatContainer) return;
-
+            async restart() {
+                if (!this.chatContainer) return;
+                
           this.chatContainer.innerHTML = "";
-          if (this.currentFlowId) {
-            await this.init(this.currentFlowId);
-          } else {
-            this.collapseCard();
-          }
-        }
+                if (this.currentFlowId) {
+                    await this.init(this.currentFlowId);
+                } else {
+                    this.collapseCard();
+                }
+            }
 
         // Format current date in Romanian
         formatRomanianDate() {
@@ -829,15 +835,25 @@
             this.chatContainer.appendChild(dateHeader);
           }
         }
-      }
 
-      // Initialize the chat on page load
+        // Helper function to scroll to the bottom of the chat
+        scrollToBottom() {
+          if (this.chatContainer) {
+            // Use setTimeout to ensure this happens after DOM updates
+            setTimeout(() => {
+              this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+            }, 100);
+          }
+        }
+        }
+
+        // Initialize the chat on page load
       document.addEventListener("DOMContentLoaded", () => {
         console.log("DOM loaded, creating ChatbotInterface");
         window.chatbotInterface = new ChatbotInterface({
           headerTitle: "Bună ziua! Cu ce vǎ putem ajuta?",
         });
-      });
+        });
     </script>
-  </body>
+</body>
 </html>
