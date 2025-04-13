@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Perfume Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
@@ -229,6 +230,9 @@
           this.cardContainer.style.display = "none";
           this.chatContainer.style.display = "flex";
           
+          // Add class to chat container for mobile style adjustments
+          this.chatWrapper.classList.add("card-expanded");
+          
           // Initialize the chat with the selected flow ID immediately
                     this.init(flowId);
 
@@ -243,6 +247,9 @@
           this.chatHeader.classList.remove("expanded-header");
           this.backButton.style.display = "none";
           this.headerText.textContent = this.config.headerTitle;
+                
+                // Remove expanded class from chat container
+          this.chatWrapper.classList.remove("card-expanded");
                 
                 // Show all cards again
           document.querySelectorAll(".card").forEach((card) => {

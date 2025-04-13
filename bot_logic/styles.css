@@ -347,6 +347,7 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
+  margin: 15px 0 15px;
 }
 
 .carousel-arrow {
@@ -510,6 +511,11 @@ body {
 
 /* Media query for mobile devices (500px or less) */
 @media screen and (max-width: 500px) {
+  .card-container {
+    position: absolute;
+    bottom: -30px;
+  }
+
   .chat-container {
     background: #f4ad54;
     width: 100%;
@@ -522,11 +528,26 @@ body {
     border-radius: 0;
     transform-origin: center;
   }
+  
+  /* Remove orange background when card is expanded */
+  .chat-container.card-expanded {
+    background: linear-gradient(
+      to bottom,
+      #f4ad54 0%,
+      #f4ad54 15%,
+      rgba(255, 255, 255, 1) 45%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  }
+
+  /* Change header to be transparent to show gradient */
+  .chat-container.card-expanded .chat-header {
+    background-color: transparent;
+  }
 
   #chat-messages {
-    height: calc(100% - 150px);
-    margin-top: -130px;
     position: relative;
+    height: 75%;
   }
 
   .chat-container.hidden {
@@ -558,6 +579,15 @@ body {
     transform: translateY(60px);
     padding-bottom: 75px;
     z-index: 1000;
+    background-color: #ffffff;
+  }
+  
+  .chat-header {
+    transition: background-color 0.3s ease-out;
+  }
+  
+  .chat-container.card-expanded .chat-header {
+    background-color: transparent;
   }
 }
 
@@ -571,14 +601,6 @@ body {
 * {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-/* Add this rule to set height only when a card is expanded */
-.card.expanded ~ .chat-container,
-.card.expanding ~ .chat-container,
-.chat-container:has(.card.expanded),
-.chat-container:has(.card.expanding) {
-  height: 600px;
 }
 
 /* Custom dropdown styling */
@@ -681,55 +703,6 @@ body {
 
 .product-recommendations > .product-item:last-child {
   margin-right: 10px;
-}
-
-.perfume-recommendations > .perfume-item:first-child {
-  margin-left: 10px;
-}
-
-.perfume-recommendations > .perfume-item:last-child {
-  margin-right: 10px;
-}
-
-/* Single product view */
-.carousel-container.single-product {
-  padding: 0 15px;
-  box-sizing: border-box;
-}
-
-.product-recommendations.single-product,
-.perfume-recommendations.single-product {
-  justify-content: center;
-  padding-top: 10px;
-}
-
-.product-item.full-width,
-.perfume-item.full-width {
-  min-width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.product-item.full-width .product-image,
-.perfume-item.full-width .perfume-image {
-  height: 220px;
-}
-
-.product-recommendations > .product-item:first-child {
-  margin-left: 10px;
-}
-
-.product-recommendations > .product-item:last-child {
-  margin-right: 10px;
-}
-
-/* Exception for single product view */
-.product-recommendations.single-product > .product-item:first-child,
-.product-recommendations.single-product > .product-item:last-child,
-.perfume-recommendations.single-product > .perfume-item:first-child,
-.perfume-recommendations.single-product > .perfume-item:last-child {
-  margin-left: 0;
-  margin-right: 0;
 }
 
 .perfume-recommendations > .perfume-item:first-child {
