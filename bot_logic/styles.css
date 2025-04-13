@@ -1,0 +1,479 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    width: 400px;
+    position: fixed;
+    bottom: 75px;
+    right: 75px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(244, 173, 84, 1) 50%,
+        rgba(244, 173, 84, 1) 100%
+    );
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+    height: 600px;
+}
+
+.chat-header {
+    background-color: #f4ad54;
+    padding: 32px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.chat-header.expanded-header {
+    padding: 20px;
+    margin-bottom: 0;
+    padding-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.chat-header.expanded-header #header-text {
+    font-size: 14px;
+    color: #000;
+    margin-left: 30px;
+}
+
+.back-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    display: none;
+}
+
+#header-text {
+    color: #fafafa;
+    font-size: 28px;
+    font-weight: 400;
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.card-container {
+    position: relative;
+    width: 400px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 15px 35px 75px 35px;
+    margin-top: -50px;
+    box-shadow: 0px -4px 11px 2px rgba(0, 0, 0, 0.05);
+    transition: padding 0.3s ease, margin-top 0.3s ease,
+        background-color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    padding-top: 25px;
+    margin-top: -60px;
+    box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-title {
+    transform: translateY(-10px);
+}
+
+.card.expanded {
+    height: 400px;
+    background-color: #fff !important;
+    transition: height 0.6s ease-out, padding-bottom 0.6s ease;
+    z-index: 10;
+    position: relative;
+    margin-top: 0;
+    transform-origin: bottom;
+    border-radius: 30px;
+    box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1);
+    padding-top: 15px;
+    padding-bottom: 35px;
+}
+
+.card.expanding {
+    height: 400px;
+    transition: height 0.6s ease-out, background-color 0.6s ease,
+        padding-bottom 0.6s ease;
+    background-color: #fafafa !important;
+    z-index: 10;
+    position: relative;
+    margin-top: 0;
+    transform-origin: bottom;
+    padding-bottom: 35px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-container > .card {
+    display: flex;
+}
+
+#card1, #card2, #card3 {
+    background-color: #fafafa;
+}
+
+.card-header {
+    font-size: 16px;
+}
+
+.chevron-icon {
+    width: 14px;
+    height: 14px;
+    margin-left: auto;
+}
+
+#chat-messages {
+    height: calc(100% - 200px);
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 30px 30px 0 0;
+    margin-top: -50px;
+    box-shadow: 0px -4px 11px 2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    display: none;
+}
+
+.user-message,
+.system-message {
+    margin-bottom: 20px;
+    padding: 20px;
+    font-size: 14px;
+    max-width: 60%;
+}
+
+.user-message {
+    background-color: #167cff;
+    color: #fff;
+    border-radius: 20px 20px 5px 20px;
+    margin-left: auto;
+}
+
+.system-message {
+    background-color: #eeeeee;
+    color: #000;
+    border-radius: 20px 20px 20px 5px;
+}
+
+.question {
+    background-color: #eeeeee;
+    color: #000;
+    border-radius: 20px 20px 20px 5px;
+    padding: 20px;
+    font-size: 14px;
+    max-width: 70%;
+    margin-bottom: 20px;
+}
+
+.message-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 20px 0;
+    width: 70%;
+    margin-left: auto;
+}
+
+.answer-button {
+    background-color: #146fe5;
+    color: white;
+    border: none;
+    border-radius: 11px 11px 0px 11px;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 5px 0;
+    width: 100%;
+}
+
+.answer-button:hover {
+    background-color: #115dbf;
+}
+
+#restart-button {
+    position: fixed;
+    bottom: 20px;
+    right: 500px;
+    padding: 10px 20px;
+    background-color: #f4ad54;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    z-index: 1000;
+}
+
+.chat-toggle-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f4ad54;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.chat-toggle-button:hover {
+    transform: scale(1.05);
+}
+
+.chat-toggle-button img {
+    width: 35px;
+    height: 35px;
+}
+
+.chat-container.hidden {
+    transform: scale(0.1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.chat-assistant-label {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    color: #000;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: width 0.4s ease, padding 0.4s ease;
+    pointer-events: none;
+    z-index: 998;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 60px;
+    padding: 0;
+    text-indent: 60px;
+}
+
+.chat-assistant-label.visible {
+    width: 210px;
+    padding: 0 20px 0 35px;
+    text-indent: 0;
+    justify-content: flex-start;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.error {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.select-container {
+    width: 70%;
+    margin-left: auto;
+}
+
+.select {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 11px 11px 0px 11px;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    background-color: #146fe5;
+    color: white;
+}
+
+.select:focus {
+    outline: none;
+    border-color: #115dbf;
+}
+
+.perfume-recommendation {
+    background-color: #eeeeee;
+    padding: 20px;
+    border-radius: 20px 20px 20px 5px;
+    margin-bottom: 20px;
+    max-width: 75%;
+}
+
+.perfume-recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.perfume-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    margin: 10px 0;
+}
+
+.perfume-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: rgba(244, 173, 84, 0.1);
+}
+
+.perfume-image {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.perfume-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.perfume-name {
+    font-weight: 500;
+    color: #333;
+    flex-grow: 1;
+}
+
+.perfume-name a, .perfume-image a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: color 0.2s;
+}
+
+.perfume-name a:hover {
+    color: #167cff;
+    text-decoration: underline;
+}
+
+#current-date {
+    display: flex;
+    justify-content: center;
+    color: #000;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.chat-content {
+    display: none;
+    margin-top: 10px;
+}
+
+.card.expanded .chat-content {
+    display: block;
+    height: 100%;
+}
+
+/* Media query for mobile devices (500px or less) */
+@media screen and (max-width: 500px) {
+    .chat-container {
+        background: #f4ad54;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: 0;
+        transform-origin: center;
+    }
+    
+    #chat-messages {
+        height: calc(100% - 150px);
+        margin-top: -130px;
+        position: relative;
+    }
+
+    .chat-container.hidden {
+        transform: scale(0);
+    }
+    
+    #restart-button {
+        bottom: 20px;
+        right: 100px;
+    }
+    
+    .card {
+        padding: 15px 35px 175px 35px;
+        margin-top: -130px;
+        transition: all 0.3s ease-out;
+        position: relative;
+    }
+    
+    .card.expanding, .card.expanded {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 60px;
+        height: calc(100vh - 100px);
+        margin-top: 0;
+        border-radius: 30px 30px 0 0;
+        transform: translateY(60px);
+        padding-bottom: 75px;
+        z-index: 1000;
+    }
+} 

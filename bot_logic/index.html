@@ -1,100 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Perfume Chatbot Tester</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        #chat-container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        .question {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        .answer-button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            background-color: #e0e0e0;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: left;
-        }
-        .answer-button:hover {
-            background-color: #d0d0d0;
-        }
-        #restart-button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .history-item {
-            margin: 5px 0;
-            padding: 5px;
-            border-left: 3px solid #4CAF50;
-        }
-        .perfume-recommendation {
-            background-color: #e8f5e9;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        .perfume-item {
-            margin: 10px 0;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-        .error {
-            background-color: #ffebee;
-            color: #c62828;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        .select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .select:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-        .not-listed-button {
-            background-color: #f5f5f5;
-            color: #666;
-            margin-top: 5px;
-        }
-    </style>
+    <title>Perfume Chatbot</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Perfume Chatbot Tester</h1>
-    <button id="restart-button">Restart Conversation</button>
-    <div id="chat-container"></div>
+    <div class="chat-container" id="chat-wrapper">
+        <div class="chat-header">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDEySDVNMTIgMTlMNSAxMkwxMiA1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Back" class="back-icon" id="back-button">
+            <span id="header-text">Perfume Assistant</span>
+        </div>
+        
+        <div class="card-container" id="card-container">
+            <div class="card" id="card1">
+                <div class="card-title">
+                    <div class="card-header">Am o întrebare legată de comanda mea.</div>
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgOUwxMiAxNUwxOCA5IiBzdHJva2U9IiMzMzMzMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" class="chevron-icon">
+                </div>
+                <div class="chat-content" id="chat-content-1"></div>
+            </div>
+            
+            <div class="card" id="card2">
+                <div class="card-title">
+                    <div class="card-header">Vreau sa gasesc cel mai apropiat magazin.</div>
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgOUwxMiAxNUwxOCA5IiBzdHJva2U9IiMzMzMzMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" class="chevron-icon">
+                </div>
+                <div class="chat-content" id="chat-content-2"></div>
+            </div>
+            
+            <div class="card" id="card3">
+                <div class="card-title">
+                    <div class="card-header">Vreau să îmi aleg un parfum.</div>
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgOUwxMiAxNUwxOCA5IiBzdHJva2U9IiMzMzMzMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" class="chevron-icon">
+                </div>
+                <div class="chat-content" id="chat-content-3"></div>
+            </div>
+        </div>
+        
+        <div id="chat-messages"></div>
+    </div>
+    
+    <button id="restart-button">Restart</button>
+    
+    <div class="chat-toggle-button" id="chat-toggle">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDZDMTIuNTUyMyA2IDEzIDUuNTUyMjggMTMgNUMxMyA0LjQ0NzcyIDEyLjU1MjMgNCAxMiA0QzExLjQ0NzcgNCAxMSA0LjQ0NzcyIDExIDVDMTEgNS41NTIyOCAxMS40NDc3IDYgMTIgNloiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTIgMTNDMTIuNTUyMyAxMyAxMyAxMi41NTIzIDEzIDEyQzEzIDExLjQ0NzcgMTIuNTUyMyAxMSAxMiAxMUMxMS40NDc3IDExIDExIDExLjQ0NzcgMTEgMTJDMTEgMTIuNTUyMyAxMS40NDc3IDEzIDEyIDEzWiIgZmlsbD0id2hpdGUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMiAyMEMxMi41NTIzIDIwIDEzIDE5LjU1MjMgMTMgMTlDMTMgMTguNDQ3NyAxMi41NTIzIDE4IDEyIDE4QzExLjQ0NzcgMTggMTEgMTguNDQ3NyAxMSAxOUMxMSAxOS41NTIzIDExLjQ0NzcgMjAgMTIgMjBaIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==" alt="Chat toggle">
+    </div>
+    
+    <div class="chat-assistant-label" id="chat-label">Perfume Assistant</div>
 
     <script type="module">
         import PerfumeChatbot from './dp_flow.js';
@@ -102,7 +55,29 @@
         class ChatbotTester {
             constructor() {
                 this.userId = 'user_' + Date.now();
-                this.chatContainer = document.getElementById('chat-container');
+                this.chatContainer = document.getElementById('chat-messages');
+                this.chatWrapper = document.getElementById('chat-wrapper');
+                this.chatToggle = document.getElementById('chat-toggle');
+                this.chatLabel = document.getElementById('chat-label');
+                this.cardContainer = document.getElementById('card-container');
+                this.headerText = document.getElementById('header-text');
+                this.backButton = document.getElementById('back-button');
+                this.chatHeader = document.querySelector('.chat-header');
+                
+                this.currentFlowId = null;
+                
+                // Map each card to its corresponding question ID and answer ID
+                this.cardMapping = {
+                    '1': {questionId: '1', answerId: '1.1', text: 'Am o întrebare legată de comanda mea.'},
+                    '2': {questionId: '1', answerId: '2.1', text: 'Vreau sa gasesc cel mai apropiat magazin.'},
+                    '3': {questionId: '1', answerId: '3.1', text: 'Vreau să îmi aleg un parfum.'}
+                };
+                
+                this.flowLabels = {
+                    '1': 'Am o întrebare legată de comanda mea.',
+                    '2': 'Vreau sa gasesc cel mai apropiat magazin.',
+                    '3': 'Vreau să îmi aleg un parfum.'
+                };
                 
                 // Check if chat container exists
                 if (!this.chatContainer) {
@@ -111,11 +86,12 @@
                 }
 
                 this.setupEventListeners();
-                this.init();
+                this.initCards();
             }
 
-            async init() {
+            async init(flowId) {
                 try {
+                    this.currentFlowId = flowId;
                     this.showLoading();
                     this.bot = new PerfumeChatbot(this.userId);
                     this.brands_and_models = await this.bot.return_perfumes_brands_and_models();
@@ -124,8 +100,25 @@
                     await this.bot.process_questions('questions.json');
                     
                     this.hideLoading();
-                    const initialQuestion = this.bot.generate_output("1");
+                    
+                    // Get the initial question
+                    const initialQuestion = this.bot.generate_output('1');
+                    
+                    // Display the question first
                     this.displayQuestion(initialQuestion);
+                    
+                    // Then automatically select the corresponding answer based on the flow ID
+                    const mapping = this.cardMapping[flowId];
+                    if (mapping) {
+                        // Add the user's selection as a message
+                        const userMessageDiv = document.createElement('div');
+                        userMessageDiv.className = 'user-message';
+                        userMessageDiv.textContent = mapping.text;
+                        this.chatContainer.appendChild(userMessageDiv);
+                        
+                        // Process the answer
+                        this.processAnswer(mapping.questionId, mapping.answerId);
+                    }
                 } catch (error) {
                     console.error('Initialization error:', error);
                     this.hideLoading();
@@ -133,10 +126,77 @@
                 }
             }
 
+            initCards() {
+                const card1 = document.getElementById('card1');
+                const card2 = document.getElementById('card2');
+                const card3 = document.getElementById('card3');
+                
+                card1.addEventListener('click', () => this.expandCard(card1, '1'));
+                card2.addEventListener('click', () => this.expandCard(card2, '2'));
+                card3.addEventListener('click', () => this.expandCard(card3, '3'));
+                
+                this.backButton.addEventListener('click', () => this.collapseCard());
+            }
+            
+            expandCard(card, flowId) {
+                // Hide other cards
+                document.querySelectorAll('.card').forEach(c => {
+                    if (c !== card) {
+                        c.style.display = 'none';
+                    }
+                });
+                
+                // Expand the clicked card
+                card.classList.add('expanding');
+                
+                // Show back button and update header
+                this.backButton.style.display = 'block';
+                this.chatHeader.classList.add('expanded-header');
+                this.headerText.textContent = this.flowLabels[flowId];
+                
+                // Show chat messages
+                setTimeout(() => {
+                    card.classList.remove('expanding');
+                    card.classList.add('expanded');
+                    this.cardContainer.style.display = 'none';
+                    this.chatContainer.style.display = 'flex';
+                    
+                    // Initialize the chat with the selected flow ID
+                    this.init(flowId);
+                }, 600);
+            }
+            
+            collapseCard() {
+                // Reset UI
+                this.chatContainer.style.display = 'none';
+                this.cardContainer.style.display = 'block';
+                this.chatHeader.classList.remove('expanded-header');
+                this.backButton.style.display = 'none';
+                this.headerText.textContent = 'Perfume Assistant';
+                
+                // Show all cards again
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.display = 'flex';
+                    card.classList.remove('expanded');
+                });
+                
+                // Clear chat messages
+                this.chatContainer.innerHTML = '';
+                this.currentFlowId = null;
+            }
+
             setupEventListeners() {
                 const restartButton = document.getElementById('restart-button');
                 if (restartButton) {
                     restartButton.addEventListener('click', () => this.restart());
+                }
+
+                // Set up chat toggle functionality
+                if (this.chatToggle) {
+                    this.chatToggle.addEventListener('click', () => {
+                        this.chatWrapper.classList.toggle('hidden');
+                        this.chatLabel.classList.toggle('visible');
+                    });
                 }
             }
 
@@ -144,7 +204,7 @@
                 if (!this.chatContainer) return;
                 
                 const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'loading';
+                loadingDiv.className = 'loading system-message';
                 loadingDiv.id = 'loading-indicator';
                 loadingDiv.textContent = 'Loading chatbot...';
                 this.chatContainer.appendChild(loadingDiv);
@@ -163,7 +223,7 @@
                 if (!this.chatContainer) return;
                 
                 const errorDiv = document.createElement('div');
-                errorDiv.className = 'error';
+                errorDiv.className = 'error system-message';
                 errorDiv.textContent = message;
                 this.chatContainer.appendChild(errorDiv);
             }
@@ -182,12 +242,19 @@
                 } else {
                     // Regular answer buttons
                     const answersDiv = document.createElement('div');
+                    answersDiv.className = 'message-options';
                     questionData.answers.forEach(answer => {
                         const button = document.createElement('button');
                         button.className = 'answer-button';
-                        button.textContent = `${answer.id}. ${answer.text}`;
+                        button.textContent = `${answer.text}`;
                         button.addEventListener('click', () => {
                             this.processAnswer(questionData.id, answer.id);
+                            
+                            // Add the user's selection as a message
+                            const userMessageDiv = document.createElement('div');
+                            userMessageDiv.className = 'user-message';
+                            userMessageDiv.textContent = answer.text;
+                            this.chatContainer.appendChild(userMessageDiv);
                         });
                         answersDiv.appendChild(button);
                     });
@@ -203,6 +270,9 @@
                 const recsDiv = document.createElement('div');
                 recsDiv.className = 'perfume-recommendation';
                 recsDiv.innerHTML = '<h3>Recommended Perfumes:</h3>';
+                
+                const perfumeRecsContainer = document.createElement('div');
+                perfumeRecsContainer.className = 'perfume-recommendations';
 
                 // Handle the perfumes object or array
                 const perfumeArray = Array.isArray(perfumes) ? perfumes : Object.values(perfumes);
@@ -211,49 +281,57 @@
                     const perfumeDiv = document.createElement('div');
                     perfumeDiv.className = 'perfume-item';
                     
-                    // Create the name element
-                    const nameElement = document.createElement('strong');
-                    nameElement.textContent = perfume.name;
+                    // Create the image container
+                    const imageContainer = document.createElement('div');
+                    imageContainer.className = 'perfume-image';
                     
-                    // Create the link with image
-                    const linkElement = document.createElement('a');
-                    linkElement.href = perfume.link;
-                    linkElement.target = '_blank'; // Opens link in new tab
+                    // Create the image link
+                    const imageLink = document.createElement('a');
+                    imageLink.href = perfume.link;
+                    imageLink.target = '_blank';
                     
                     // Create the image element
                     const imageElement = document.createElement('img');
                     imageElement.src = perfume.link_pic;
                     imageElement.alt = perfume.name;
-                    imageElement.style.width = '100px';
-                    imageElement.style.height = '100px';
-                    imageElement.style.objectFit = 'cover';
-                    imageElement.style.marginTop = '10px';
                     
-                    // Add the image to the link
-                    linkElement.appendChild(imageElement);
+                    // Add image to link, and link to container
+                    imageLink.appendChild(imageElement);
+                    imageContainer.appendChild(imageLink);
                     
-                    // Add everything to the perfume div
-                    perfumeDiv.appendChild(nameElement);
-                    perfumeDiv.appendChild(document.createElement('br'));
-                    perfumeDiv.appendChild(linkElement);
+                    // Create the name container
+                    const nameContainer = document.createElement('div');
+                    nameContainer.className = 'perfume-name';
                     
-                    // Add the perfume div to the recs div
-                    recsDiv.appendChild(perfumeDiv);
+                    // Create the name link
+                    const nameLink = document.createElement('a');
+                    nameLink.href = perfume.link;
+                    nameLink.target = '_blank';
+                    nameLink.textContent = perfume.name;
+                    
+                    // Add name link to container
+                    nameContainer.appendChild(nameLink);
+                    
+                    // Add both containers to the perfume item
+                    perfumeDiv.appendChild(imageContainer);
+                    perfumeDiv.appendChild(nameContainer);
+                    
+                    // Add the perfume div to the recommendations container
+                    perfumeRecsContainer.appendChild(perfumeDiv);
                 });
 
+                recsDiv.appendChild(perfumeRecsContainer);
                 this.chatContainer.appendChild(recsDiv);
                 this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
             }
 
             displayPerfumeDropdown() {
                 const dropdownContainer = document.createElement('div');
-                dropdownContainer.style.margin = '10px 0';
+                dropdownContainer.className = 'select-container';
 
                 // Create select element
                 const select = document.createElement('select');
-                select.style.width = '100%';
-                select.style.padding = '8px';
-                select.style.marginBottom = '10px';
+                select.className = 'select';
 
                 // Add default option
                 const defaultOption = document.createElement('option');
@@ -278,19 +356,10 @@
                     select.appendChild(unavailableOption);
                 }
 
-                // Add options from brands_and_models
-                this.brands_and_models.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = `${item.brand}-${item.model}`;
-                    option.textContent = `${item.brand} - ${item.model}`;
-                    select.appendChild(option);
-                });
-
                 // Create submit button
                 const submitButton = document.createElement('button');
                 submitButton.className = 'answer-button';
                 submitButton.textContent = 'Submit';
-                submitButton.style.marginTop = '10px';
                 submitButton.disabled = true; // Initially disabled
 
                 // Enable/disable submit button based on selection
@@ -302,6 +371,13 @@
                 submitButton.addEventListener('click', () => {
                     if (select.value) {
                         const [brand, model] = select.value.split('-');
+                        
+                        // Add the user's selection as a message
+                        const userMessageDiv = document.createElement('div');
+                        userMessageDiv.className = 'user-message';
+                        userMessageDiv.textContent = `${brand} - ${model}`;
+                        this.chatContainer.appendChild(userMessageDiv);
+                        
                         this.processAnswer('3.2.1', 'recommendation_model_brand', { brand, model });
                     }
                 });
@@ -310,7 +386,6 @@
                 dropdownContainer.appendChild(submitButton);
                 this.chatContainer.appendChild(dropdownContainer);
             }
-
 
             processAnswer(questionId, answerId, additionalData = null) {
                 if (!this.bot) return;
@@ -323,8 +398,8 @@
 
                     if (result === null) {
                         const endDiv = document.createElement('div');
-                        endDiv.className = 'question';
-                        endDiv.textContent = 'Conversation ended. Click "Restart Conversation" to begin again.';
+                        endDiv.className = 'system-message';
+                        endDiv.textContent = 'Conversation ended. Click "Restart" to begin again or go back to select another option.';
                         this.chatContainer.appendChild(endDiv);
                     } else {
                         // Display the next question
@@ -346,11 +421,15 @@
                 if (!this.chatContainer) return;
                 
                 this.chatContainer.innerHTML = '';
-                await this.init();
+                if (this.currentFlowId) {
+                    await this.init(this.currentFlowId);
+                } else {
+                    this.collapseCard();
+                }
             }
         }
 
-        // Wait for DOM to be fully loaded before initializing
+        // Initialize the chat on page load
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM loaded, creating ChatbotTester');
             window.chatbotTester = new ChatbotTester();
