@@ -523,6 +523,9 @@ body {
   .card-container {
     position: absolute;
     bottom: -30px;
+    width: 100%;
+    padding-bottom: 200px;
+    background-color: #fafafa;
   }
 
   .chat-container {
@@ -540,6 +543,7 @@ body {
     transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
       background 0.3s ease-out;
     will-change: transform;
+    box-shadow: none;
   }
 
   /* Remove orange background when card is expanded */
