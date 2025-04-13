@@ -217,27 +217,21 @@
             }
           });
 
-          // Expand the clicked card
-          card.classList.add("expanding");
-
           // Show back button and update header
           this.backButton.style.display = "block";
           this.chatHeader.classList.add("expanded-header");
           this.headerText.textContent =
             this.flowLabels[flowId] || this.config.headerTitle;
 
-          // Show chat messages
-          setTimeout(() => {
-            card.classList.remove("expanding");
-            card.classList.add("expanded");
-            this.cardContainer.style.display = "none";
+          // Make chat messages container visible immediately
+          this.cardContainer.style.display = "none";
+          this.chatContainer.style.display = "flex";
+          
+          // Initialize the chat with the selected flow ID immediately
+          this.init(flowId);
 
-            // Make sure chat messages container is visible
-            this.chatContainer.style.display = "flex";
-
-            // Initialize the chat with the selected flow ID
-            this.init(flowId);
-          }, 600);
+          // Add expanded class to the card without animation delay
+          card.classList.add("expanded");
         }
 
         collapseCard() {
