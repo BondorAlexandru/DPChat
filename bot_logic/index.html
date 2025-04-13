@@ -301,8 +301,9 @@
           const loadingDiv = document.createElement("div");
           loadingDiv.className = "loading system-message";
           loadingDiv.id = "loading-indicator";
-          loadingDiv.textContent = "Loading...";
-                this.chatContainer.appendChild(loadingDiv);
+          loadingDiv.textContent = "...";
+          this.chatContainer.appendChild(loadingDiv);
+          this.scrollToBottom();
             }
 
             hideLoading() {
@@ -312,6 +313,18 @@
                 if (loadingDiv) {
                     loadingDiv.remove();
                 }
+                
+                // Also remove any typing indicators
+                this.hideTypingIndicator();
+            }
+
+            hideTypingIndicator() {
+              if (!this.chatContainer) return;
+              
+              const typingIndicator = document.getElementById("typing-indicator");
+              if (typingIndicator) {
+                typingIndicator.remove();
+              }
             }
 
             showError(message) {
@@ -347,10 +360,10 @@
         displayStandardQuestion(questionData) {
           const questionDiv = document.createElement("div");
           questionDiv.className = "question";
-                questionDiv.textContent = questionData.text;
-                this.chatContainer.appendChild(questionDiv);
+          questionDiv.textContent = questionData.text;
+          this.chatContainer.appendChild(questionDiv);
 
-                    // Regular answer buttons
+          // Regular answer buttons
           const answersDiv = document.createElement("div");
           answersDiv.className = "message-options";
           questionData.answers.forEach((answer) => {
@@ -365,20 +378,32 @@
                 optionDiv.remove();
               });
                             
-                            // Add the user's selection as a message
+              // Add the user's selection as a message
               const userMessageDiv = document.createElement("div");
               userMessageDiv.className = "user-message";
-                            userMessageDiv.textContent = answer.text;
-                            this.chatContainer.appendChild(userMessageDiv);
+              userMessageDiv.textContent = answer.text;
+              this.chatContainer.appendChild(userMessageDiv);
+              
+              // Scroll to bottom to show user's choice
+              this.scrollToBottom();
 
-              // Process the answer and continue the flow
-              this.processAnswer(questionData.id, answer.id);
-                        });
-                        answersDiv.appendChild(button);
-                    });
-                    this.chatContainer.appendChild(answersDiv);
-                    this.scrollToBottom();
-                }
+              // Show typing indicator
+              this.showTypingIndicator();
+
+              // Add a delay before processing the answer to make conversation feel more organic
+              setTimeout(() => {
+                // Hide typing indicator before showing the response
+                this.hideTypingIndicator();
+                
+                // Process the answer and continue the flow
+                this.processAnswer(questionData.id, answer.id);
+              }, 500);
+            });
+            answersDiv.appendChild(button);
+          });
+          this.chatContainer.appendChild(answersDiv);
+          this.scrollToBottom();
+        }
 
         // Get product options for dropdown - can be overridden for specific product types
         getProductOptions(questionData) {
@@ -504,9 +529,21 @@
                       userMessageDiv.className = "user-message";
                       userMessageDiv.textContent = option.text;
                       this.chatContainer.appendChild(userMessageDiv);
-
-                      // Process the answer based on the question type
-                      this.handleSpecialQuestionAnswer(questionData.id, option);
+                      
+                      // Scroll to bottom to show user's choice
+                      this.scrollToBottom();
+                      
+                      // Show typing indicator
+                      this.showTypingIndicator();
+                      
+                      // Add a delay before processing to make the conversation feel more organic
+                      setTimeout(() => {
+                        // Hide typing indicator before showing the response
+                        this.hideTypingIndicator();
+                        
+                        // Process the answer based on the question type
+                        this.handleSpecialQuestionAnswer(questionData.id, option);
+                      }, 500);
                     }, 300);
                   });
 
@@ -787,8 +824,20 @@
                       userMessageDiv.textContent = answer.text;
                       this.chatContainer.appendChild(userMessageDiv);
                       
-                      // Process the answer and continue the flow
-                      this.processAnswer(result.question.id, id);
+                      // Scroll to bottom to show the user's choice
+                      this.scrollToBottom();
+                      
+                      // Show typing indicator
+                      this.showTypingIndicator();
+                      
+                      // Add a delay before processing the answer to make conversation feel more organic
+                      setTimeout(() => {
+                        // Hide typing indicator before showing the response
+                        this.hideTypingIndicator();
+                        
+                        // Process the answer and continue the flow
+                        this.processAnswer(result.question.id, id);
+                      }, 500);
                     });
                     answersDiv.appendChild(button);
                   });
@@ -870,9 +919,39 @@
           if (this.chatContainer) {
             // Use setTimeout to ensure this happens after DOM updates
             setTimeout(() => {
-              this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+              this.chatContainer.scrollTo({
+                top: this.chatContainer.scrollHeight,
+                behavior: 'smooth'
+              });
             }, 100);
           }
+        }
+
+        // Show a temporary small loading indicator to simulate typing
+        showTypingIndicator() {
+          if (!this.chatContainer) return;
+          
+          // Remove any existing indicator first
+          this.hideLoading();
+          
+          const loadingDiv = document.createElement("div");
+          loadingDiv.className = "typing-indicator system-message";
+          loadingDiv.id = "typing-indicator";
+          
+          // Create the typing animation dots
+          const dotsContainer = document.createElement("div");
+          dotsContainer.className = "typing-dots";
+          
+          // Add 3 dots for animation
+          for (let i = 0; i < 3; i++) {
+            const dot = document.createElement("span");
+            dot.className = "typing-dot";
+            dotsContainer.appendChild(dot);
+          }
+          
+          loadingDiv.appendChild(dotsContainer);
+          this.chatContainer.appendChild(loadingDiv);
+          this.scrollToBottom();
         }
         }
 
