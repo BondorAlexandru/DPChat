@@ -574,28 +574,42 @@
             this.chatContainer.appendChild(recsDiv);
           }
 
-          // Create a carousel container that will hold the products and navigation
-          const carouselContainer = document.createElement("div");
-          carouselContainer.className = "carousel-container";
-          
-          // Create left arrow navigation
-          const leftArrow = document.createElement("div");
-          leftArrow.className = "carousel-arrow carousel-arrow-left";
-          leftArrow.innerHTML = "&#10094;"; // Left arrow character
-          carouselContainer.appendChild(leftArrow);
-          
-          // Create the products container
-          const productRecsContainer = document.createElement("div");
-          productRecsContainer.className = "product-recommendations";
-
           // Handle the products object or array
           const productArray = Array.isArray(products)
             ? products
             : Object.values(products);
+            
+          // Check if there's only one product
+          const hasSingleProduct = productArray.length === 1;
+
+          // Create a carousel container that will hold the products and navigation
+          const carouselContainer = document.createElement("div");
+          carouselContainer.className = "carousel-container";
+          if (hasSingleProduct) {
+            carouselContainer.classList.add("single-product");
+          }
+          
+          // Create left arrow navigation (only if more than one product)
+          if (!hasSingleProduct) {
+            const leftArrow = document.createElement("div");
+            leftArrow.className = "carousel-arrow carousel-arrow-left";
+            leftArrow.innerHTML = "&#10094;"; // Left arrow character
+            carouselContainer.appendChild(leftArrow);
+          }
+          
+          // Create the products container
+          const productRecsContainer = document.createElement("div");
+          productRecsContainer.className = "product-recommendations";
+          if (hasSingleProduct) {
+            productRecsContainer.classList.add("single-product");
+          }
 
           productArray.forEach((product) => {
             const productDiv = document.createElement("div");
             productDiv.className = "product-item";
+            if (hasSingleProduct) {
+              productDiv.classList.add("full-width");
+            }
 
             // Create the image container
             const imageContainer = document.createElement("div");
@@ -641,17 +655,25 @@
           // Add the products container to the carousel
           carouselContainer.appendChild(productRecsContainer);
           
-          // Create right arrow navigation
-          const rightArrow = document.createElement("div");
-          rightArrow.className = "carousel-arrow carousel-arrow-right";
-          rightArrow.innerHTML = "&#10095;"; // Right arrow character
-          carouselContainer.appendChild(rightArrow);
+          // Create right arrow navigation (only if more than one product)
+          if (!hasSingleProduct) {
+            const rightArrow = document.createElement("div");
+            rightArrow.className = "carousel-arrow carousel-arrow-right";
+            rightArrow.innerHTML = "&#10095;"; // Right arrow character
+            carouselContainer.appendChild(rightArrow);
+          }
           
           // Add carousel to the system message container
           recsDiv.appendChild(carouselContainer);
           
-          // Set up carousel navigation
-          this.setupCarouselNavigation(leftArrow, rightArrow, productRecsContainer);
+          // Set up carousel navigation if we have more than one product
+          if (!hasSingleProduct) {
+            this.setupCarouselNavigation(
+              carouselContainer.querySelector('.carousel-arrow-left'),
+              carouselContainer.querySelector('.carousel-arrow-right'),
+              productRecsContainer
+            );
+          }
           
           // Ensure the latest content is visible
           this.scrollToBottom();

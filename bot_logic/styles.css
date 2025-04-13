@@ -347,7 +347,6 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  margin: 15px 0 15px;
 }
 
 .carousel-arrow {
@@ -587,6 +586,8 @@ body {
   width: 100%;
   position: relative;
   margin-top: 10px;
+  padding-inline: 15px;
+  box-sizing: border-box;
 }
 
 .dropdown-input {
@@ -656,6 +657,7 @@ body {
   color: #000;
   border-radius: 20px 20px 20px 5px;
   padding: 0px;
+  padding-bottom: 20px;
   font-size: 14px;
   max-width: 85%;
   overflow: visible;
@@ -679,6 +681,55 @@ body {
 
 .product-recommendations > .product-item:last-child {
   margin-right: 10px;
+}
+
+.perfume-recommendations > .perfume-item:first-child {
+  margin-left: 10px;
+}
+
+.perfume-recommendations > .perfume-item:last-child {
+  margin-right: 10px;
+}
+
+/* Single product view */
+.carousel-container.single-product {
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.product-recommendations.single-product,
+.perfume-recommendations.single-product {
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.product-item.full-width,
+.perfume-item.full-width {
+  min-width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.product-item.full-width .product-image,
+.perfume-item.full-width .perfume-image {
+  height: 220px;
+}
+
+.product-recommendations > .product-item:first-child {
+  margin-left: 10px;
+}
+
+.product-recommendations > .product-item:last-child {
+  margin-right: 10px;
+}
+
+/* Exception for single product view */
+.product-recommendations.single-product > .product-item:first-child,
+.product-recommendations.single-product > .product-item:last-child,
+.perfume-recommendations.single-product > .perfume-item:first-child,
+.perfume-recommendations.single-product > .perfume-item:last-child {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .perfume-recommendations > .perfume-item:first-child {
