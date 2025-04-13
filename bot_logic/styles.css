@@ -740,8 +740,8 @@ body {
 
 /* Typing indicator */
 .typing-indicator {
-  max-width: 60px;
-  padding: 10px 15px;
+  max-width: 50px;
+  padding: 20px 15px;
   margin-left: 0;
 }
 
@@ -753,8 +753,8 @@ body {
 
 .typing-dot {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: #bbb;
   animation: typingAnimation 1.4s infinite ease-in-out both;
