@@ -24,7 +24,6 @@ body {
     transform-origin: bottom right;
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 1;
-    height: 600px;
 }
 
 .chat-header {
@@ -104,7 +103,7 @@ body {
 }
 
 .card.expanded {
-    height: 400px;
+    height: 600px;
     background-color: #fff !important;
     transition: height 0.6s ease-out, padding-bottom 0.6s ease;
     z-index: 10;
@@ -118,7 +117,7 @@ body {
 }
 
 .card.expanding {
-    height: 400px;
+    height: 600px;
     transition: height 0.6s ease-out, background-color 0.6s ease,
         padding-bottom 0.6s ease;
     background-color: #fafafa !important;
@@ -150,22 +149,21 @@ body {
 }
 
 #chat-messages {
-    height: calc(100% - 200px);
+    height: calc(100% - 100px);
     overflow-y: auto;
     padding: 20px;
+    padding-top: 70px;
     background-color: #fff;
     border-radius: 30px 30px 0 0;
     margin-top: -50px;
     box-shadow: 0px -4px 11px 2px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    display: none;
+    gap: 10px;
 }
 
 .user-message,
 .system-message {
-    margin-bottom: 20px;
     padding: 20px;
     font-size: 14px;
     max-width: 60%;
@@ -179,9 +177,14 @@ body {
 }
 
 .system-message {
-    background-color: #eeeeee;
+    background-color: #f2f3fa;
     color: #000;
     border-radius: 20px 20px 20px 5px;
+    padding: 20px;
+    font-size: 14px;
+    max-width: 70%;
+    margin-bottom: 15px;
+    overflow: visible;
 }
 
 .question {
@@ -191,14 +194,11 @@ body {
     padding: 20px;
     font-size: 14px;
     max-width: 70%;
-    margin-bottom: 20px;
 }
 
 .message-options {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin: 10px 0 20px 0;
     width: 70%;
     margin-left: auto;
 }
@@ -423,7 +423,8 @@ body {
 
 .card.expanded .chat-content {
     display: block;
-    height: 100%;
+    height: 500px;
+    overflow-y: auto;
 }
 
 /* Media query for mobile devices (500px or less) */
@@ -476,4 +477,84 @@ body {
         padding-bottom: 75px;
         z-index: 1000;
     }
+}
+
+/* Hide scrollbars for all elements */
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Add this rule to set height only when a card is expanded */
+.card.expanded ~ .chat-container,
+.card.expanding ~ .chat-container,
+.chat-container:has(.card.expanded),
+.chat-container:has(.card.expanding) {
+    height: 600px;
+}
+
+/* Custom dropdown styling */
+.custom-dropdown-container {
+    width: 100%;
+    position: relative;
+    margin-top: 5px;
+}
+
+.dropdown-input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.dropdown-input:focus {
+    outline: none;
+    border-color: #4776E6;
+    box-shadow: 0 1px 5px rgba(71, 118, 230, 0.2);
+}
+
+.dropdown-list {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-top: 5px;
+    z-index: 100;
+    position: relative;
+}
+
+.dropdown-option {
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.dropdown-option:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown-option.selected {
+    background-color: #4776E6;
+    color: white;
+}
+
+.dropdown-no-result {
+    padding: 15px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
 } 

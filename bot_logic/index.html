@@ -38,7 +38,7 @@
             </div>
         </div>
         
-        <div id="chat-messages"></div>
+        <div id="chat-messages" style="display: none;"></div>
     </div>
     
     <button id="restart-button">Restart</button>
@@ -101,22 +101,13 @@
                     
                     this.hideLoading();
                     
-                    // Get the initial question
-                    const initialQuestion = this.bot.generate_output('1');
+                    // Make sure chat messages container is visible
+                    this.chatContainer.style.display = 'flex';
                     
-                    // Display the question first
-                    this.displayQuestion(initialQuestion);
-                    
-                    // Then automatically select the corresponding answer based on the flow ID
+                    // Get the mapping for this flow
                     const mapping = this.cardMapping[flowId];
                     if (mapping) {
-                        // Add the user's selection as a message
-                        const userMessageDiv = document.createElement('div');
-                        userMessageDiv.className = 'user-message';
-                        userMessageDiv.textContent = mapping.text;
-                        this.chatContainer.appendChild(userMessageDiv);
-                        
-                        // Process the answer
+                        // Process the answer directly without showing the first question
                         this.processAnswer(mapping.questionId, mapping.answerId);
                     }
                 } catch (error) {
@@ -159,6 +150,8 @@
                     card.classList.remove('expanding');
                     card.classList.add('expanded');
                     this.cardContainer.style.display = 'none';
+                    
+                    // Make sure chat messages container is visible
                     this.chatContainer.style.display = 'flex';
                     
                     // Initialize the chat with the selected flow ID
@@ -231,35 +224,43 @@
             displayQuestion(questionData) {
                 if (!this.chatContainer || !questionData) return;
 
+                // Special handling for perfume preference question - skip showing the question
+                if (questionData.id === '3.2.1') {
+                    this.displayPerfumeDropdown();
+                    return;
+                }
+
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question';
                 questionDiv.textContent = questionData.text;
                 this.chatContainer.appendChild(questionDiv);
 
-                // Special handling for perfume preference question
-                if (questionData.id === '3.2.1') {
-                    this.displayPerfumeDropdown();
-                } else {
-                    // Regular answer buttons
-                    const answersDiv = document.createElement('div');
-                    answersDiv.className = 'message-options';
-                    questionData.answers.forEach(answer => {
-                        const button = document.createElement('button');
-                        button.className = 'answer-button';
-                        button.textContent = `${answer.text}`;
-                        button.addEventListener('click', () => {
-                            this.processAnswer(questionData.id, answer.id);
-                            
-                            // Add the user's selection as a message
-                            const userMessageDiv = document.createElement('div');
-                            userMessageDiv.className = 'user-message';
-                            userMessageDiv.textContent = answer.text;
-                            this.chatContainer.appendChild(userMessageDiv);
+                // Regular answer buttons
+                const answersDiv = document.createElement('div');
+                answersDiv.className = 'message-options';
+                questionData.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-button';
+                    button.textContent = `${answer.text}`;
+                    button.addEventListener('click', () => {
+                        // Remove all answer buttons when one is selected
+                        const messageOptions = this.chatContainer.querySelectorAll('.message-options');
+                        messageOptions.forEach(optionDiv => {
+                            optionDiv.remove();
                         });
-                        answersDiv.appendChild(button);
+                        
+                        // Add the user's selection as a message
+                        const userMessageDiv = document.createElement('div');
+                        userMessageDiv.className = 'user-message';
+                        userMessageDiv.textContent = answer.text;
+                        this.chatContainer.appendChild(userMessageDiv);
+                        
+                        // Process the answer and continue the flow
+                        this.processAnswer(questionData.id, answer.id);
                     });
-                    this.chatContainer.appendChild(answersDiv);
-                }
+                    answersDiv.appendChild(button);
+                });
+                this.chatContainer.appendChild(answersDiv);
 
                 this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
             }
@@ -326,65 +327,179 @@
             }
 
             displayPerfumeDropdown() {
+                if (!this.chatContainer) return;
+                
+                // Create a system message container
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'system-message';
+                messageDiv.style.maxWidth = '75%';
+                messageDiv.style.padding = '20px';
+                messageDiv.style.backgroundColor = '#f2f3fa';
+                
+                // Add the message text
+                const textSpan = document.createElement('div');
+                textSpan.textContent = 'Vă rugăm tastați numele parfumului dumneavoastră favorit:';
+                textSpan.style.marginBottom = '15px';
+                messageDiv.appendChild(textSpan);
+                
+                // Create custom dropdown container
                 const dropdownContainer = document.createElement('div');
-                dropdownContainer.className = 'select-container';
-
-                // Create select element
-                const select = document.createElement('select');
-                select.className = 'select';
-
-                // Add default option
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'Select a perfume';
-                defaultOption.disabled = true;
-                defaultOption.selected = true;
-                select.appendChild(defaultOption);
-
-                if (this.brands_and_models && Array.isArray(this.brands_and_models)) {
-                    this.brands_and_models.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = `${item.brand}-${item.model}`;
-                        option.textContent = `${item.brand} - ${item.model}`;
-                        select.appendChild(option);
-                    });
-                } else {
-                    console.warn('No perfume list available');
-                    const unavailableOption = document.createElement('option');
-                    unavailableOption.textContent = 'No perfumes available';
-                    unavailableOption.disabled = true;
-                    select.appendChild(unavailableOption);
-                }
-
-                // Create submit button
-                const submitButton = document.createElement('button');
-                submitButton.className = 'answer-button';
-                submitButton.textContent = 'Submit';
-                submitButton.disabled = true; // Initially disabled
-
-                // Enable/disable submit button based on selection
-                select.addEventListener('change', () => {
-                    submitButton.disabled = !select.value;
-                });
-
-                // Handle submission
-                submitButton.addEventListener('click', () => {
-                    if (select.value) {
-                        const [brand, model] = select.value.split('-');
+                dropdownContainer.className = 'custom-dropdown-container';
+                
+                // Create input for filtering
+                const inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.className = 'dropdown-input';
+                inputField.placeholder = '';
+                inputField.style.width = '100%';
+                inputField.style.padding = '15px';
+                inputField.style.marginBottom = '5px';
+                inputField.style.borderRadius = '20px';
+                inputField.style.border = '1px solid #ddd';
+                inputField.style.fontSize = '14px';
+                
+                // Create dropdown list container
+                const dropdownList = document.createElement('div');
+                dropdownList.className = 'dropdown-list';
+                dropdownList.style.width = '100%';
+                dropdownList.style.maxHeight = '200px';
+                dropdownList.style.overflowY = 'auto';
+                dropdownList.style.backgroundColor = '#fff';
+                dropdownList.style.borderRadius = '20px';
+                dropdownList.style.boxShadow = '0 3px 10px rgba(0,0,0,0.1)';
+                dropdownList.style.display = 'none';
+                
+                // Add input and dropdown to the container
+                dropdownContainer.appendChild(inputField);
+                dropdownContainer.appendChild(dropdownList);
+                
+                // Add the dropdown container to the message
+                messageDiv.appendChild(dropdownContainer);
+                
+                // Add the message to the chat
+                this.chatContainer.appendChild(messageDiv);
+                
+                // Focus on the input field
+                setTimeout(() => inputField.focus(), 100);
+                
+                // Track the selected option
+                let selectedOption = null;
+                
+                // Function to render the options based on filter
+                const renderOptions = (filter = '') => {
+                    // Only show dropdown if filter has content
+                    if (filter.length > 0) {
+                        dropdownList.style.display = 'block';
                         
-                        // Add the user's selection as a message
-                        const userMessageDiv = document.createElement('div');
-                        userMessageDiv.className = 'user-message';
-                        userMessageDiv.textContent = `${brand} - ${model}`;
-                        this.chatContainer.appendChild(userMessageDiv);
+                        dropdownList.innerHTML = '';
+                        let filteredOptions = [];
                         
-                        this.processAnswer('3.2.1', 'recommendation_model_brand', { brand, model });
+                        if (this.brands_and_models && Array.isArray(this.brands_and_models)) {
+                            // Filter brand and model combinations
+                            filteredOptions = this.brands_and_models.filter(item => 
+                                `${item.brand} ${item.model}`.toLowerCase().includes(filter.toLowerCase()) ||
+                                `${item.brand}`.toLowerCase().includes(filter.toLowerCase())
+                            ).map(item => ({
+                                display: `${item.brand} ${item.model}`,
+                                brand: item.brand,
+                                model: item.model
+                            }));
+                        }
+                        
+                        // If there are no matching options
+                        if (filteredOptions.length === 0) {
+                            const noResult = document.createElement('div');
+                            noResult.className = 'dropdown-no-result';
+                            noResult.textContent = 'Niciun rezultat găsit';
+                            noResult.style.padding = '15px';
+                            noResult.style.textAlign = 'center';
+                            noResult.style.color = '#999';
+                            dropdownList.appendChild(noResult);
+                        } else {
+                            // Create filtered options
+                            filteredOptions.forEach(option => {
+                                const optionElement = document.createElement('div');
+                                optionElement.className = 'dropdown-option';
+                                optionElement.textContent = option.display;
+                                optionElement.style.padding = '15px';
+                                optionElement.style.cursor = 'pointer';
+                                optionElement.style.transition = 'background-color 0.2s';
+                                optionElement.style.fontWeight = '500';
+                                optionElement.style.textTransform = 'uppercase';
+                                
+                                // Check if this is the selected option
+                                if (selectedOption && selectedOption.display === option.display) {
+                                    optionElement.style.backgroundColor = '#4776E6';
+                                    optionElement.style.color = 'white';
+                                }
+                                
+                                // Hover effect
+                                optionElement.addEventListener('mouseenter', () => {
+                                    if (!(selectedOption && selectedOption.display === option.display)) {
+                                        optionElement.style.backgroundColor = '#f5f5f5';
+                                    }
+                                });
+                                
+                                optionElement.addEventListener('mouseleave', () => {
+                                    if (!(selectedOption && selectedOption.display === option.display)) {
+                                        optionElement.style.backgroundColor = 'transparent';
+                                    }
+                                });
+                                
+                                // Handle option selection
+                                optionElement.addEventListener('click', () => {
+                                    // Update the selected option
+                                    selectedOption = option;
+                                    
+                                    // Update input field with selected option
+                                    inputField.value = option.display;
+                                    
+                                    // Hide dropdown
+                                    dropdownList.style.display = 'none';
+                                    
+                                    // Remove the dropdown container and add a user message
+                                    setTimeout(() => {
+                                        // Remove the dropdown container
+                                        messageDiv.removeChild(dropdownContainer);
+                                        
+                                        // Add the user's selection as a message
+                                        const userMessageDiv = document.createElement('div');
+                                        userMessageDiv.className = 'user-message';
+                                        userMessageDiv.textContent = option.display;
+                                        this.chatContainer.appendChild(userMessageDiv);
+                                        
+                                        // Process the selection
+                                        this.processAnswer('3.2.1', 'recommendation_model_brand', { 
+                                            brand: option.brand, 
+                                            model: option.model 
+                                        });
+                                    }, 300);
+                                });
+                                
+                                dropdownList.appendChild(optionElement);
+                            });
+                        }
+                    } else {
+                        // Hide dropdown when input is empty
+                        dropdownList.style.display = 'none';
+                    }
+                    
+                    // Scroll to the bottom of chat
+                    this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+                };
+                
+                // Handle input changes to filter options
+                inputField.addEventListener('input', () => renderOptions(inputField.value));
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!dropdownContainer.contains(e.target)) {
+                        dropdownList.style.display = 'none';
                     }
                 });
-
-                dropdownContainer.appendChild(select);
-                dropdownContainer.appendChild(submitButton);
-                this.chatContainer.appendChild(dropdownContainer);
+                
+                // Scroll to the bottom of chat
+                this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
             }
 
             processAnswer(questionId, answerId, additionalData = null) {
