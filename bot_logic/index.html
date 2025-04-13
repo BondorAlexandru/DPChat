@@ -357,6 +357,11 @@
           this.displayStandardQuestion(questionData);
         }
 
+        // Helper function to get a random thinking time between 500ms and 1000ms
+        getRandomThinkingTime() {
+          return Math.floor(Math.random() * 501) + 500; // Random between 500-1000ms
+        }
+
         displayStandardQuestion(questionData) {
           const questionDiv = document.createElement("div");
           questionDiv.className = "question";
@@ -389,6 +394,9 @@
 
               // Show typing indicator
               this.showTypingIndicator();
+              
+              // Get random thinking time
+              const thinkingTime = this.getRandomThinkingTime();
 
               // Add a delay before processing the answer to make conversation feel more organic
               setTimeout(() => {
@@ -397,7 +405,7 @@
                 
                 // Process the answer and continue the flow
                 this.processAnswer(questionData.id, answer.id);
-              }, 500);
+              }, thinkingTime);
             });
             answersDiv.appendChild(button);
           });
@@ -536,6 +544,9 @@
                       // Show typing indicator
                       this.showTypingIndicator();
                       
+                      // Get random thinking time
+                      const thinkingTime = this.getRandomThinkingTime();
+
                       // Add a delay before processing to make the conversation feel more organic
                       setTimeout(() => {
                         // Hide typing indicator before showing the response
@@ -543,7 +554,7 @@
                         
                         // Process the answer based on the question type
                         this.handleSpecialQuestionAnswer(questionData.id, option);
-                      }, 500);
+                      }, thinkingTime);
                     }, 300);
                   });
 
@@ -830,6 +841,9 @@
                       // Show typing indicator
                       this.showTypingIndicator();
                       
+                      // Get random thinking time
+                      const thinkingTime = this.getRandomThinkingTime();
+                      
                       // Add a delay before processing the answer to make conversation feel more organic
                       setTimeout(() => {
                         // Hide typing indicator before showing the response
@@ -837,7 +851,7 @@
                         
                         // Process the answer and continue the flow
                         this.processAnswer(result.question.id, id);
-                      }, 500);
+                      }, thinkingTime);
                     });
                     answersDiv.appendChild(button);
                   });
