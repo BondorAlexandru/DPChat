@@ -6,6 +6,7 @@ body {
 }
 
 .chat-container {
+  height: auto;
   width: 400px;
   position: fixed;
   bottom: 75px;
@@ -27,6 +28,10 @@ body {
   z-index: 999;
   transform: translateY(0);
   will-change: transform, opacity;
+}
+
+.chat-container.card-expanded {
+  height: 600px;
 }
 
 .chat-header {
@@ -196,8 +201,8 @@ body {
 }
 
 .message-text {
-    padding-top: 20px;
-    padding-inline: 20px;
+  padding-top: 20px;
+  padding-inline: 20px;
 }
 
 .answer-button {
@@ -532,10 +537,11 @@ body {
     border-radius: 0;
     transform-origin: bottom center;
     transform: translateY(0);
-    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), background 0.3s ease-out;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+      background 0.3s ease-out;
     will-change: transform;
   }
-  
+
   /* Remove orange background when card is expanded */
   .chat-container.card-expanded {
     background: linear-gradient(
@@ -545,6 +551,7 @@ body {
       rgba(255, 255, 255, 1) 45%,
       rgba(255, 255, 255, 1) 100%
     );
+    height: calc(100% - 100px);
   }
 
   /* Change header to be transparent to show gradient */
@@ -554,7 +561,6 @@ body {
 
   #chat-messages {
     position: relative;
-    height: 75%;
   }
 
   .chat-container.hidden {
@@ -591,7 +597,7 @@ body {
     background-color: #ffffff;
     animation: slideUpCard 0.3s ease forwards;
   }
-  
+
   @keyframes slideUpCard {
     from {
       transform: translateY(100%);
@@ -600,11 +606,11 @@ body {
       transform: translateY(0);
     }
   }
-  
+
   .chat-header {
     transition: background-color 0.3s ease-out;
   }
-  
+
   .chat-container.card-expanded .chat-header {
     background-color: transparent;
   }
@@ -767,7 +773,8 @@ body {
 }
 
 @keyframes typingAnimation {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.7);
     opacity: 0.5;
   }
