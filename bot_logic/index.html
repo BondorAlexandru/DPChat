@@ -558,13 +558,32 @@
           }
         }
 
-        displayProductRecommendations(products) {
+        displayProductRecommendations(products, systemMessageContainer = null) {
           if (!this.chatContainer || !products) return;
 
-          const recsDiv = document.createElement("div");
-          recsDiv.className = "product-recommendation";
-          recsDiv.innerHTML = "<h3>Recommended Products:</h3>";
+          // Create a new system message container if one wasn't provided
+          let recsDiv;
+          if (systemMessageContainer) {
+            // Use the existing system message container
+            recsDiv = systemMessageContainer;
+          } else {
+            // Create a new system message container
+            recsDiv = document.createElement("div");
+            recsDiv.className = "system-message";
+            this.chatContainer.appendChild(recsDiv);
+          }
 
+          // Create a carousel container that will hold the products and navigation
+          const carouselContainer = document.createElement("div");
+          carouselContainer.className = "carousel-container";
+          
+          // Create left arrow navigation
+          const leftArrow = document.createElement("div");
+          leftArrow.className = "carousel-arrow carousel-arrow-left";
+          leftArrow.innerHTML = "&#10094;"; // Left arrow character
+          carouselContainer.appendChild(leftArrow);
+          
+          // Create the products container
           const productRecsContainer = document.createElement("div");
           productRecsContainer.className = "product-recommendations";
 
@@ -580,45 +599,103 @@
             // Create the image container
             const imageContainer = document.createElement("div");
             imageContainer.className = "product-image";
-
-            // Create the image link
-            const imageLink = document.createElement("a");
-            imageLink.href = product.link;
-            imageLink.target = "_blank";
-
-            // Create the image element
-            const imageElement = document.createElement("img");
-            imageElement.src = product.link_pic;
-            imageElement.alt = product.name;
-
-            // Add image to link, and link to container
-            imageLink.appendChild(imageElement);
-            imageContainer.appendChild(imageLink);
-
-            // Create the name container
+            
+            // Set background image instead of creating an img element
+            imageContainer.style.backgroundImage = `url(${product.link_pic})`;
+            
+            // Extract product code from the name (assuming format includes code like A19)
+            const productCode = product.name.split(' ')[0]; // Get first word as code
+            
+            // Create the name/price container
             const nameContainer = document.createElement("div");
             nameContainer.className = "product-name";
+            
+            // Add product code
+            const codeSpan = document.createElement("span");
+            codeSpan.textContent = productCode;
+            nameContainer.appendChild(codeSpan);
+            
+            // Add price (hardcoded as example, update with real price if available)
+            const priceSpan = document.createElement("span");
+            priceSpan.className = "product-price";
+            priceSpan.textContent = "90,00 lei"; 
+            nameContainer.appendChild(priceSpan);
+            
+            // Create add to cart button
+            const addButton = document.createElement("a");
+            addButton.href = product.link;
+            addButton.target = "_blank";
+            addButton.className = "product-add-button";
+            addButton.textContent = "VEZI PRODUS";
 
-            // Create the name link
-            const nameLink = document.createElement("a");
-            nameLink.href = product.link;
-            nameLink.target = "_blank";
-            nameLink.textContent = product.name;
-
-            // Add name link to container
-            nameContainer.appendChild(nameLink);
-
-            // Add both containers to the product item
+            // Add all elements to the product div
             productDiv.appendChild(imageContainer);
             productDiv.appendChild(nameContainer);
+            productDiv.appendChild(addButton);
 
             // Add the product div to the recommendations container
             productRecsContainer.appendChild(productDiv);
           });
-
-          recsDiv.appendChild(productRecsContainer);
-          this.chatContainer.appendChild(recsDiv);
+          
+          // Add the products container to the carousel
+          carouselContainer.appendChild(productRecsContainer);
+          
+          // Create right arrow navigation
+          const rightArrow = document.createElement("div");
+          rightArrow.className = "carousel-arrow carousel-arrow-right";
+          rightArrow.innerHTML = "&#10095;"; // Right arrow character
+          carouselContainer.appendChild(rightArrow);
+          
+          // Add carousel to the system message container
+          recsDiv.appendChild(carouselContainer);
+          
+          // Set up carousel navigation
+          this.setupCarouselNavigation(leftArrow, rightArrow, productRecsContainer);
+          
+          // Scroll to bottom of container
           this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+          
+          return recsDiv;
+        }
+        
+        // Set up carousel navigation with arrow controls
+        setupCarouselNavigation(leftArrow, rightArrow, container) {
+          if (!container || !leftArrow || !rightArrow) return;
+          
+          // Default scroll amount (one product width + gap)
+          const scrollAmount = 195; // 180px product width + 15px gap
+          
+          // Left arrow click handler
+          leftArrow.addEventListener('click', () => {
+            container.scrollBy({
+              left: -scrollAmount,
+              behavior: 'smooth'
+            });
+          });
+          
+          // Right arrow click handler
+          rightArrow.addEventListener('click', () => {
+            container.scrollBy({
+              left: scrollAmount,
+              behavior: 'smooth'
+            });
+          });
+          
+          // Show/hide arrows based on scroll position
+          const updateArrowVisibility = () => {
+            // Show left arrow only if not at the start
+            leftArrow.style.opacity = container.scrollLeft > 0 ? '1' : '0.3';
+            
+            // Show right arrow only if not at the end
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+            rightArrow.style.opacity = container.scrollLeft < maxScrollLeft - 10 ? '1' : '0.3';
+          };
+          
+          // Initial arrow visibility
+          updateArrowVisibility();
+          
+          // Update arrow visibility on scroll
+          container.addEventListener('scroll', updateArrowVisibility);
         }
 
         processAnswer(questionId, answerId, additionalData = null) {
@@ -637,12 +714,60 @@
                 'Conversation ended. Click "Restart" to begin again or go back to select another option.';
               this.chatContainer.appendChild(endDiv);
             } else {
-              // Display the next question
               console.log(result);
-              this.displayQuestion(result.question);
-
-              // Process additional system options
-              this.processSystemOptions(result.system_options);
+              
+              // Check if we have product recommendations to include in the system message
+              if (result.system_options && result.system_options.output_list) {
+                // Create a system message that will contain both the question and product recommendations
+                const systemMessageDiv = document.createElement("div");
+                systemMessageDiv.className = "system-message";
+                
+                // Add question text first
+                const textDiv = document.createElement("div");
+                textDiv.className = "message-text";
+                textDiv.textContent = result.question.text;
+                systemMessageDiv.appendChild(textDiv);
+                
+                // Add the system message to the chat container
+                this.chatContainer.appendChild(systemMessageDiv);
+                
+                // Add product recommendations to the same system message
+                this.displayProductRecommendations(result.system_options.output_list, systemMessageDiv);
+                
+                // Now display any answer options if they exist
+                if (result.question.answers && Object.keys(result.question.answers).length > 0) {
+                  const answersDiv = document.createElement("div");
+                  answersDiv.className = "message-options";
+                  
+                  Object.entries(result.question.answers).forEach(([id, answer]) => {
+                    const button = document.createElement("button");
+                    button.className = "answer-button";
+                    button.textContent = answer.text;
+                    button.addEventListener("click", () => {
+                      // Remove all answer buttons when one is selected
+                      const messageOptions = this.chatContainer.querySelectorAll(".message-options");
+                      messageOptions.forEach((optionDiv) => {
+                        optionDiv.remove();
+                      });
+                      
+                      // Add the user's selection as a message
+                      const userMessageDiv = document.createElement("div");
+                      userMessageDiv.className = "user-message";
+                      userMessageDiv.textContent = answer.text;
+                      this.chatContainer.appendChild(userMessageDiv);
+                      
+                      // Process the answer and continue the flow
+                      this.processAnswer(result.question.id, id);
+                    });
+                    answersDiv.appendChild(button);
+                  });
+                  
+                  this.chatContainer.appendChild(answersDiv);
+                }
+              } else {
+                // No recommendations, just display the question normally
+                this.displayQuestion(result.question);
+              }
             }
           } catch (error) {
             console.error("Process answer error:", error);
@@ -653,13 +778,12 @@
         // Process various system option types
         processSystemOptions(systemOptions) {
           if (!systemOptions) return;
-
-          // Check for product recommendations
-          if (systemOptions.output_list) {
+          
+          // This function is now handled in processAnswer for a more integrated approach
+          // but we'll keep it for backward compatibility
+          if (systemOptions.output_list && !document.querySelector('.product-recommendations')) {
             this.displayProductRecommendations(systemOptions.output_list);
           }
-
-          // Add additional system option handling here as needed
         }
 
         async restart() {
