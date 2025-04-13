@@ -22,8 +22,11 @@ body {
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transform-origin: bottom right;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s ease;
   opacity: 1;
+  z-index: 999;
+  transform: translateY(0);
+  will-change: transform, opacity;
 }
 
 .chat-header {
@@ -262,9 +265,10 @@ body {
 }
 
 .chat-container.hidden {
-  transform: scale(0.1);
+  transform: translateY(100%);
   opacity: 0;
   pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
 }
 
 .chat-assistant-label {
@@ -526,7 +530,10 @@ body {
     bottom: 0;
     left: 0;
     border-radius: 0;
-    transform-origin: center;
+    transform-origin: bottom center;
+    transform: translateY(0);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), background 0.3s ease-out;
+    will-change: transform;
   }
   
   /* Remove orange background when card is expanded */
@@ -551,7 +558,9 @@ body {
   }
 
   .chat-container.hidden {
-    transform: scale(0);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s ease;
   }
 
   #restart-button {
@@ -576,10 +585,20 @@ body {
     height: calc(100vh - 100px);
     margin-top: 0;
     border-radius: 30px 30px 0 0;
-    transform: translateY(60px);
+    transform: translateY(0);
     padding-bottom: 75px;
     z-index: 1000;
     background-color: #ffffff;
+    animation: slideUpCard 0.3s ease forwards;
+  }
+  
+  @keyframes slideUpCard {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
   
   .chat-header {
