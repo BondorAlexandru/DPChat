@@ -47,6 +47,7 @@ body {
   margin-bottom: 0;
   padding-bottom: 15px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .chat-header.expanded-header #header-text {

@@ -268,6 +268,16 @@
             restartButton.addEventListener("click", () => this.restart());
                 }
 
+                // Make the entire header clickable when expanded
+                if (this.chatHeader) {
+                  this.chatHeader.addEventListener("click", (e) => {
+                    // Only collapse when the header is in expanded mode
+                    if (this.chatHeader.classList.contains("expanded-header")) {
+                      this.collapseCard();
+                    }
+                  });
+                }
+
                 // Set up chat toggle functionality
                 if (this.chatToggle) {
             const toggleIcon = document.getElementById("toggle-icon");
