@@ -12,7 +12,7 @@
     <div class="chat-container" id="chat-wrapper">
       <div class="chat-header">
         <img
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDEySDVNMTIgMTlMNSAxMkwxMiA1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K"
+          src="../img/icons/chevronLeft.svg"
           alt="Back"
           class="back-icon"
           id="back-button"
@@ -177,6 +177,9 @@
 
             this.hideLoading();
 
+            // Add today's date at the top of the conversation
+            this.addDateHeader();
+
             // Make sure chat messages container is visible
             this.chatContainer.style.display = "flex";
 
@@ -220,8 +223,7 @@
           // Show back button and update header
           this.backButton.style.display = "block";
           this.chatHeader.classList.add("expanded-header");
-          this.headerText.textContent =
-            this.flowLabels[flowId] || this.config.headerTitle;
+          this.headerText.textContent = "Meniul principal";
 
           // Make chat messages container visible immediately
           this.cardContainer.style.display = "none";
@@ -668,6 +670,39 @@
             await this.init(this.currentFlowId);
           } else {
             this.collapseCard();
+          }
+        }
+
+        // Format current date in Romanian
+        formatRomanianDate() {
+          const today = new Date();
+          const day = today.getDate();
+          
+          const months = [
+            "IANUARIE", "FEBRUARIE", "MARTIE", "APRILIE", "MAI", "IUNIE",
+            "IULIE", "AUGUST", "SEPTEMBRIE", "OCTOMBRIE", "NOIEMBRIE", "DECEMBRIE"
+          ];
+          
+          const month = months[today.getMonth()];
+          const year = today.getFullYear();
+          
+          return `${day} ${month} ${year}`;
+        }
+        
+        // Add date header to the conversation
+        addDateHeader() {
+          if (!this.chatContainer) return;
+          
+          // Create date header element
+          const dateHeader = document.createElement("div");
+          dateHeader.className = "date-header";
+          dateHeader.textContent = this.formatRomanianDate();
+          
+          // Add to the beginning of the chat container
+          if (this.chatContainer.firstChild) {
+            this.chatContainer.insertBefore(dateHeader, this.chatContainer.firstChild);
+          } else {
+            this.chatContainer.appendChild(dateHeader);
           }
         }
       }
