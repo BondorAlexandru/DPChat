@@ -110,10 +110,14 @@
               type: "productDropdown",
               dataProvider: "getProductOptions",
             },
-            2.1: {
+            "2.1": {
               type: "locationDropdown",
               dataProvider: "getLocationOptions",
             },
+            "2.2.1": {
+              type: "locationDropdown",
+              dataProvider: "getLocationOptions",
+            }
           };
                 
                 // Map each card to its corresponding question ID and answer ID
@@ -682,7 +686,7 @@
             
             // Set background image instead of creating an img element
             imageContainer.style.backgroundImage = `url(${product.link_pic})`;
-            
+
             // Extract product code from the name (assuming format includes code like A19)
             const productCode = product.name.split(' ')[0]; // Get first word as code
             
@@ -799,7 +803,7 @@
               const endDiv = document.createElement("div");
               endDiv.className = "system-message";
               endDiv.textContent =
-                'Conversation ended. Click "Restart" to begin again or go back to select another option.';
+                'Conversație încheiată. Va mulțumim!';
               this.chatContainer.appendChild(endDiv);
               this.scrollToBottom();
                     } else {
@@ -853,7 +857,7 @@
                       
                       // Get random thinking time
                     //   const thinkingTime = this.getRandomThinkingTime();
-                      const thinkingTime = 10000000;
+                      const thinkingTime = 1000;
                       
                       // Add a delay before processing the answer to make conversation feel more organic
                       setTimeout(() => {
