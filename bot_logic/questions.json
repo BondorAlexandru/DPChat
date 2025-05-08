@@ -3,15 +3,15 @@
         "1": {
             "text": "Bună ziua! Cu ce vă putem ajuta?",
             "answers": {
-                "1.1": {
+                "3.1": {
                   "text": "Vreau să îmi aleg un parfum.",
                   "nextQuestion": "3.1"
                 },
-                "2.1": {
+                "1.1": {
                     "text": "Am o întrebare legată de comanda mea.",
                     "nextQuestion": "1.1"
                 },
-                "3.1": {
+                "2.1": {
                     "text": "Vreau sa gasesc cel mai apropiat magazin.",
                     "nextQuestion": "2.1"
                 }
