@@ -649,7 +649,7 @@
             }
         },
         "3.5.1": {
-            "text": "Ati ales **Dulce**, care aroma va defineste cel mai bine alegerea?",
+            "text": "Ati ales Dulce, care aroma va defineste cel mai bine alegerea?",
             "answers": {
                 "1": {
                     "text": "Fructat",
@@ -670,7 +670,7 @@
             }
         },
         "3.5.2": {
-            "text": "Ati ales **Proaspat**, care aroma va defineste cel mai bine alegerea?",
+            "text": "Ati ales Proaspat, care aroma va defineste cel mai bine alegerea?",
             "answers": {
                 "1": {
                     "text": "Citric",
@@ -687,7 +687,7 @@
             }
         },
         "3.5.3": {
-            "text": "Ati ales **Deep**, care aroma va defineste cel mai bine alegerea?",
+            "text": "Ati ales Deep, care aroma va defineste cel mai bine alegerea?",
             "answers": {
                 "1": {
                     "text": "Lemnos",
@@ -704,7 +704,7 @@
             }
         },
         "3.5.4": {
-            "text": "Ati ales **Spice**, care aroma va defineste cel mai bine alegerea?",
+            "text": "Ati ales Spice, care aroma va defineste cel mai bine alegerea?",
             "answers": {
                 "1": {
                     "text": "Aromatic",

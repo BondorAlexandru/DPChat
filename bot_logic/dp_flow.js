@@ -136,18 +136,27 @@ export default class PerfumeChatbot {
      * @returns {List} A list of dictionaries with brand and model
      */
     async return_perfumes_brands_and_models() {
-        const data = await this.process_csv('parfumuri.csv');  
-        this.perfumes_brands_and_models = data.map(row => ({
-            brand: row.Brand,
-            model: row.Model,
-            perfume_match: row.Nume_Produs,
-            timp: row.Timp,
-            sex: row.Sex,
-            aroma_1: row.Aroma,
-            aroma_2: row.AromaSecundara,
-            intensitate: row.Intensitate,
-            link: row.link
-        }));
+        const data = await this.process_csv('parfumuri.csv');
+        const seenModels = new Set();
+        
+        this.perfumes_brands_and_models = data
+            .filter(row => {
+                if (seenModels.has(row.Model)) return false;
+                seenModels.add(row.Model);
+                return true;
+            })
+            .map(row => ({
+                brand: row.Brand,
+                model: row.Model,
+                perfume_match: row.Nume_Produs,
+                timp: row.Timp,
+                sex: row.Sex,
+                aroma_1: row.Aroma,
+                aroma_2: row.AromaSecundara,
+                intensitate: row.Intensitate,
+                link: row.link
+            }));
+
         this.perfumes_candidates = this.perfumes_brands_and_models;
         return this.perfumes_brands_and_models;
     }
