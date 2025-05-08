@@ -455,150 +455,113 @@
           }));
         }
 
-        // Generic dropdown display for any type of data
         displayCustomDropdown(questionData, options) {
-          if (!this.chatContainer || !options) return;
+  if (!this.chatContainer || !options) return;
 
-          // Create a system message container
-          const messageDiv = document.createElement("div");
-          messageDiv.className = "system-message";
+  // Create a system message container
+  const messageDiv = document.createElement("div");
+  messageDiv.className = "system-message";
 
-          // Add the message text
-          const textSpan = document.createElement("div");
-          textSpan.className = "message-text";
-          textSpan.textContent = questionData.text;
-          messageDiv.appendChild(textSpan);
+  // Add the message text
+  const textSpan = document.createElement("div");
+  textSpan.className = "message-text";
+  textSpan.textContent = questionData.text;
+  messageDiv.appendChild(textSpan);
 
-          // Create custom dropdown container
-          const dropdownContainer = document.createElement("div");
-          dropdownContainer.className = "custom-dropdown-container";
+  // Create custom dropdown container
+  const dropdownContainer = document.createElement("div");
+  dropdownContainer.className = "custom-dropdown-container";
 
-          // Create input for filtering
-          const inputField = document.createElement("input");
-          inputField.type = "text";
-          inputField.className = "dropdown-input";
-          inputField.placeholder = "";
+  // Create input for filtering
+  const inputField = document.createElement("input");
+  inputField.type = "text";
+  inputField.className = "dropdown-input";
+  inputField.placeholder = "";
 
-          // Create dropdown list container
-          const dropdownList = document.createElement("div");
-          dropdownList.className = "dropdown-list";
+  // Create dropdown list container
+  const dropdownList = document.createElement("div");
+  dropdownList.className = "dropdown-list";
 
-          // Add input and dropdown to the container
-          dropdownContainer.appendChild(inputField);
-          dropdownContainer.appendChild(dropdownList);
+  dropdownContainer.appendChild(inputField);
+  dropdownContainer.appendChild(dropdownList);
+  messageDiv.appendChild(dropdownContainer);
+  this.chatContainer.appendChild(messageDiv);
 
-          // Add the dropdown container to the message
-          messageDiv.appendChild(dropdownContainer);
+  setTimeout(() => inputField.focus(), 100);
 
-          // Add the message to the chat
-          this.chatContainer.appendChild(messageDiv);
+  let selectedOption = null;
 
-          // Focus on the input field
-          setTimeout(() => inputField.focus(), 100);
+  const renderOptions = (filter = "") => {
+    dropdownList.classList.add("active");
+    dropdownList.innerHTML = "";
 
-          // Track the selected option
-          let selectedOption = null;
+    const filteredOptions = options.filter((option) =>
+      option.text.toLowerCase().includes(filter.toLowerCase())
+    );
 
-          // Function to render the options based on filter
-          const renderOptions = (filter = "") => {
-            // Only show dropdown if filter has content
-            if (filter.length > 0) {
-              dropdownList.classList.add("active");
+    if (filteredOptions.length === 0) {
+      const noResult = document.createElement("div");
+      noResult.className = "dropdown-no-result";
+      noResult.textContent = "Niciun rezultat găsit";
+      dropdownList.appendChild(noResult);
+    } else {
+      filteredOptions.forEach((option) => {
+        const optionElement = document.createElement("div");
+        optionElement.className = "dropdown-option";
+        optionElement.textContent = option.text;
 
-              dropdownList.innerHTML = "";
-
-              // Filter options based on text
-              const filteredOptions = options.filter((option) =>
-                option.text.toLowerCase().includes(filter.toLowerCase())
-              );
-
-              // If there are no matching options
-              if (filteredOptions.length === 0) {
-                const noResult = document.createElement("div");
-                noResult.className = "dropdown-no-result";
-                noResult.textContent = "Niciun rezultat găsit";
-                dropdownList.appendChild(noResult);
-              } else {
-                // Create filtered options
-                filteredOptions.forEach((option) => {
-                  const optionElement = document.createElement("div");
-                  optionElement.className = "dropdown-option";
-                  optionElement.textContent = option.text;
-
-                  // Check if this is the selected option
-                  if (selectedOption && selectedOption.id === option.id) {
-                    optionElement.classList.add("selected");
-                  }
-
-                  // Handle option selection
-                  optionElement.addEventListener("click", () => {
-                    // Update the selected option
-                    selectedOption = option;
-
-                    // Update input field with selected option
-                    inputField.value = option.text;
-
-                    // Hide dropdown
-                    dropdownList.classList.remove("active");
-
-                    // Add the user's selection as a message and process it
-                    setTimeout(() => {
-                      // Remove the dropdown container
-                      messageDiv.removeChild(dropdownContainer);
-
-                      // Add the user's selection as a message
-                      const userMessageDiv = document.createElement("div");
-                      userMessageDiv.className = "user-message";
-                      userMessageDiv.textContent = option.text;
-                      this.chatContainer.appendChild(userMessageDiv);
-                      
-                      // Scroll to bottom to show user's choice
-                      this.scrollToBottom();
-                      
-                      // Show typing indicator
-                      this.showTypingIndicator();
-                      
-                      // Get random thinking time
-                      const thinkingTime = this.getRandomThinkingTime();
-
-                      // Add a delay before processing to make the conversation feel more organic
-                      setTimeout(() => {
-                        // Hide typing indicator before showing the response
-                        this.hideTypingIndicator();
-                        
-                        // Process the answer based on the question type
-                        this.handleSpecialQuestionAnswer(questionData.id, option);
-                      }, thinkingTime);
-                    }, 300);
-                  });
-
-                  dropdownList.appendChild(optionElement);
-                });
-              }
-            } else {
-              // Hide dropdown when input is empty
-              dropdownList.classList.remove("active");
-            }
-
-            // Scroll to the bottom of chat
-                this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
-          };
-
-          // Handle input changes to filter options
-          inputField.addEventListener("input", () =>
-            renderOptions(inputField.value)
-          );
-
-          // Close dropdown when clicking outside
-          document.addEventListener("click", (e) => {
-            if (!dropdownContainer.contains(e.target)) {
-              dropdownList.classList.remove("active");
-            }
-          });
-
-          // Scroll to the bottom of chat
-          this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+        if (selectedOption && selectedOption.id === option.id) {
+          optionElement.classList.add("selected");
         }
+
+        optionElement.addEventListener("click", () => {
+          selectedOption = option;
+          inputField.value = option.text;
+          dropdownList.classList.remove("active");
+
+          setTimeout(() => {
+            messageDiv.removeChild(dropdownContainer);
+
+            const userMessageDiv = document.createElement("div");
+            userMessageDiv.className = "user-message";
+            userMessageDiv.textContent = option.text;
+            this.chatContainer.appendChild(userMessageDiv);
+
+            this.scrollToBottom();
+            this.showTypingIndicator();
+
+            const thinkingTime = this.getRandomThinkingTime();
+            setTimeout(() => {
+              this.hideTypingIndicator();
+              this.handleSpecialQuestionAnswer(questionData.id, option);
+            }, thinkingTime);
+          }, 300);
+        });
+
+        dropdownList.appendChild(optionElement);
+      });
+    }
+
+    this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+  };
+
+  // 👇 Only auto-show dropdown if it's question 2.1 or 2.2.1
+  if (["2.1", "2.2.1"].includes(questionData.id)) {
+    renderOptions("");
+  }
+
+  inputField.addEventListener("input", () =>
+    renderOptions(inputField.value)
+  );
+
+  document.addEventListener("click", (e) => {
+    if (!dropdownContainer.contains(e.target)) {
+      dropdownList.classList.remove("active");
+    }
+  });
+
+  this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
+}
 
         // Handle answers for special question types
         handleSpecialQuestionAnswer(questionId, option) {
