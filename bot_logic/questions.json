@@ -33,63 +33,63 @@
             },
             "answers": {
               "2.2.1": {
-                "text": "Bucuresti.",
+                "text": "Bucuresti",
                 "nextQuestion": "2.2.1"
               },
               "2.2.2": {
-                "text": "Argeș.",
+                "text": "Argeș",
                 "nextQuestion": "2.2.2"
               },
               "2.2.3": {
-                "text": "Braila.",
+                "text": "Braila",
                 "nextQuestion": "2.2.3"
               },
               "2.2.4": {
-                "text": "Brașov.",
+                "text": "Brașov",
                 "nextQuestion": "2.2.4"
               },
               "2.2.5": {
-                "text": "Buzău.",
+                "text": "Buzău",
                 "nextQuestion": "2.2.5"
               },
               "2.2.6": {
-                "text": "Cluj.",
+                "text": "Cluj",
                 "nextQuestion": "2.2.6"
               },
               "2.2.7": {
-                "text": "Constanța.",
+                "text": "Constanța",
                 "nextQuestion": "2.2.7"
               },
               "2.2.8": {
-                "text": "Dolj.",
+                "text": "Dolj",
                 "nextQuestion": "2.2.8"
               },
               "2.2.9": {
-                "text": "Galaţi.",
+                "text": "Galaţi",
                 "nextQuestion": "2.2.9"
               },
               "2.2.10": {
-                "text": "Hunedoara.",
+                "text": "Hunedoara",
                 "nextQuestion": "2.2.10"
               },
               "2.2.11": {
-                "text": "Iași.",
+                "text": "Iași",
                 "nextQuestion": "2.2.11"
               },
               "2.2.12": {
-                "text": "Ilfov.",
+                "text": "Ilfov",
                 "nextQuestion": "2.2.12"
               },
               "2.2.13": {
-                "text": "Olt.",
+                "text": "Olt",
                 "nextQuestion": "2.2.13"
               },
               "2.2.14": {
-                "text": "Prahova.",
+                "text": "Prahova",
                 "nextQuestion": "2.2.14"
               },
               "2.2.15": {
-                "text": "Vâlcea.",
+                "text": "Vâlcea",
                 "nextQuestion": "2.2.15"
               }
             }
