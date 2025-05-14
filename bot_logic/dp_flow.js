@@ -42,8 +42,13 @@ export default class PerfumeChatbot {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            const generated = await this.generateQuestionnaireJson();
+
             const data = await response.json();
-            this.questions = data.questions;
+            this.questions = {
+                ...data.questions,
+                ...generated
+            };
         } catch (error) {
             throw new Error(`Error loading questions: ${error.message}`);
         }
@@ -129,6 +134,87 @@ export default class PerfumeChatbot {
         }
     }   
 
+    /**
+ * Given CSV text with headers [Nume magazin,Oras,Adresa,Nr telefon],
+ * build the nested JSON structure.
+ */
+    async generateQuestionnaireJson(csvFile = 'MAGAZINE-D&P.csv') {
+        // 1) Grab the array of row-objects
+        const rows = await this.process_csv(csvFile);
+        if (!rows.length) return {};
+      
+        // 2) Group by city
+        const byCity = rows.reduce((acc, row) => {
+          const city = row.Oras;
+          if (!acc[city]) acc[city] = [];
+          acc[city].push({
+            name: row['Nume magazin'],
+            address: row.Adresa,
+            phone: row['Nr telefon']
+          });
+          return acc;
+        }, {});
+      
+        // 3) Build the questions JSON
+        const result = {};
+      
+        // 3a) “Select city” question
+        const cities = Object.keys(byCity);
+        result['2.1'] = {
+          text: "Selectează orașul în care vă aflați",
+          system_options: { input_list: cities },
+          answers: {}
+        };
+      
+        // 3b) For each city...
+        cities.forEach((city, i) => {
+          const cityId = `2.2.${i+1}`;
+          const stores = byCity[city];
+      
+          if (stores.length === 1) {
+            // Only one store: go straight to contact
+            const storeId = `${cityId}.1`;
+            result['2.1'].answers[cityId] = {
+              text: city,
+              nextQuestion: storeId
+            };
+            result[storeId] = {
+              text: `Pentru a ne contacta la magazinul ${stores[0].name} din ${stores[0].address}, vă rugăm apelați ${stores[0].phone}.`,
+              answers: {
+                "1": { text: "Am înțeles", nextQuestion: "end" }
+              }
+            };
+      
+          } else {
+            // Multiple stores: ask which one
+            result['2.1'].answers[cityId] = {
+              text: city,
+              nextQuestion: cityId
+            };
+            result[cityId] = {
+              text: `Selectați magazinul din ${city} care vă interesează`,
+              system_options: { input_list: stores.map(s => s.name) },
+              answers: {}
+            };
+      
+            stores.forEach((s, j) => {
+              const storeId = `${cityId}.${j+1}`;
+              result[cityId].answers[storeId] = {
+                text: s.name,
+                nextQuestion: storeId
+              };
+              result[storeId] = {
+                text: `Pentru a ne contacta la magazinul ${s.name} din ${s.address}, vă rugăm apelați ${s.phone}.`,
+                answers: {
+                  "1": { text: "Am înțeles", nextQuestion: "end" }
+                }
+              };
+            });
+          }
+        });
+      
+        return result;
+      }
 
     /**
      * Returns a list of perfumes brands and models for user to type it and 
