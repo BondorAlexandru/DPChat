@@ -181,7 +181,7 @@ export default class PerfumeChatbot {
             result[storeId] = {
               text: `Pentru a ne contacta la magazinul ${stores[0].name} din ${stores[0].address}, vă rugăm apelați ${stores[0].phone}.`,
               answers: {
-                "1": { text: "Am înțeles", nextQuestion: "end" }
+                "1": { text: "Mulțumesc", nextQuestion: "end" }
               }
             };
       
@@ -206,7 +206,7 @@ export default class PerfumeChatbot {
               result[storeId] = {
                 text: `Pentru a ne contacta la magazinul ${s.name} din ${s.address}, vă rugăm apelați ${s.phone}.`,
                 answers: {
-                  "1": { text: "Am înțeles", nextQuestion: "end" }
+                  "1": { text: "Mulțumesc", nextQuestion: "end" }
                 }
               };
             });
