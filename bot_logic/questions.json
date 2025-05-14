@@ -1,7 +1,7 @@
 {
     "questions": {
         "1": {
-            "text": "Bună ziua! Cu ce vă putem ajuta?",
+            "text": "Cu ce vă putem ajuta?",
             "answers": {
                 "3.1": {
                   "text": "Vreau să îmi aleg un parfum.",
@@ -21,7 +21,7 @@
             "text": "Pentru a ne contacta, vă rugăm apelați 0740 520 000 sau lasați-ne un mesaj la adresa de email office@d&p.ro",
             "answers": {
                 "1": {
-                    "text": "Am înțeles",
+                    "text": "Mulțumesc",
                     "nextQuestion": "end"
                 }
             }
@@ -52,7 +52,7 @@
             }
         },
         "3.2.2": {
-            "text": "Pentru cine doriți sa cumparati parfumul:",
+            "text": "Pentru cine doriți sa cumparati parfumul?",
             "answers": {
                 "1": {
                     "text": "Pentru mine",
@@ -209,7 +209,7 @@
             }
         },
         "end": {
-            "text": "Vă mulțumim pentru că ați ales serviciile noastre! Mai putem să vă ajutăm cu ceva?",
+            "text": "Vă mulțumim pentru că ați ales D&P! Vă mai putem ajuta cu ceva?",
             "answers": {
                 "1": {
                     "text": "Da",
@@ -233,7 +233,7 @@
                     "nextQuestion": "1"
                 },
                 "2": {
-                    "text": "Multumesc, asta este tot.",
+                    "text": "Mulțumesc, asta este tot.",
                     "nextQuestion": null
                 }
             }
@@ -249,7 +249,7 @@
                     "nextQuestion": "1"
                 },
                 "2": {
-                    "text": "Multumesc, asta este tot.",
+                    "text": "Mulțumesc, asta este tot.",
                     "nextQuestion": null
                 }
             }
