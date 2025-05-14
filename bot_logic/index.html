@@ -765,8 +765,14 @@
                     if (result === null) {
               const endDiv = document.createElement("div");
               endDiv.className = "system-message";
-              endDiv.textContent =
-                'Conversație încheiată. Vă mulțumim!';
+              
+              // Add message text inside a div with message-text class
+              const textDiv = document.createElement("div");
+              textDiv.className = "message-text";
+              textDiv.textContent = 'Conversație încheiată. Vă mulțumim!';
+              
+              endDiv.appendChild(textDiv);
+
               this.chatContainer.appendChild(endDiv);
               this.scrollToBottom();
                     } else {
