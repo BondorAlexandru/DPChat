@@ -304,7 +304,6 @@ export default class PerfumeChatbot {
                 text: answer.text
             }))
         };
-        console.log(next_question_to_show);
         return next_question_to_show
     }
 
@@ -320,7 +319,6 @@ export default class PerfumeChatbot {
         }
 
         
-        // console.log(question.answers[0])
         let keys_to_preserve = [];
         for (let key in question.answers) {
 
@@ -429,8 +427,6 @@ export default class PerfumeChatbot {
      * @returns {List} Filtered list of perfume names
      */
     filter_out_perfumes(filter, filter_value) {
-       console.log(filter)
-       console.log(filter_value)
 
         const old_candidates = this.perfumes_candidates;
         const new_candidates = [];
@@ -484,8 +480,6 @@ export default class PerfumeChatbot {
                 new_candidates.push(perfume);
             }
         }
-        console.log(old_candidates)
-        console.log(new_candidates)
         this.perfumes_candidates = new_candidates;
         return new_candidates;
     }
@@ -623,9 +617,6 @@ export default class PerfumeChatbot {
         }
         if (answerId == 0)
             answerId = 1;
-        console.log(question);
-        console.log(answerId);
-        console.log(question.answers[answerId]);
 
         const answer = question.answers[answerId] || question.answers["*"];
         if (!answer) {
@@ -648,10 +639,7 @@ export default class PerfumeChatbot {
         // Recommendation of perfumes - last step
         if (this.currentQuestion === "recommendation") {
             this.filters['intensitate'] = answer.text;
-            // const recommendedPerfumes = this.select_perfumes();
             const recommendedPerfumes = this.filter_out_perfumes('intensitate', answer.text);
-            console.log(this.perfumes_candidates);
-            console.log(this.generate_perfume_list(recommendedPerfumes));
             return {
                 question: this.generate_output(this.currentQuestion),
                 system_options: {
@@ -673,7 +661,6 @@ export default class PerfumeChatbot {
 
         // Cases where we set the filters
         if (this.currentQuestion === "2.1" && this.currentQuestion !== "end") {
-            console.log(this.questions[this.currentQuestion]);
             return {
                 question: this.generate_output(this.currentQuestion),
                 system_options: {
@@ -770,7 +757,6 @@ export default class PerfumeChatbot {
 
         // all other cases
         if (this.currentQuestion && this.currentQuestion !== "end") {
-            console.log(this.currentQuestion)
             return {
                 question: this.generate_output(this.currentQuestion)
             };
