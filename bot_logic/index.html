@@ -662,12 +662,6 @@
             codeSpan.textContent = productCode;
             nameContainer.appendChild(codeSpan);
             
-            // Add price (hardcoded as example, update with real price if available)
-            const priceSpan = document.createElement("span");
-            priceSpan.className = "product-price";
-            priceSpan.textContent = "90,00 lei"; 
-            nameContainer.appendChild(priceSpan);
-            
             // Create add to cart button
             const addButton = document.createElement("a");
             addButton.href = product.link;
