@@ -556,7 +556,7 @@ body {
       rgba(255, 255, 255, 1) 45%,
       rgba(255, 255, 255, 1) 100%
     );
-    height: calc(100% - 100px);
+    height: 100vh;
   }
 
   /* Change header to be transparent to show gradient */
