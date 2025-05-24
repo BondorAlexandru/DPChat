@@ -16,6 +16,7 @@ export default class PerfumeChatbot {
         this.perfumes = [];
         this.perfumes_brands_and_models = [];
         this.perfumes_candidates = [];
+        this.perfumes_candidates_original = [];
         this.filters = {}
 
         this.return_perfumes_brands_and_models_list()
@@ -244,6 +245,7 @@ export default class PerfumeChatbot {
             }));
 
         this.perfumes_candidates = this.perfumes_brands_and_models;
+        this.perfumes_candidates_original = this.perfumes_brands_and_models;
         return this.perfumes_brands_and_models;
     }
 
@@ -318,7 +320,7 @@ export default class PerfumeChatbot {
             throw new Error(`Question ${questionId} not found`);
         }
 
-        
+        console.log(question.answers)
         let keys_to_preserve = [];
         for (let key in question.answers) {
 
@@ -395,12 +397,16 @@ export default class PerfumeChatbot {
             
             const match = name.match(/[A-Z]{1,2}(?:-?\d{1,2})/);
             const urlCode = match ? match[0].toLowerCase() : '';    
-
+            console.log(urlCode);
+            console.log(name);
+            console.log(perfume);
             let link_value = `https://www.dpparfum.ro/produs/${urlCode}`
             if (name.toLowerCase().includes("private collection")) 
                 link_value = `https://www.dpparfum.ro/produs/${urlCode}-private-collection/`
             if (name.toLowerCase().includes("arabian") && name.toLowerCase().includes("-")) 
                 link_value = `https://www.dpparfum.ro/produs/${urlCode}-arabian/`
+            if (urlCode === 'D3' && perfume.toLowerCase().includes("dama")) 
+                link_value = `https://www.dpparfum.ro/produs/${urlCode}-2`
             perfumeEntryRec['name'] = name;
             perfumeEntryRec['link'] = link_value;
             perfumeEntryRec['link_pic'] = this.select_url_from_name(name);
@@ -430,6 +436,8 @@ export default class PerfumeChatbot {
 
         const old_candidates = this.perfumes_candidates;
         const new_candidates = [];
+        console.log(old_candidates);
+        console.log(filter_value);
         for (let perfume of old_candidates) {
             let match = false;
             if (!filter_value) {
@@ -442,7 +450,6 @@ export default class PerfumeChatbot {
             if (filter_value.toLowerCase() === "nu stiu" ||
                 filter_value.toLowerCase() === "nu știu") {
                 match = true;
-                continue;
             }
             
 
@@ -481,6 +488,7 @@ export default class PerfumeChatbot {
             }
         }
         this.perfumes_candidates = new_candidates;
+        console.log(new_candidates);
         return new_candidates;
     }
 
@@ -611,14 +619,18 @@ export default class PerfumeChatbot {
      * @throws {Error} If question or answer ID is invalid
      */
     processAnswer(questionId, answerId, perfume_brand_model=null) {
-        const question = this.questions[questionId];
+        let question = this.questions[questionId];
         if (!question) {
             throw new Error(`Question ${questionId} not found`);
         }
         if (answerId == 0)
             answerId = 1;
 
-        const answer = question.answers[answerId] || question.answers["*"];
+        if (answerId == 1)
+            this.perfumes_candidates = this.perfumes_candidates_original;
+
+
+        let answer = question.answers[answerId] || question.answers["*"];
         if (!answer) {
             throw new Error(`Invalid answer ${answerId} for question ${questionId}`);
         }
@@ -634,7 +646,7 @@ export default class PerfumeChatbot {
 
 
         this.currentQuestion = answer.nextQuestion;
-
+        console.log(this.currentQuestion)
 
         // Recommendation of perfumes - last step
         if (this.currentQuestion === "recommendation") {
@@ -729,19 +741,29 @@ export default class PerfumeChatbot {
             this.currentQuestion === "3.5.4" ) {
             this.filters['aroma_1'] = answer.text;    
             let options = this.get_next_options(this.currentQuestion, 'aroma_2');
-            
-            return {
+            console.log(options);
+            console.log(options[0]);
+            if ((options.length == 2) || options.length == 1)
+            {
+                question = this.questions["3.6"];
+                answer = options[0];
+                this.currentQuestion = "3.6";
+                console.log(this.perfumes_candidates);
+            }
+            else return {
                 question: this.generate_output(this.currentQuestion, options)
             };
         }
 
         if (this.currentQuestion === "3.6" && this.currentQuestion !== "end") {
+            console.log(answer);
             this.filters['aroma_2'] = answer.text;    
             this.filter_out_perfumes('aroma_2', answer.text);
             let options = this.get_next_options(this.currentQuestion, "intensitate");
-
-            if (options.length == 2)
+            console.log(options);
+            if ((options.length == 2) || options.length == 1)
             {
+                console.log(this.perfumes_candidates);
                 return {
                     question: this.generate_output("recommendation"),
                     system_options: {
