@@ -951,21 +951,54 @@
 
         // Prevent chat scroll from affecting background
         preventScrollPropagation() {
+          // Enhanced scroll prevention for embedded environments
+          const preventScroll = (e) => {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+          };
+          
+          const preventTouchScroll = (e) => {
+            // Only prevent if we're not at the boundaries of the chat
+            const target = e.target.closest('#chat-messages');
+            if (target) {
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+            }
+          };
+          
           // Prevent scroll propagation on the chat container
           if (this.chatContainer) {
-            this.chatContainer.addEventListener('wheel', (e) => {
-              e.stopPropagation();
-            }, { passive: true });
+            this.chatContainer.addEventListener('wheel', preventScroll, { passive: false });
+            this.chatContainer.addEventListener('touchmove', preventTouchScroll, { passive: false });
+            this.chatContainer.addEventListener('scroll', preventScroll, { passive: true });
           }
           
           // Prevent scroll propagation on the chat wrapper
           if (this.chatWrapper) {
-            this.chatWrapper.addEventListener('wheel', (e) => {
-              const target = e.target.closest('#chat-messages');
-              if (target) {
-                e.stopPropagation();
-              }
+            this.chatWrapper.addEventListener('wheel', preventScroll, { passive: false });
+            this.chatWrapper.addEventListener('touchmove', preventTouchScroll, { passive: false });
+            this.chatWrapper.addEventListener('scroll', preventScroll, { passive: true });
+            
+            // Additional protection - disable scroll on wrapper
+            this.chatWrapper.style.touchAction = 'none';
+            this.chatWrapper.style.overscrollBehavior = 'contain';
+          }
+          
+          // Prevent body scroll when chat is active
+          const chatMessages = document.getElementById('chat-messages');
+          if (chatMessages) {
+            chatMessages.addEventListener('wheel', (e) => {
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+            }, { passive: false });
+            
+            chatMessages.addEventListener('touchstart', (e) => {
+              e.stopPropagation();
             }, { passive: true });
+            
+            chatMessages.addEventListener('touchmove', (e) => {
+              e.stopPropagation();
+            }, { passive: false });
           }
         }
       }

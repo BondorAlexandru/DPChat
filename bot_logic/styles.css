@@ -30,6 +30,8 @@ body {
   transform: translateY(0);
   will-change: transform, opacity;
   contain: layout style;
+  touch-action: none;
+  isolation: isolate;
 }
 
 .chat-container.card-expanded {
@@ -107,6 +109,7 @@ body {
   justify-content: space-between;
   align-items: center;
   transition: transform 0.5s ease;
+  margin-top: 10px;
 }
 
 .card:hover .card-title {
@@ -168,6 +171,8 @@ body {
   scroll-padding: 20px;
   contain: layout style;
   overscroll-behavior: contain;
+  touch-action: pan-y;
+  isolation: isolate;
 }
 
 .user-message,
@@ -579,7 +584,9 @@ body {
   #chat-messages {
     position: relative;
     height: calc(100vh - 200px); /* Fallback */
-    height: calc(100dvh - 200px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(
+      100dvh - 200px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
     margin-bottom: 0; /* Fallback */
     margin-bottom: env(safe-area-inset-bottom);
   }
@@ -597,10 +604,24 @@ body {
   }
 
   .card {
-    padding: 15px 35px 175px 35px;
+    padding: 15px 35px 155px 35px;
     margin-top: -130px;
     transition: all 0.3s ease-out;
     position: relative;
+    box-shadow: 0px -9px 6px -3px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Disable hover effects on mobile */
+  .card:hover {
+    padding-top: 15px; /* Keep original padding */
+    margin-top: -130px; /* Keep original margin */
+    transform: none; /* Disable any transforms */
+    box-shadow: 0px -9px 6px -3px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Disable card title hover movement */
+  .card:hover .card-title {
+    transform: none;
   }
 
   .card.expanding,
@@ -612,7 +633,9 @@ body {
     top: 60px; /* Fallback */
     top: calc(60px + env(safe-area-inset-top));
     height: calc(100vh - 100px); /* Fallback */
-    height: calc(100dvh - 100px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(
+      100dvh - 100px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
     margin-top: 0;
     border-radius: 30px 30px 0 0;
     transform: translateY(0);
@@ -781,48 +804,72 @@ body {
   margin-right: 10px;
 }
 
-/* Typing indicator */
+/* Typing indicator - more robust against host site conflicts */
 .typing-indicator {
-  max-width: 50px;
-  padding: 20px 15px;
-  margin-left: 0;
+  max-width: 50px !important;
+  padding: 20px 15px !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  box-sizing: border-box !important;
+  background-color: #f2f3fa !important;
+  border-radius: 20px 20px 20px 5px !important;
+  position: relative !important;
 }
 
 .typing-dots {
-  display: flex;
-  justify-content: center;
-  gap: 4px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 4px !important;
+  height: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .typing-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #bbb;
-  animation: typingAnimation 1.4s infinite ease-in-out both;
+  display: inline-block !important;
+  width: 10px !important;
+  height: 10px !important;
+  min-width: 10px !important;
+  min-height: 10px !important;
+  max-width: 10px !important;
+  max-height: 10px !important;
+  border-radius: 50% !important;
+  background-color: #bbb !important;
+  animation: typingAnimation 1.4s infinite ease-in-out both !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  transform-origin: center center !important;
 }
 
 .typing-dot:nth-child(1) {
-  animation-delay: 0s;
+  animation-delay: 0s !important;
 }
 
 .typing-dot:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: 0.2s !important;
 }
 
 .typing-dot:nth-child(3) {
-  animation-delay: 0.4s;
+  animation-delay: 0.4s !important;
 }
 
 @keyframes typingAnimation {
   0%,
   100% {
-    transform: scale(0.7);
-    opacity: 0.5;
+    transform: scale(0.7) !important;
+    opacity: 0.5 !important;
   }
   50% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(1) !important;
+    opacity: 1 !important;
   }
 }
