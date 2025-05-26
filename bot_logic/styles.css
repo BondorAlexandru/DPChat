@@ -530,14 +530,16 @@ body {
     position: absolute;
     bottom: -30px;
     width: 100%;
-    padding-bottom: 200px;
+    padding-bottom: 200px; /* Fallback */
+    padding-bottom: calc(200px + env(safe-area-inset-bottom));
     background-color: #fafafa;
   }
 
   .chat-container {
     background: #f4ad54;
     width: 100%;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh;
     position: fixed;
     top: 0;
     right: 0;
@@ -550,6 +552,10 @@ body {
       background 0.3s ease-out;
     will-change: transform;
     box-shadow: none;
+    padding-top: 0; /* Fallback */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: 0; /* Fallback */
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* Remove orange background when card is expanded */
@@ -561,7 +567,8 @@ body {
       rgba(255, 255, 255, 1) 45%,
       rgba(255, 255, 255, 1) 100%
     );
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh;
   }
 
   /* Change header to be transparent to show gradient */
@@ -571,7 +578,10 @@ body {
 
   #chat-messages {
     position: relative;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 200px); /* Fallback */
+    height: calc(100dvh - 200px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    margin-bottom: 0; /* Fallback */
+    margin-bottom: env(safe-area-inset-bottom);
   }
 
   .chat-container.hidden {
@@ -581,7 +591,8 @@ body {
   }
 
   #restart-button {
-    bottom: 20px;
+    bottom: 20px; /* Fallback */
+    bottom: calc(20px + env(safe-area-inset-bottom));
     right: 100px;
   }
 
@@ -598,12 +609,15 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    top: 60px;
-    height: calc(100vh - 100px);
+    top: 60px; /* Fallback */
+    top: calc(60px + env(safe-area-inset-top));
+    height: calc(100vh - 100px); /* Fallback */
+    height: calc(100dvh - 100px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     margin-top: 0;
     border-radius: 30px 30px 0 0;
     transform: translateY(0);
-    padding-bottom: 75px;
+    padding-bottom: 75px; /* Fallback */
+    padding-bottom: calc(75px + env(safe-area-inset-bottom));
     z-index: 1000;
     background-color: #ffffff;
     animation: slideUpCard 0.3s ease forwards;
@@ -620,10 +634,28 @@ body {
 
   .chat-header {
     transition: background-color 0.3s ease-out;
+    padding-top: 32px; /* Fallback */
+    padding-top: calc(32px + env(safe-area-inset-top));
   }
 
   .chat-container.card-expanded .chat-header {
     background-color: transparent;
+    padding-top: 20px; /* Fallback */
+    padding-top: calc(20px + env(safe-area-inset-top));
+  }
+
+  .chat-toggle-button {
+    bottom: 20px; /* Fallback */
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    right: 20px; /* Fallback */
+    right: calc(20px + env(safe-area-inset-right));
+  }
+
+  .chat-assistant-label {
+    bottom: 20px; /* Fallback */
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    right: 20px; /* Fallback */
+    right: calc(20px + env(safe-area-inset-right));
   }
 }
 
