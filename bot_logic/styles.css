@@ -566,6 +566,7 @@ body {
 
   #chat-messages {
     position: relative;
+    height: calc(100vh - 200px);
   }
 
   .chat-container.hidden {
