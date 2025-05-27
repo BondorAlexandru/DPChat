@@ -717,40 +717,77 @@
           // Default scroll amount (one product width + gap)
           const scrollAmount = 195; // 180px product width + 15px gap
           
+          // Check if we can scroll in a direction
+          const canScrollLeft = () => container.scrollLeft > 5;
+          const canScrollRight = () => {
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+            return container.scrollLeft < maxScrollLeft - 5;
+          };
+          
           // Left arrow click handler
           leftArrow.addEventListener('click', () => {
-            container.scrollBy({
-              left: -scrollAmount,
-              behavior: 'smooth'
-            });
+            if (canScrollLeft()) {
+              container.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+              });
+            }
           });
           
           // Right arrow click handler
           rightArrow.addEventListener('click', () => {
-            container.scrollBy({
-              left: scrollAmount,
-              behavior: 'smooth'
-            });
+            if (canScrollRight()) {
+              container.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+              });
+            }
           });
           
           // Show/hide arrows based on scroll position
           const updateArrowVisibility = () => {
-            // Show left arrow only if not at the start
-            leftArrow.style.opacity = container.scrollLeft > 0 ? '1' : '0.3';
+            // Check if there's actually scrollable content
+            const hasScrollableContent = container.scrollWidth > container.clientWidth;
             
-            // Show right arrow only if not at the end
-            const maxScrollLeft = container.scrollWidth - container.clientWidth;
-            rightArrow.style.opacity = container.scrollLeft < maxScrollLeft - 10 ? '1' : '0.3';
+            if (!hasScrollableContent) {
+              // No scrollable content, hide both arrows
+              leftArrow.style.opacity = '0.3';
+              rightArrow.style.opacity = '0.3';
+              leftArrow.style.pointerEvents = 'none';
+              rightArrow.style.pointerEvents = 'none';
+              return;
+            }
+            
+            // Show/hide left arrow based on scroll position
+            if (canScrollLeft()) {
+              leftArrow.style.opacity = '1';
+              leftArrow.style.pointerEvents = 'auto';
+            } else {
+              leftArrow.style.opacity = '0.3';
+              leftArrow.style.pointerEvents = 'none';
+            }
+            
+            // Show/hide right arrow based on scroll position
+            if (canScrollRight()) {
+              rightArrow.style.opacity = '1';
+              rightArrow.style.pointerEvents = 'auto';
+            } else {
+              rightArrow.style.opacity = '0.3';
+              rightArrow.style.pointerEvents = 'none';
+            }
           };
           
           // Initial arrow visibility
-          updateArrowVisibility();
+          setTimeout(updateArrowVisibility, 100); // Small delay to ensure proper measurements
           
           // Update arrow visibility on scroll
           container.addEventListener('scroll', updateArrowVisibility);
-            }
+          
+          // Update on resize in case container size changes
+          window.addEventListener('resize', updateArrowVisibility);
+        }
 
-            processAnswer(questionId, answerId, additionalData = null) {
+        processAnswer(questionId, answerId, additionalData = null) {
           if (!this.chatbot) return;
 
                 try {

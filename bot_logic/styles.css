@@ -806,8 +806,8 @@ body {
 
 /* Typing indicator - more robust against host site conflicts */
 .typing-indicator {
-  max-width: 50px !important;
-  padding: 20px 15px !important;
+  max-width: 70px !important;
+  padding: 20px 35px !important;
   margin-left: 0 !important;
   margin-right: auto !important;
   margin-top: 0 !important;
@@ -822,7 +822,7 @@ body {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  gap: 4px !important;
+  gap: 6px !important;
   height: auto !important;
   width: auto !important;
   margin: 0 !important;
